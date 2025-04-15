@@ -1,0 +1,36 @@
+/* globals.css */
+
+/* Efecto del ponpón */
+.light-effect {
+  position: fixed; /* Aseguramos que esté en una posición fija */
+  pointer-events: none;
+  width: 300px; /* Tamaño del ponpón */
+  height: 300px; /* Tamaño del ponpón */
+  background-color: white;
+  border-radius: 50%; /* Forma circular */
+  opacity: 0.25; /* Aumentar opacidad para que sea más visible */
+  filter: blur(40px); /* Desenfoque fuerte */
+  z-index: -1; /* Aseguramos que esté detrás de los elementos */
+  transition: left 0.1s ease-out, top 0.1s ease-out; /* Movimiento suave */
+  pointer-events: none; /* Evitar que interfiera con la interacción del mouse */
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 12px; /* Ancho de la scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4B5563; /* Color oscuro para el "thumb" */
+  border-radius: 10px;
+  border: 3px solid #1F2937; /* Bordes para un look más definido */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6B7280; /* Un tono más claro cuando se pasa el mouse */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #2D3748; /* Fondo oscuro para el track */
+  border-radius: 10px;
+}
