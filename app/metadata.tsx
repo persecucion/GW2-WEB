@@ -1,0 +1,1 @@
+// Este archivo ya no es necesario porque su contenido ha sido integrado en layout.tsx 
