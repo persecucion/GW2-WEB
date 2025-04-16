@@ -26,8 +26,8 @@ const firaCode = Fira_Code({
 
 const siteConfig = {
   name: 'GW2 Community',
-  description: 'La mejor comunidad hispanohablante de Guild Wars 2. Eventos exclusivos, sorteos, guías y mucho más.',
-  url: 'https://www.gw2community.com',
+  description: 'La mejor comunidad hispanohablante de Discord. Eventos exclusivos, sorteos, guías y mucho más.',
+  url: 'https://gatitos2.vercel.app/',
   ogImage: 'https://www.gw2community.com/og-image.jpg',
 }
 
