@@ -216,8 +216,8 @@ export default function Footer() {
           <div className="flex items-center bg-dark-800/30 py-2 px-4 rounded-lg border border-white/5 shadow-md">
             <span className="text-gray-400 flex items-center">
               Hecho con <FaHeart className="mx-1 text-red-500 animate-pulse" /> por{' '}
-              <a href="#" className="text-primary-400 ml-1 hover:underline hover:text-primary-300">
-                GW2 Team
+              <a href="https://github.com/Junsred" className="text-primary-400 ml-1 hover:underline hover:text-primary-300">
+                Junsred
               </a>
             </span>
             <button 
