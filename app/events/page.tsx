@@ -286,11 +286,7 @@ export default function EventsPage() {
                           fill
                           className="object-cover"
                         />
-                        <Badge
-                          variant="solid"
-                          color={getCategoryColor(event.category)}
-                          className="absolute top-4 right-4"
-                        >
+                        <Badge variant="solid" className={`absolute top-4 right-4 ${getCategoryColor(event.category)}`}>
                           {getCategoryName(event.category)}
                         </Badge>
                       </div>
@@ -360,11 +356,7 @@ export default function EventsPage() {
                           fill
                           className="object-cover rounded-t-lg"
                         />
-                        <Badge
-                          variant="solid"
-                          color={getCategoryColor(event.category)}
-                          className="absolute top-4 right-4"
-                        >
+                        <Badge variant="solid" className={`absolute top-4 right-4 ${getCategoryColor(event.category)}`}>
                           {getCategoryName(event.category)}
                         </Badge>
                       </div>
