@@ -28,7 +28,7 @@ const siteConfig = {
   name: 'GW2 Community',
   description: 'La mejor comunidad hispanohablante de Discord. Eventos exclusivos, sorteos, guías y mucho más.',
   url: 'https://gatitos2.vercel.app/',
-  ogImage: 'https://www.gw2community.com/og-image.jpg',
+  ogImage: 'https://media.discordapp.net/attachments/1125825952623116339/1361862545304195182/server-logo.webp?ex=68004cd4&is=67fefb54&hm=9ead8c7c3ed5baaa7cd243d7acac38ab1773768acd8d80ead03d504edcc1b6ab&=&format=webp',
 }
 
 export const metadata: Metadata = {
