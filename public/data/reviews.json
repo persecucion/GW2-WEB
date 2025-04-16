@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "author": "Alejandro Martínez",
+    "avatar": "/images/avatars/user1.jpg",
+    "role": "patreon",
+    "rating": 4.5,
+    "content": "La mejor comunidad de GW2 en español, sin duda. Los eventos son muy divertidos y el ambiente es increíble. Llevo 3 años como miembro y no puedo estar más satisfecho con todo lo que ofrecen. Los guías son muy pacientes y siempre dispuestos a ayudar a los nuevos jugadores.",
+    "date": "2023-12-15",
+    "verified": true,
+    "helpful": 12
+  },
+  {
+    "id": 2,
+    "author": "María Rodríguez",
+    "avatar": "/images/avatars/user2.jpg",
+    "role": "moderator",
+    "rating": 5,
+    "content": "Como moderadora, puedo decir que el equipo detrás de esta comunidad se esfuerza al máximo por crear un espacio acogedor y divertido para todos los jugadores. Los eventos están muy bien organizados y siempre hay algo nuevo que hacer.",
+    "date": "2023-11-25",
+    "verified": true,
+    "helpful": 8
+  },
+  {
+    "id": 3,
+    "author": "Carlos Sánchez",
+    "avatar": "/images/avatars/user3.jpg",
+    "role": "member",
+    "rating": 4,
+    "content": "Me uní hace poco más de un mes y la experiencia ha sido genial. La gente es muy amable y siempre hay alguien dispuesto a ayudarte si tienes dudas sobre el juego. Los eventos de mundo contra mundo son muy divertidos.",
+    "date": "2024-01-05",
+    "verified": true,
+    "helpful": 5
+  },
+  {
+    "id": 4,
+    "author": "Laura Gómez",
+    "avatar": "/images/avatars/user4.jpg",
+    "role": "patreon",
+    "rating": 4.5,
+    "content": "Como suscriptora de Patreon, tengo acceso a eventos exclusivos que son simplemente geniales. Merece mucho la pena el apoyo mensual por todo lo que ofrecen. Los sorteos mensuales también son un gran incentivo.",
+    "date": "2023-10-18",
+    "verified": true,
+    "helpful": 9
+  },
+  {
+    "id": 5,
+    "author": "Javier López",
+    "avatar": "/images/avatars/user5.jpg",
+    "role": "member",
+    "rating": 3.5,
+    "content": "Una comunidad muy activa y con muchos eventos. Lo único que mejoraría es tener más eventos para nuevos jugadores, pero en general estoy muy contento con mi experiencia aquí.",
+    "date": "2024-02-10",
+    "verified": false,
+    "helpful": 3
+  },
+  {
+    "id": 6,
+    "author": "Ana Martín",
+    "avatar": "/images/avatars/user6.jpg",
+    "role": "patreon",
+    "rating": 5,
+    "content": "La guía de mazmorras que ofrecen a los Patreons es increíblemente detallada y me ha ayudado muchísimo a mejorar mi juego. El Discord está siempre activo y hay gente dispuesta a ayudar a cualquier hora.",
+    "date": "2023-09-30",
+    "verified": true,
+    "helpful": 14
+  },
+  {
+    "id": 7,
+    "author": "Diego Fernández",
+    "avatar": "/images/avatars/user7.jpg",
+    "role": "member",
+    "rating": 3,
+    "content": "Los eventos son divertidos y la comunidad es amigable. A veces los horarios no me vienen bien por mi zona horaria, pero entiendo que es difícil cubrir todas las zonas. Recomendaría más eventos en diferentes franjas.",
+    "date": "2024-03-01",
+    "verified": true,
+    "helpful": 2
+  },
+  {
+    "id": 8,
+    "author": "Lucía Torres",
+    "avatar": "/images/avatars/user8.jpg",
+    "role": "moderator",
+    "rating": 5,
+    "content": "Como parte del equipo de moderación, estoy orgullosa de formar parte de esta comunidad. Siempre buscamos mejorar y escuchamos activamente el feedback de nuestros miembros para implementar cambios positivos.",
+    "date": "2023-08-22",
+    "verified": true,
+    "helpful": 7
+  },
+  {
+    "id": 9,
+    "author": "Roberto García",
+    "avatar": "/images/avatars/user9.jpg",
+    "role": "patreon",
+    "rating": 4,
+    "content": "Las carreras de Tyria y los eventos de salto son mi parte favorita. El nivel de organización es impresionante y se nota que hay mucho trabajo detrás de cada evento. Totalmente recomendable para cualquier fan de GW2.",
+    "date": "2024-02-18",
+    "verified": true,
+    "helpful": 6
+  },
+  {
+    "id": 10,
+    "author": "Elena Díaz",
+    "avatar": "/images/avatars/user10.jpg",
+    "role": "member",
+    "rating": 4,
+    "content": "Llevo jugando a GW2 desde el lanzamiento pero nunca había encontrado una comunidad tan acogedora. Los eventos de raid training son especialmente útiles para quienes queremos mejorar en ese aspecto del juego.",
+    "date": "2023-12-05",
+    "verified": true,
+    "helpful": 11
+  },
+  {
+    "id": 11,
+    "author": "Miguel Ángel",
+    "avatar": "/images/avatars/user11.jpg",
+    "role": "member",
+    "rating": 3.5,
+    "content": "Buenos eventos y gente agradable. He aprendido mucho sobre el juego desde que me uní. Las guías que comparten son muy útiles, especialmente para los nuevos modos de juego.",
+    "date": "2024-01-20",
+    "verified": false,
+    "helpful": 4
+  },
+  {
+    "id": 12,
+    "author": "Sofía Navarro",
+    "avatar": "/images/avatars/user12.jpg",
+    "role": "patreon",
+    "rating": 4.5,
+    "content": "Los beneficios de Patreon valen cada céntimo. Las sesiones de entrenamiento personalizadas me han ayudado a mejorar enormemente mi gameplay. El equipo siempre está abierto a sugerencias para nuevos contenidos.",
+    "date": "2023-11-10",
+    "verified": true,
+    "helpful": 10
+  }
+] 
