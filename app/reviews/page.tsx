@@ -133,377 +133,133 @@ export default function ReviewsPage() {
     setExpandedReview(expandedReview === reviewId ? null : reviewId)
   }
 
+  // Cargar reseñas desde el archivo JSON
+  useEffect(() => {
+    // Solo ejecutar en el cliente
+    if (typeof window !== 'undefined') {
+      // Cargar los datos desde el archivo JSON
+      fetch('/data/reviews.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('No se pudo cargar el archivo de reseñas');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setReviews(data);
+          setFilteredReviews(data);
+        })
+        .catch(error => {
+          console.error('Error al cargar las reseñas:', error);
+          // No mostrar alerta al usuario, simplemente loguear el error
+        });
+
+      // Cargar votos guardados para mostrar UI correcta (solo para esta sesión)
+      const savedVotes = localStorage.getItem('gw2_review_votes');
+      if (savedVotes) {
+        try {
+          setUserVotes(JSON.parse(savedVotes));
+        } catch (error) {
+          console.error('Error al cargar votos guardados:', error);
+        }
+      }
+      
+      // Cargar ratings guardados para mostrar UI correcta (solo para esta sesión)
+      const savedRatings = localStorage.getItem('gw2_user_ratings');
+      if (savedRatings) {
+        try {
+          const ratings = JSON.parse(savedRatings);
+          setUserRatings(ratings);
+          
+          // Actualizar UI de estrellas activas
+          const activeStarsState: {[key: string]: number} = {};
+          Object.entries(ratings).forEach(([reviewId, rating]) => {
+            activeStarsState[reviewId] = rating as number;
+          });
+          setActiveStars(activeStarsState);
+        } catch (error) {
+          console.error('Error al cargar ratings guardados:', error);
+        }
+      }
+      
+      // Inicializar AOS
+      AOS.init({
+        duration: 1000,
+        once: true,
+        easing: 'ease-out-cubic',
+      });
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   // Función para votar en una reseña
   const handleVote = (reviewId: number) => {
     // Verificar si el usuario ya votó
-    const reviewIdStr = reviewId.toString()
+    const reviewIdStr = reviewId.toString();
     if (userVotes[reviewIdStr]) {
       showNotification('warning', 'Ya has marcado esta reseña como útil anteriormente.');
-      return
+      return;
     }
     
-    // Cargar las reviews actuales desde localStorage (para asegurarnos de tener los datos más recientes)
-    const currentReviewsData = localStorage.getItem('gw2_reviews_data');
-    let currentReviews: Review[] = [];
-    
-    if (currentReviewsData) {
-      try {
-        currentReviews = JSON.parse(currentReviewsData);
-      } catch (error) {
-        console.error('Error al parsear datos de reseñas:', error);
-        currentReviews = [...reviews];
-      }
-    } else {
-      currentReviews = [...reviews];
-    }
-    
-    // Actualizar el número de votos útiles en la review
-    const updatedReviews = currentReviews.map(review => {
+    // Actualizar el estado local
+    const updatedReviews = reviews.map(review => {
       if (review.id === reviewId) {
         return {
           ...review,
-          helpful: (review.helpful || 0) + 1
-        }
+          helpful: review.helpful + 1
+        };
       }
-      return review
+      return review;
     });
     
-    // Guardar el voto del usuario en su sesión local
+    // Guardar el voto del usuario (solo para esta sesión)
     const updatedVotes = {
       ...userVotes,
       [reviewIdStr]: true
     };
-    
     setUserVotes(updatedVotes);
     
-    // Actualizar las reseñas en el estado local
+    // Actualizar el estado
     setReviews(updatedReviews);
-    setFilteredReviews(prev => {
-      return prev.map(review => {
-        if (review.id === reviewId) {
-          return {
-            ...review,
-            helpful: (review.helpful || 0) + 1
-          }
-        }
-        return review
-      })
-    });
+    setFilteredReviews(prev => prev.map(review => 
+      review.id === reviewId ? {...review, helpful: review.helpful + 1} : review
+    ));
     
-    // Actualizar en localStorage (datos globales y sesión individual)
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews));
-        localStorage.setItem('gw2_review_votes', JSON.stringify(updatedVotes));
-      } catch (error) {
-        console.error('Error al guardar reseñas:', error)
-      }
-    }
+    // Guardar voto en localStorage (solo para esta sesión)
+    localStorage.setItem('gw2_review_votes', JSON.stringify(updatedVotes));
     
     // Mostrar confirmación
-    showNotification('success', 'Gracias por valorar esta reseña como útil. Tu voto ha sido registrado para todos los usuarios.');
-  }
-  
+    showNotification('success', 'Gracias por valorar esta reseña como útil.');
+  };
+
   // Función para calificar una reseña
   const handleRateReview = (reviewId: number, rating: number) => {
     const reviewIdStr = reviewId.toString();
     
-    // Cargar las reviews actuales desde localStorage (para asegurarnos de tener los datos más recientes)
-    const currentReviewsData = localStorage.getItem('gw2_reviews_data');
-    let currentReviews: Review[] = [];
+    // Guardar la calificación del usuario (solo para esta sesión)
+    const updatedRatings = {
+      ...userRatings,
+      [reviewIdStr]: rating
+    };
+    setUserRatings(updatedRatings);
     
-    if (currentReviewsData) {
-      try {
-        currentReviews = JSON.parse(currentReviewsData);
-      } catch (error) {
-        console.error('Error al parsear datos de reseñas:', error);
-        currentReviews = [...reviews];
-      }
-    } else {
-      currentReviews = [...reviews];
-    }
+    // Actualizar UI de estrellas
+    setActiveStars(prev => ({
+      ...prev,
+      [reviewIdStr]: rating
+    }));
     
-    // Encontrar la review actual y calcular la nueva valoración global
-    let updatedReviews = [...currentReviews];
-    const reviewToUpdate = updatedReviews.find(r => r.id === reviewId);
+    // Guardar rating en localStorage (solo para esta sesión)
+    localStorage.setItem('gw2_user_ratings', JSON.stringify(updatedRatings));
     
-    if (reviewToUpdate) {
-      // Si el usuario ya había valorado, reemplazar su valoración anterior
-      // Si no había valorado, añadir su nueva valoración
-      
-      // Guardar la calificación del usuario en su sesión local
-      const updatedRatings = {
-        ...userRatings,
-        [reviewIdStr]: rating
-      };
-      
-      setUserRatings(updatedRatings);
-      
-      // Actualizar UI de estrellas
-      setActiveStars(prev => ({
-        ...prev,
-        [reviewIdStr]: rating
-      }));
-      
-      // Actualizar la valoración global de la review
-      // Aquí usamos un enfoque simplificado: la valoración del usuario se convierte en la valoración global
-      reviewToUpdate.rating = rating;
-      
-      // Actualizar las reseñas en el estado
-      updatedReviews = currentReviews.map(review => {
-        if (review.id === reviewId) {
-          return {
-            ...review,
-            rating
-          };
-        }
-        return review;
-      });
-      
-      setReviews(updatedReviews);
-      setFilteredReviews(prev => {
-        return prev.map(review => {
-          if (review.id === reviewId) {
-            return {
-              ...review,
-              rating
-            }
-          }
-          return review;
-        });
-      });
-      
-      // Guardar en localStorage (tanto datos globales como preferencias del usuario)
-      if (typeof window !== 'undefined') {
-        try {
-          localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews));
-          localStorage.setItem('gw2_user_ratings', JSON.stringify(updatedRatings));
-        } catch (error) {
-          console.error('Error al guardar reseñas:', error);
-        }
-      }
-      
-      // Mostrar confirmación
-      showNotification('success', `Has calificado esta opinión con ${rating} estrellas. Tu valoración es visible para todos los usuarios.`);
-    }
-  }
-  
-  // Guardar votos cuando cambien
-  useEffect(() => {
-    if (typeof window !== 'undefined' && Object.keys(userVotes).length > 0) {
-      localStorage.setItem('gw2_review_votes', JSON.stringify(userVotes))
-    }
-  }, [userVotes])
-  
-  // Guardar ratings cuando cambien
-  useEffect(() => {
-    if (typeof window !== 'undefined' && Object.keys(userRatings).length > 0) {
-      localStorage.setItem('gw2_user_ratings', JSON.stringify(userRatings))
-    }
-  }, [userRatings])
-
-  // Datos de ejemplo
-  useEffect(() => {
-    const dummyReviews: Review[] = [
-      {
-        id: 1,
-        author: 'Alejandro Martínez',
-        avatar: '/images/avatars/user1.jpg',
-        role: 'patreon',
-        rating: 0,
-        content: 'La mejor comunidad de GW2 en español, sin duda. Los eventos son muy divertidos y el ambiente es increíble. Llevo 3 años como miembro y no puedo estar más satisfecho con todo lo que ofrecen. Los guías son muy pacientes y siempre dispuestos a ayudar a los nuevos jugadores.',
-        date: '2023-12-15',
-        verified: true,
-        helpful: 0
-      },
-      {
-        id: 2,
-        author: 'María Rodríguez',
-        avatar: '/images/avatars/user2.jpg',
-        role: 'moderator',
-        rating: 0,
-        content: 'Como moderadora, puedo decir que el equipo detrás de esta comunidad se esfuerza al máximo por crear un espacio acogedor y divertido para todos los jugadores. Los eventos están muy bien organizados y siempre hay algo nuevo que hacer.',
-        date: '2023-11-25',
-        verified: true,
-        helpful: 0
-      },
-      {
-        id: 3,
-        author: 'Carlos Sánchez',
-        avatar: '/images/avatars/user3.jpg',
-        role: 'member',
-        rating: 0,
-        content: 'Me uní hace poco más de un mes y la experiencia ha sido genial. La gente es muy amable y siempre hay alguien dispuesto a ayudarte si tienes dudas sobre el juego. Los eventos de mundo contra mundo son muy divertidos.',
-        date: '2024-01-05',
-        verified: true,
-        helpful: 0
-      },
-      {
-        id: 4,
-        author: 'Laura Gómez',
-        avatar: '/images/avatars/user4.jpg',
-        role: 'patreon',
-        rating: 0,
-        content: 'Como suscriptora de Patreon, tengo acceso a eventos exclusivos que son simplemente geniales. Merece mucho la pena el apoyo mensual por todo lo que ofrecen. Los sorteos mensuales también son un gran incentivo.',
-        date: '2023-10-18',
-        verified: true,
-        helpful: 0
-      },
-      {
-        id: 5,
-        author: 'Javier López',
-        avatar: '/images/avatars/user5.jpg',
-        role: 'member',
-        rating: 0,
-        content: 'Una comunidad muy activa y con muchos eventos. Lo único que mejoraría es tener más eventos para nuevos jugadores, pero en general estoy muy contento con mi experiencia aquí.',
-        date: '2024-02-10',
-        verified: false,
-        helpful: 0
-      },
-      {
-        id: 6,
-        author: 'Ana Martín',
-        avatar: '/images/avatars/user6.jpg',
-        role: 'patreon',
-        rating: 0,
-        content: 'La guía de mazmorras que ofrecen a los Patreons es increíblemente detallada y me ha ayudado muchísimo a mejorar mi juego. El Discord está siempre activo y hay gente dispuesta a ayudar a cualquier hora.',
-        date: '2023-09-30',
-        verified: true,
-        helpful: 0
-      },
-      {
-        id: 7,
-        author: 'Diego Fernández',
-        avatar: '/images/avatars/user7.jpg',
-        role: 'member',
-        rating: 0,
-        content: 'Los eventos son divertidos y la comunidad es amigable. A veces los horarios no me vienen bien por mi zona horaria, pero entiendo que es difícil cubrir todas las zonas. Recomendaría más eventos en diferentes franjas.',
-        date: '2024-03-01',
-        verified: true,
-        helpful: 0
-      },
-      {
-        id: 8,
-        author: 'Lucía Torres',
-        avatar: '/images/avatars/user8.jpg',
-        role: 'moderator',
-        rating: 0,
-        content: 'Como parte del equipo de moderación, estoy orgullosa de formar parte de esta comunidad. Siempre buscamos mejorar y escuchamos activamente el feedback de nuestros miembros para implementar cambios positivos.',
-        date: '2023-08-22',
-        verified: true,
-        helpful: 0
-      },
-      {
-        id: 9,
-        author: 'Roberto García',
-        avatar: '/images/avatars/user9.jpg',
-        role: 'patreon',
-        rating: 0,
-        content: 'Las carreras de Tyria y los eventos de salto son mi parte favorita. El nivel de organización es impresionante y se nota que hay mucho trabajo detrás de cada evento. Totalmente recomendable para cualquier fan de GW2.',
-        date: '2024-02-18',
-        verified: true,
-        helpful: 0
-      },
-      {
-        id: 10,
-        author: 'Elena Díaz',
-        avatar: '/images/avatars/user10.jpg',
-        role: 'member',
-        rating: 0,
-        content: 'Llevo jugando a GW2 desde el lanzamiento pero nunca había encontrado una comunidad tan acogedora. Los eventos de raid training son especialmente útiles para quienes queremos mejorar en ese aspecto del juego.',
-        date: '2023-12-05',
-        verified: true,
-        helpful: 0
-      },
-      {
-        id: 11,
-        author: 'Miguel Ángel',
-        avatar: '/images/avatars/user11.jpg',
-        role: 'member',
-        rating: 0,
-        content: 'Buenos eventos y gente agradable. He aprendido mucho sobre el juego desde que me uní. Las guías que comparten son muy útiles, especialmente para los nuevos modos de juego.',
-        date: '2024-01-20',
-        verified: false,
-        helpful: 0
-      },
-      {
-        id: 12,
-        author: 'Sofía Navarro',
-        avatar: '/images/avatars/user12.jpg',
-        role: 'patreon',
-        rating: 0,
-        content: 'Los beneficios de Patreon valen cada céntimo. Las sesiones de entrenamiento personalizadas me han ayudado a mejorar enormemente mi gameplay. El equipo siempre está abierto a sugerencias para nuevos contenidos.',
-        date: '2023-11-10',
-        verified: true,
-        helpful: 0
-      }
-    ]
+    // Actualizar UI con estrellas activas
+    // Nota: No actualizamos el rating real de la reseña, solo la visualización para el usuario actual
     
-    // Guardar datos en localStorage para simular una API
-    if (typeof window !== 'undefined') {
-      // Cargar los datos guardados o usar los datos de ejemplo
-      const existingData = localStorage.getItem('gw2_reviews_data')
-      if (!existingData) {
-        localStorage.setItem('gw2_reviews_data', JSON.stringify(dummyReviews))
-        setReviews(dummyReviews)
-        setFilteredReviews(dummyReviews)
-      } else {
-        // Usar los datos guardados
-        try {
-          const savedReviews = JSON.parse(existingData);
-          
-          // Cargar votos guardados para actualizar el estado helpful de las reseñas
-          const savedVotes = localStorage.getItem('gw2_review_votes')
-          if (savedVotes) {
-            const votes = JSON.parse(savedVotes);
-            setUserVotes(votes);
-          }
-          
-          // Cargar ratings guardados para actualizar las estrellas activas
-          const savedRatings = localStorage.getItem('gw2_user_ratings')
-          if (savedRatings) {
-            const ratings = JSON.parse(savedRatings);
-            setUserRatings(ratings);
-            
-            // Actualizar UI de estrellas activas basado en ratings guardadas
-            const activeStarsState: {[key: string]: number} = {};
-            Object.entries(ratings).forEach(([reviewId, rating]) => {
-              activeStarsState[reviewId] = rating as number;
-            });
-            setActiveStars(activeStarsState);
-            
-            // Actualizar las reseñas con las valoraciones del usuario
-            savedReviews.forEach((review: Review) => {
-              const reviewId = review.id.toString();
-              if (ratings[reviewId]) {
-                review.userRating = ratings[reviewId];
-              }
-            });
-          }
-          
-          setReviews(savedReviews)
-          setFilteredReviews(savedReviews)
-        } catch (error) {
-          console.error('Error al cargar reseñas guardadas:', error)
-          setReviews(dummyReviews)
-          setFilteredReviews(dummyReviews)
-        }
-      }
-    } else {
-      setReviews(dummyReviews)
-      setFilteredReviews(dummyReviews)
-    }
-    
-    // Inicializar AOS
-    AOS.init({
-      duration: 1000,
-      once: true,
-      easing: 'ease-out-cubic',
-    })
-    
-    // Scroll to top
-    window.scrollTo(0, 0)
-  }, [])
+    // Mostrar confirmación
+    showNotification('success', `Has calificado esta opinión con ${rating} estrellas.`);
+  };
   
   // Filtrar y ordenar reseñas
   useEffect(() => {
@@ -599,8 +355,13 @@ export default function ReviewsPage() {
     
     const total = reviews.length
     const verified = reviews.filter(r => r.verified).length
-    // Calcular promedio usando las valoraciones guardadas globalmente
-    const sum = reviews.reduce((acc, review) => acc + (review.rating || 0), 0)
+    
+    // Calcular promedio usando valoraciones precargadas
+    const sum = reviews.reduce((acc, review) => {
+      // Usar valoración precargada para el promedio general
+      return acc + (review.rating || 0)
+    }, 0)
+    
     const avg = Math.round((sum / total) * 10) / 10
     
     return { avg, total, verified }
@@ -948,7 +709,8 @@ export default function ReviewsPage() {
                           </h3>
                           <span className="text-sm text-gray-400">{formatDate(review.date)}</span>
                           <div className="flex mt-1 space-x-1">
-                            {renderStars(review.rating || review.userRating || 0)}
+                            {/* Mostrar estrellas - dar prioridad a la valoración personal si existe */}
+                            {renderStars(activeStars[review.id.toString()] || review.rating || 0)}
                           </div>
                         </div>
                       </div>
