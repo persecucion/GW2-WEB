@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react'
-import { FaStar, FaStarHalfAlt, FaFilter, FaSearch, FaUserCircle, FaCheckCircle, FaRegStar, FaSortAmountDown, FaSortAmountUp, FaThumbsUp, FaChevronDown, FaQuoteRight, FaComments, FaDiscord } from 'react-icons/fa'
+import { FaStar, FaStarHalfAlt, FaFilter, FaSearch, FaUserCircle, FaCheckCircle, FaRegStar, FaSortAmountDown, FaSortAmountUp, FaThumbsUp, FaChevronDown, FaQuoteRight, FaComments, FaDiscord, FaTimes, FaInfo } from 'react-icons/fa'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Header from '../Header'
@@ -14,6 +14,38 @@ import { Label } from '../components/Label'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/Tabs'
 import Image from 'next/image'
 // import { toast, ToastContainer } from '../components/Toast'
+
+// Estilos para las animaciones de notificaciones
+const notificationStyles = `
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -20px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  
+  @keyframes fadeOutUp {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translate3d(0, -20px, 0);
+    }
+  }
+  
+  .animate-fade-in-down {
+    animation: fadeInDown 0.3s ease-out forwards;
+  }
+  
+  .animate-fade-out-up {
+    animation: fadeOutUp 0.3s ease-in forwards;
+  }
+`;
 
 // Tipos
 interface Review {
@@ -37,6 +69,14 @@ interface VotesData {
 // Sistema de ratings de usuario
 interface UserRatingsData {
   [reviewId: string]: number;
+}
+
+// Notificación
+interface Notification {
+  id: string;
+  type: 'success' | 'error' | 'info' | 'warning';
+  message: string;
+  duration?: number;
 }
 
 // Sistema de notificaciones simplificado
@@ -63,7 +103,31 @@ export default function ReviewsPage() {
   const [loadingMore, setLoadingMore] = useState(false)
   const [activeStars, setActiveStars] = useState<{[key: string]: number}>({})
   const [hoverStars, setHoverStars] = useState<{[key: string]: number}>({})
+  const [notification, setNotification] = useState<Notification | null>(null)
   
+  // Sistema de notificaciones en página
+  const showNotification = (type: 'success' | 'error' | 'info' | 'warning', message: string, duration = 3000) => {
+    const id = Math.random().toString(36).substring(2, 9);
+    setNotification({
+      id,
+      type,
+      message,
+      duration
+    });
+    
+    // Auto-cerrar la notificación después del tiempo
+    if (duration > 0) {
+      setTimeout(() => {
+        setNotification(prev => prev?.id === id ? null : prev);
+      }, duration);
+    }
+  };
+  
+  // Cerrar notificación manualmente
+  const closeNotification = () => {
+    setNotification(null);
+  };
+
   // Cargar votos y ratings guardados
   useEffect(() => {
     // Solo ejecutar en el cliente
@@ -77,6 +141,13 @@ export default function ReviewsPage() {
         const savedRatings = localStorage.getItem('gw2_user_ratings')
         if (savedRatings) {
           setUserRatings(JSON.parse(savedRatings))
+          
+          // Actualizar UI de estrellas activas basado en ratings guardadas
+          const activeStarsState: {[key: string]: number} = {};
+          Object.entries(JSON.parse(savedRatings)).forEach(([reviewId, rating]) => {
+            activeStarsState[reviewId] = rating as number;
+          });
+          setActiveStars(activeStarsState);
         }
       } catch (error) {
         console.error('Error al cargar datos guardados:', error)
@@ -103,7 +174,7 @@ export default function ReviewsPage() {
     // Verificar si el usuario ya votó
     const reviewIdStr = reviewId.toString()
     if (userVotes[reviewIdStr]) {
-      showToast('Ya has marcado esta reseña como útil anteriormente.', 'aviso');
+      showNotification('warning', 'Ya has marcado esta reseña como útil anteriormente.');
       return
     }
     
@@ -137,7 +208,7 @@ export default function ReviewsPage() {
     }
     
     // Mostrar confirmación
-    showToast('Gracias por valorar esta reseña como útil.', 'éxito');
+    showNotification('success', 'Gracias por valorar esta reseña como útil.');
   }
   
   // Función para calificar una reseña
@@ -155,8 +226,30 @@ export default function ReviewsPage() {
       [reviewIdStr]: rating
     }))
     
+    // Actualizar las reseñas con la calificación del usuario
+    const updatedReviews = reviews.map(review => {
+      if (review.id === reviewId) {
+        return {
+          ...review,
+          userRating: rating
+        }
+      }
+      return review
+    })
+    
+    setReviews(updatedReviews)
+    
+    // Guardar en localStorage
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews))
+      } catch (error) {
+        console.error('Error al guardar reseñas:', error)
+      }
+    }
+    
     // Mostrar confirmación
-    showToast(`Has calificado esta opinión con ${rating} estrellas`, 'éxito');
+    showNotification('success', `Has calificado esta opinión con ${rating} estrellas`);
   }
   
   // Función para expandir/colapsar una reseña
@@ -172,7 +265,7 @@ export default function ReviewsPage() {
         author: 'Alejandro Martínez',
         avatar: '/images/avatars/user1.jpg',
         role: 'patreon',
-        rating: 5,
+        rating: 0,
         content: 'La mejor comunidad de GW2 en español, sin duda. Los eventos son muy divertidos y el ambiente es increíble. Llevo 3 años como miembro y no puedo estar más satisfecho con todo lo que ofrecen. Los guías son muy pacientes y siempre dispuestos a ayudar a los nuevos jugadores.',
         date: '2023-12-15',
         verified: true,
@@ -183,7 +276,7 @@ export default function ReviewsPage() {
         author: 'María Rodríguez',
         avatar: '/images/avatars/user2.jpg',
         role: 'moderator',
-        rating: 5,
+        rating: 0,
         content: 'Como moderadora, puedo decir que el equipo detrás de esta comunidad se esfuerza al máximo por crear un espacio acogedor y divertido para todos los jugadores. Los eventos están muy bien organizados y siempre hay algo nuevo que hacer.',
         date: '2023-11-25',
         verified: true,
@@ -194,7 +287,7 @@ export default function ReviewsPage() {
         author: 'Carlos Sánchez',
         avatar: '/images/avatars/user3.jpg',
         role: 'member',
-        rating: 4.5,
+        rating: 0,
         content: 'Me uní hace poco más de un mes y la experiencia ha sido genial. La gente es muy amable y siempre hay alguien dispuesto a ayudarte si tienes dudas sobre el juego. Los eventos de mundo contra mundo son muy divertidos.',
         date: '2024-01-05',
         verified: true,
@@ -205,7 +298,7 @@ export default function ReviewsPage() {
         author: 'Laura Gómez',
         avatar: '/images/avatars/user4.jpg',
         role: 'patreon',
-        rating: 5,
+        rating: 0,
         content: 'Como suscriptora de Patreon, tengo acceso a eventos exclusivos que son simplemente geniales. Merece mucho la pena el apoyo mensual por todo lo que ofrecen. Los sorteos mensuales también son un gran incentivo.',
         date: '2023-10-18',
         verified: true,
@@ -216,7 +309,7 @@ export default function ReviewsPage() {
         author: 'Javier López',
         avatar: '/images/avatars/user5.jpg',
         role: 'member',
-        rating: 4,
+        rating: 0,
         content: 'Una comunidad muy activa y con muchos eventos. Lo único que mejoraría es tener más eventos para nuevos jugadores, pero en general estoy muy contento con mi experiencia aquí.',
         date: '2024-02-10',
         verified: false,
@@ -227,7 +320,7 @@ export default function ReviewsPage() {
         author: 'Ana Martín',
         avatar: '/images/avatars/user6.jpg',
         role: 'patreon',
-        rating: 5,
+        rating: 0,
         content: 'La guía de mazmorras que ofrecen a los Patreons es increíblemente detallada y me ha ayudado muchísimo a mejorar mi juego. El Discord está siempre activo y hay gente dispuesta a ayudar a cualquier hora.',
         date: '2023-09-30',
         verified: true,
@@ -238,7 +331,7 @@ export default function ReviewsPage() {
         author: 'Diego Fernández',
         avatar: '/images/avatars/user7.jpg',
         role: 'member',
-        rating: 3.5,
+        rating: 0,
         content: 'Los eventos son divertidos y la comunidad es amigable. A veces los horarios no me vienen bien por mi zona horaria, pero entiendo que es difícil cubrir todas las zonas. Recomendaría más eventos en diferentes franjas.',
         date: '2024-03-01',
         verified: true,
@@ -249,7 +342,7 @@ export default function ReviewsPage() {
         author: 'Lucía Torres',
         avatar: '/images/avatars/user8.jpg',
         role: 'moderator',
-        rating: 5,
+        rating: 0,
         content: 'Como parte del equipo de moderación, estoy orgullosa de formar parte de esta comunidad. Siempre buscamos mejorar y escuchamos activamente el feedback de nuestros miembros para implementar cambios positivos.',
         date: '2023-08-22',
         verified: true,
@@ -260,7 +353,7 @@ export default function ReviewsPage() {
         author: 'Roberto García',
         avatar: '/images/avatars/user9.jpg',
         role: 'patreon',
-        rating: 4.5,
+        rating: 0,
         content: 'Las carreras de Tyria y los eventos de salto son mi parte favorita. El nivel de organización es impresionante y se nota que hay mucho trabajo detrás de cada evento. Totalmente recomendable para cualquier fan de GW2.',
         date: '2024-02-18',
         verified: true,
@@ -271,7 +364,7 @@ export default function ReviewsPage() {
         author: 'Elena Díaz',
         avatar: '/images/avatars/user10.jpg',
         role: 'member',
-        rating: 5,
+        rating: 0,
         content: 'Llevo jugando a GW2 desde el lanzamiento pero nunca había encontrado una comunidad tan acogedora. Los eventos de raid training son especialmente útiles para quienes queremos mejorar en ese aspecto del juego.',
         date: '2023-12-05',
         verified: true,
@@ -282,7 +375,7 @@ export default function ReviewsPage() {
         author: 'Miguel Ángel',
         avatar: '/images/avatars/user11.jpg',
         role: 'member',
-        rating: 4,
+        rating: 0,
         content: 'Buenos eventos y gente agradable. He aprendido mucho sobre el juego desde que me uní. Las guías que comparten son muy útiles, especialmente para los nuevos modos de juego.',
         date: '2024-01-20',
         verified: false,
@@ -293,7 +386,7 @@ export default function ReviewsPage() {
         author: 'Sofía Navarro',
         avatar: '/images/avatars/user12.jpg',
         role: 'patreon',
-        rating: 5,
+        rating: 0,
         content: 'Los beneficios de Patreon valen cada céntimo. Las sesiones de entrenamiento personalizadas me han ayudado a mejorar enormemente mi gameplay. El equipo siempre está abierto a sugerencias para nuevos contenidos.',
         date: '2023-11-10',
         verified: true,
@@ -430,7 +523,41 @@ export default function ReviewsPage() {
 
   return (
     <div className="min-h-screen bg-dark-900 text-white overflow-x-hidden">
+      {/* Estilos CSS para animaciones */}
+      <style jsx global>{notificationStyles}</style>
+      
       <Header />
+      
+      {/* Componente de notificación */}
+      {notification && (
+        <div className="fixed top-6 right-6 z-50 max-w-md animate-fade-in-down">
+          <div 
+            className={`
+              rounded-lg shadow-lg border p-4 flex items-start transform transition-all duration-300
+              ${notification.type === 'success' ? 'bg-green-900/90 border-green-500' : 
+                notification.type === 'error' ? 'bg-red-900/90 border-red-500' : 
+                notification.type === 'warning' ? 'bg-yellow-900/90 border-yellow-500' : 
+                'bg-blue-900/90 border-blue-500'}
+            `}
+          >
+            <div className="flex-shrink-0 mr-3">
+              {notification.type === 'success' && <FaCheckCircle className="w-5 h-5 text-green-400" />}
+              {notification.type === 'error' && <FaTimes className="w-5 h-5 text-red-400" />}
+              {notification.type === 'warning' && <FaInfo className="w-5 h-5 text-yellow-400" />}
+              {notification.type === 'info' && <FaInfo className="w-5 h-5 text-blue-400" />}
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-white">{notification.message}</p>
+            </div>
+            <button
+              onClick={closeNotification}
+              className="ml-4 flex-shrink-0 text-gray-400 hover:text-white transition-colors"
+            >
+              <FaTimes className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
       
       {/* Hero Section */}
       <section className="relative py-24 bg-dark-950 overflow-hidden">
@@ -865,11 +992,15 @@ export default function ReviewsPage() {
             data-aos="fade-up"
           >
             <div className="text-center mb-10">
-              <Badge className="px-6 py-2 text-base font-medium rounded-full bg-indigo-500 text-white mb-6 shadow-lg inline-block">
-                ¿Quieres compartir tu experiencia?
-              </Badge>
+              <div className="inline-block relative mb-6">
+                <span className="bg-gradient-to-r from-indigo-600 to-primary-500 text-white text-sm font-semibold px-5 py-1.5 rounded-full">
+                  Comparte tu experiencia
+                </span>
+                <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-10 h-0.5 bg-primary-500"></span>
+              </div>
+              
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-                Abre un <span className="text-primary-400">ticket</span> en nuestro Discord
+                Abre un <span className="bg-gradient-to-r from-primary-400 to-indigo-500 bg-clip-text text-transparent">ticket</span> en nuestro Discord
               </h2>
               <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-8">
                 Para compartir tu experiencia y que tu opinión sea publicada en nuestra web, 
