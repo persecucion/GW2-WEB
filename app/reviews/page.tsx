@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react'
-import { FaStar, FaStarHalfAlt, FaFilter, FaSearch, FaUserCircle, FaCheckCircle, FaRegStar, FaSortAmountDown, FaSortAmountUp, FaThumbsUp, FaChevronDown, FaQuoteRight, FaPen, FaComments } from 'react-icons/fa'
+import { FaStar, FaStarHalfAlt, FaFilter, FaSearch, FaUserCircle, FaCheckCircle, FaRegStar, FaSortAmountDown, FaSortAmountUp, FaThumbsUp, FaChevronDown, FaQuoteRight, FaComments, FaDiscord } from 'react-icons/fa'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Header from '../Header'
@@ -39,16 +39,7 @@ interface UserRatingsData {
   [reviewId: string]: number;
 }
 
-// Formulario de reseña
-interface ReviewFormData {
-  name: string;
-  email: string;
-  rating: number;
-  content: string;
-  acceptTerms: boolean;
-}
-
-// Sistema de notificaciones simplificado (en lugar de usar el componente Toast)
+// Sistema de notificaciones simplificado
 const showToast = (message: string, type: string) => {
   if (typeof window !== 'undefined') {
     alert(`${type.toUpperCase()}: ${message}`);
@@ -72,19 +63,6 @@ export default function ReviewsPage() {
   const [loadingMore, setLoadingMore] = useState(false)
   const [activeStars, setActiveStars] = useState<{[key: string]: number}>({})
   const [hoverStars, setHoverStars] = useState<{[key: string]: number}>({})
-  
-  // Estado para el formulario
-  const [reviewForm, setReviewForm] = useState<ReviewFormData>({
-    name: '',
-    email: '',
-    rating: 0,
-    content: '',
-    acceptTerms: false
-  })
-  const [formRatingHover, setFormRatingHover] = useState(0)
-  const [submitting, setSubmitting] = useState(false)
-  const [formErrors, setFormErrors] = useState<{[key: string]: string}>({})
-  const [formSuccess, setFormSuccess] = useState(false)
   
   // Cargar votos y ratings guardados
   useEffect(() => {
@@ -450,120 +428,6 @@ export default function ReviewsPage() {
   
   const stats = calculateStats()
 
-  // Validar formulario
-  const validateForm = (): boolean => {
-    const errors: {[key: string]: string} = {}
-    
-    if (!reviewForm.name.trim()) {
-      errors.name = 'El nombre es obligatorio'
-    }
-    
-    if (!reviewForm.email.trim()) {
-      errors.email = 'El email es obligatorio'
-    } else if (!/\S+@\S+\.\S+/.test(reviewForm.email)) {
-      errors.email = 'El email no es válido'
-    }
-    
-    if (reviewForm.rating === 0) {
-      errors.rating = 'Debes dar una valoración'
-    }
-    
-    if (!reviewForm.content.trim()) {
-      errors.content = 'El contenido de la opinión es obligatorio'
-    } else if (reviewForm.content.length < 20) {
-      errors.content = 'La opinión debe tener al menos 20 caracteres'
-    }
-    
-    if (!reviewForm.acceptTerms) {
-      errors.acceptTerms = 'Debes aceptar los términos'
-    }
-    
-    setFormErrors(errors)
-    return Object.keys(errors).length === 0
-  }
-  
-  // Manejar cambios en el formulario
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target
-    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined
-    
-    setReviewForm(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }))
-    
-    // Limpiar el error al editar el campo
-    if (formErrors[name]) {
-      setFormErrors(prev => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
-    }
-  }
-  
-  // Manejar el envío del formulario
-  const handleSubmitReview = (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!validateForm()) {
-      return
-    }
-    
-    setSubmitting(true)
-    
-    // Simular envío
-    setTimeout(() => {
-      // Crear nueva reseña
-      const newReview: Review = {
-        id: reviews.length + 1,
-        author: reviewForm.name,
-        avatar: '/images/avatars/default.jpg',
-        role: 'member',
-        rating: reviewForm.rating,
-        content: reviewForm.content,
-        date: new Date().toISOString().split('T')[0],
-        verified: false,
-        helpful: 0
-      }
-      
-      // Actualizar reseñas
-      const updatedReviews = [newReview, ...reviews]
-      setReviews(updatedReviews)
-      
-      // Guardar en localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews))
-      }
-      
-      // Resetear formulario
-      setReviewForm({
-        name: '',
-        email: '',
-        rating: 0,
-        content: '',
-        acceptTerms: false
-      })
-      
-      setSubmitting(false)
-      setFormSuccess(true)
-      
-      // Ocultar mensaje de éxito después de unos segundos
-      setTimeout(() => {
-        setFormSuccess(false)
-      }, 5000)
-      
-      // Mostrar confirmación
-      showToast('Tu opinión ha sido enviada con éxito. ¡Gracias por compartir tu experiencia!', 'éxito')
-      
-      // Hacer scroll hacia arriba después de enviar
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-    }, 1500)
-  }
-
   return (
     <div className="min-h-screen bg-dark-900 text-white overflow-x-hidden">
       <Header />
@@ -585,16 +449,13 @@ export default function ReviewsPage() {
         
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="text-center" data-aos="fade-up">
-            <div className="inline-block relative mb-6">
-              <Badge className="px-6 py-2 text-base font-medium rounded-full bg-primary-500 text-white shadow-lg shadow-primary-500/20">
-                Reviews
-              </Badge>
-              <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-primary-500"></span>
-            </div>
+            <span className="bg-primary-900/30 text-primary-400 text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4">
+              Reviews
+            </span>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
               <span className="text-white">Lo que dicen nuestros </span>
-              <span className="text-primary-400">miembros</span>
+              <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">miembros</span>
             </h1>
             
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-12">
@@ -641,7 +502,6 @@ export default function ReviewsPage() {
                 rounded="full"
                 className="shadow-xl"
                 size="lg"
-                leftIcon={<FaPen />}
                 onClick={() => window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})}
               >
                 Escribe tu opinión
@@ -881,18 +741,18 @@ export default function ReviewsPage() {
                       
                       {/* Contenido de la review */}
                       <div className="relative mt-2">
-                        <p className={`text-gray-300 ${expandedReview === review.id ? '' : 'line-clamp-4'}`}>
+                        <p className={expandedReview === review.id ? 'text-gray-300' : 'text-gray-300 line-clamp-4'}>
                           {review.content}
                         </p>
                         
                         {review.content.length > 150 && expandedReview !== review.id && (
-                          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-dark-800 to-transparent"></div>
+                          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-dark-800 to-transparent pointer-events-none"></div>
                         )}
                         
                         {review.content.length > 150 && (
                           <button 
                             onClick={() => toggleExpandReview(review.id)}
-                            className="mt-2 text-primary-400 hover:text-primary-300 text-sm font-medium"
+                            className="mt-2 text-primary-400 hover:text-primary-300 text-sm font-medium focus:outline-none hover:underline"
                           >
                             {expandedReview === review.id ? 'Leer menos' : 'Leer más'}
                           </button>
@@ -1005,166 +865,64 @@ export default function ReviewsPage() {
             data-aos="fade-up"
           >
             <div className="text-center mb-10">
-              <Badge className="px-6 py-2 text-base font-medium rounded-full bg-indigo-500 text-white mb-4 shadow-lg">
-                Tu opinión importa
+              <Badge className="px-6 py-2 text-base font-medium rounded-full bg-indigo-500 text-white mb-6 shadow-lg inline-block">
+                ¿Quieres compartir tu experiencia?
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                Comparte tu <span className="text-primary-400">experiencia</span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+                Abre un <span className="text-primary-400">ticket</span> en nuestro Discord
               </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                ¿Has participado en nuestra comunidad? Nos encantaría conocer tu opinión. 
-                Tu feedback nos ayuda a seguir mejorando.
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-8">
+                Para compartir tu experiencia y que tu opinión sea publicada en nuestra web, 
+                por favor abre un ticket en nuestro servidor de Discord. 
+                Nuestro equipo de moderación revisará tu opinión y la añadirá a la página.
               </p>
-            </div>
-            
-            {formSuccess ? (
-              <div className="bg-green-900/30 border border-green-500 rounded-xl p-6 text-center max-w-lg mx-auto mb-8">
-                <FaCheckCircle className="text-green-400 text-4xl mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">¡Gracias por tu opinión!</h3>
-                <p className="text-gray-300 mb-4">
-                  Tu reseña ha sido enviada con éxito y aparecerá en la lista de opiniones.
-                </p>
-                <Button
-                  onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
-                  variant="outline"
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mt-12">
+                <div className="bg-dark-800 border border-gray-700 rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="100">
+                  <div className="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <FaDiscord className="text-white text-2xl" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Paso 1</h3>
+                  <p className="text-gray-300 mb-4">
+                    Únete a nuestro servidor oficial de Discord si aún no eres miembro
+                  </p>
+                </div>
+                
+                <div className="bg-dark-800 border border-gray-700 rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="200">
+                  <div className="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <FaComments className="text-white text-2xl" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Paso 2</h3>
+                  <p className="text-gray-300 mb-4">
+                    Ve al canal de tickets y abre uno solicitando compartir tu opinión
+                  </p>
+                </div>
+                
+                <div className="bg-dark-800 border border-gray-700 rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                  <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <FaCheckCircle className="text-white text-2xl" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Paso 3</h3>
+                  <p className="text-gray-300 mb-4">
+                    Un moderador revisará tu solicitud y añadirá tu opinión si cumple los requisitos
+                  </p>
+                </div>
+              </div>
+              
+              <div className="mt-12">
+                <Button 
+                  href="https://discord.gg/gatitos2"
+                  external
+                  variant="gradient"
                   rounded="full"
-                  className="border-green-500 text-green-400"
+                  size="lg"
+                  className="px-12 shadow-xl"
+                  leftIcon={<FaDiscord className="text-xl" />}
                 >
-                  Volver al inicio
+                  Unirse a Discord
                 </Button>
               </div>
-            ) : (
-              <form onSubmit={handleSubmitReview} className="max-w-3xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <div>
-                    <Label htmlFor="name" className="text-white mb-2 block">Nombre <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      placeholder="Tu nombre"
-                      value={reviewForm.name}
-                      onChange={handleFormChange}
-                      className={`bg-dark-800 border-gray-600 focus:border-primary-500 ${formErrors.name ? 'border-red-500' : ''}`}
-                    />
-                    {formErrors.name && (
-                      <p className="text-red-500 text-sm mt-1">{formErrors.name}</p>
-                    )}
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="email" className="text-white mb-2 block">Email <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="tu@email.com"
-                      value={reviewForm.email}
-                      onChange={handleFormChange}
-                      className={`bg-dark-800 border-gray-600 focus:border-primary-500 ${formErrors.email ? 'border-red-500' : ''}`}
-                    />
-                    {formErrors.email && (
-                      <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>
-                    )}
-                  </div>
-                </div>
-                
-                <div className="mb-8">
-                  <Label className="text-white mb-2 block">Valoración <span className="text-red-500">*</span></Label>
-                  <div className="flex space-x-2 items-center">
-                    <div className="flex space-x-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          onClick={() => setReviewForm(prev => ({ ...prev, rating: star }))}
-                          onMouseEnter={() => setFormRatingHover(star)}
-                          onMouseLeave={() => setFormRatingHover(0)}
-                          className="text-3xl focus:outline-none transition-transform hover:scale-110"
-                        >
-                          {star <= (formRatingHover || reviewForm.rating) ? (
-                            <FaStar className="text-yellow-400" />
-                          ) : (
-                            <FaRegStar className="text-gray-400" />
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                    <span className="text-gray-400 ml-2">
-                      {reviewForm.rating > 0 ? (
-                        <>
-                          <span className="text-white font-bold">{reviewForm.rating}</span> de 5
-                        </>
-                      ) : 'Sin valorar'}
-                    </span>
-                  </div>
-                  {formErrors.rating && (
-                    <p className="text-red-500 text-sm mt-1">{formErrors.rating}</p>
-                  )}
-                </div>
-                
-                <div className="mb-8">
-                  <Label htmlFor="content" className="text-white mb-2 block">Tu opinión <span className="text-red-500">*</span></Label>
-                  <textarea
-                    id="content"
-                    name="content"
-                    rows={6}
-                    placeholder="Comparte tu experiencia con nosotros..."
-                    value={reviewForm.content}
-                    onChange={handleFormChange}
-                    className={`w-full rounded-lg bg-dark-800 border border-gray-600 focus:border-primary-500 p-3 text-white ${formErrors.content ? 'border-red-500' : ''}`}
-                  ></textarea>
-                  <div className="flex justify-between mt-1">
-                    {formErrors.content ? (
-                      <p className="text-red-500 text-sm">{formErrors.content}</p>
-                    ) : (
-                      <p className="text-gray-400 text-sm">Mínimo 20 caracteres</p>
-                    )}
-                    <p className="text-gray-400 text-sm">{reviewForm.content.length} / 500</p>
-                  </div>
-                </div>
-                
-                <div className="mb-8">
-                  <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="acceptTerms"
-                        name="acceptTerms"
-                        type="checkbox"
-                        checked={reviewForm.acceptTerms}
-                        onChange={handleFormChange}
-                        className="h-4 w-4 rounded border-gray-600 bg-dark-800 text-primary-500 focus:ring-primary-500"
-                      />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label htmlFor="acceptTerms" className="text-gray-300">
-                        Acepto los <a href="#" className="text-primary-400 hover:underline">términos y condiciones</a> y la <a href="#" className="text-primary-400 hover:underline">política de privacidad</a>
-                      </label>
-                      {formErrors.acceptTerms && (
-                        <p className="text-red-500 text-sm mt-1">{formErrors.acceptTerms}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="text-center">
-                  <Button
-                    type="submit"
-                    variant="gradient"
-                    rounded="full"
-                    size="lg"
-                    className="px-12 shadow-xl"
-                    disabled={submitting}
-                  >
-                    {submitting ? (
-                      <>
-                        <span className="inline-block h-4 w-4 mr-2 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
-                        Enviando...
-                      </>
-                    ) : 'Enviar mi opinión'}
-                  </Button>
-                </div>
-              </form>
-            )}
+            </div>
           </div>
         </div>
       </section>
