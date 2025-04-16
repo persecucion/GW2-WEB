@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react'
-import { FaStar, FaStarHalfAlt, FaFilter, FaSearch, FaUserCircle, FaCheckCircle, FaRegStar, FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa'
+import { FaStar, FaStarHalfAlt, FaFilter, FaSearch, FaUserCircle, FaCheckCircle, FaRegStar, FaSortAmountDown, FaSortAmountUp, FaThumbsUp, FaChevronDown } from 'react-icons/fa'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Header from '../Header'
@@ -13,6 +13,7 @@ import { Input } from '../components/Input'
 import { Label } from '../components/Label'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/Tabs'
 import Image from 'next/image'
+// import { toast, ToastContainer } from '../components/Toast'
 
 // Tipos
 interface Review {
@@ -27,14 +28,95 @@ interface Review {
   helpful: number
 }
 
+// Sistema de votos
+interface VotesData {
+  [reviewId: string]: boolean;
+}
+
+// Sistema de notificaciones simplificado (en lugar de usar el componente Toast)
+const showToast = (message: string, type: string) => {
+  if (typeof window !== 'undefined') {
+    alert(`${type.toUpperCase()}: ${message}`);
+  }
+};
+
 export default function ReviewsPage() {
   // Estado para las reseñas
   const [reviews, setReviews] = useState<Review[]>([])
   const [filteredReviews, setFilteredReviews] = useState<Review[]>([])
+  const [displayedReviews, setDisplayedReviews] = useState<Review[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [filter, setFilter] = useState<'all' | 'member' | 'patreon' | 'moderator'>('all')
   const [sortOrder, setSortOrder] = useState<'recent' | 'highest' | 'lowest'>('recent')
   const [isFiltersVisible, setIsFiltersVisible] = useState(false)
+  const [userVotes, setUserVotes] = useState<VotesData>({})
+  const [currentPage, setCurrentPage] = useState(1)
+  const reviewsPerPage = 6
+  const [loadingMore, setLoadingMore] = useState(false)
+  
+  // Cargar votos guardados
+  useEffect(() => {
+    // Solo ejecutar en el cliente
+    if (typeof window !== 'undefined') {
+      try {
+        const savedVotes = localStorage.getItem('gw2_review_votes')
+        if (savedVotes) {
+          setUserVotes(JSON.parse(savedVotes))
+        }
+      } catch (error) {
+        console.error('Error al cargar votos:', error)
+      }
+    }
+  }, [])
+  
+  // Guardar votos cuando cambien
+  useEffect(() => {
+    if (typeof window !== 'undefined' && Object.keys(userVotes).length > 0) {
+      localStorage.setItem('gw2_review_votes', JSON.stringify(userVotes))
+    }
+  }, [userVotes])
+  
+  // Función para votar en una reseña
+  const handleVote = (reviewId: number) => {
+    // Verificar si el usuario ya votó
+    const reviewIdStr = reviewId.toString()
+    if (userVotes[reviewIdStr]) {
+      showToast('Ya has marcado esta reseña como útil anteriormente.', 'aviso');
+      return
+    }
+    
+    // Actualizar el estado de reviews
+    const updatedReviews = reviews.map(review => {
+      if (review.id === reviewId) {
+        return {
+          ...review,
+          helpful: review.helpful + 1
+        }
+      }
+      return review
+    })
+    
+    // Guardar el voto del usuario
+    setUserVotes(prev => ({
+      ...prev,
+      [reviewIdStr]: true
+    }))
+    
+    // Actualizar las reseñas
+    setReviews(updatedReviews)
+    
+    // Actualizar en localStorage
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews))
+      } catch (error) {
+        console.error('Error al guardar reseñas:', error)
+      }
+    }
+    
+    // Mostrar confirmación
+    showToast('Gracias por valorar esta reseña como útil.', 'éxito');
+  }
   
   // Datos de ejemplo
   useEffect(() => {
@@ -48,7 +130,7 @@ export default function ReviewsPage() {
         content: 'La mejor comunidad de GW2 en español, sin duda. Los eventos son muy divertidos y el ambiente es increíble. Llevo 3 años como miembro y no puedo estar más satisfecho con todo lo que ofrecen. Los guías son muy pacientes y siempre dispuestos a ayudar a los nuevos jugadores.',
         date: '2023-12-15',
         verified: true,
-        helpful: 42
+        helpful: 0
       },
       {
         id: 2,
@@ -59,7 +141,7 @@ export default function ReviewsPage() {
         content: 'Como moderadora, puedo decir que el equipo detrás de esta comunidad se esfuerza al máximo por crear un espacio acogedor y divertido para todos los jugadores. Los eventos están muy bien organizados y siempre hay algo nuevo que hacer.',
         date: '2023-11-25',
         verified: true,
-        helpful: 38
+        helpful: 0
       },
       {
         id: 3,
@@ -70,7 +152,7 @@ export default function ReviewsPage() {
         content: 'Me uní hace poco más de un mes y la experiencia ha sido genial. La gente es muy amable y siempre hay alguien dispuesto a ayudarte si tienes dudas sobre el juego. Los eventos de mundo contra mundo son muy divertidos.',
         date: '2024-01-05',
         verified: true,
-        helpful: 27
+        helpful: 0
       },
       {
         id: 4,
@@ -81,7 +163,7 @@ export default function ReviewsPage() {
         content: 'Como suscriptora de Patreon, tengo acceso a eventos exclusivos que son simplemente geniales. Merece mucho la pena el apoyo mensual por todo lo que ofrecen. Los sorteos mensuales también son un gran incentivo.',
         date: '2023-10-18',
         verified: true,
-        helpful: 31
+        helpful: 0
       },
       {
         id: 5,
@@ -92,7 +174,7 @@ export default function ReviewsPage() {
         content: 'Una comunidad muy activa y con muchos eventos. Lo único que mejoraría es tener más eventos para nuevos jugadores, pero en general estoy muy contento con mi experiencia aquí.',
         date: '2024-02-10',
         verified: false,
-        helpful: 14
+        helpful: 0
       },
       {
         id: 6,
@@ -103,7 +185,7 @@ export default function ReviewsPage() {
         content: 'La guía de mazmorras que ofrecen a los Patreons es increíblemente detallada y me ha ayudado muchísimo a mejorar mi juego. El Discord está siempre activo y hay gente dispuesta a ayudar a cualquier hora.',
         date: '2023-09-30',
         verified: true,
-        helpful: 29
+        helpful: 0
       },
       {
         id: 7,
@@ -114,7 +196,7 @@ export default function ReviewsPage() {
         content: 'Los eventos son divertidos y la comunidad es amigable. A veces los horarios no me vienen bien por mi zona horaria, pero entiendo que es difícil cubrir todas las zonas. Recomendaría más eventos en diferentes franjas.',
         date: '2024-03-01',
         verified: true,
-        helpful: 12
+        helpful: 0
       },
       {
         id: 8,
@@ -125,7 +207,7 @@ export default function ReviewsPage() {
         content: 'Como parte del equipo de moderación, estoy orgullosa de formar parte de esta comunidad. Siempre buscamos mejorar y escuchamos activamente el feedback de nuestros miembros para implementar cambios positivos.',
         date: '2023-08-22',
         verified: true,
-        helpful: 45
+        helpful: 0
       },
       {
         id: 9,
@@ -136,7 +218,7 @@ export default function ReviewsPage() {
         content: 'Las carreras de Tyria y los eventos de salto son mi parte favorita. El nivel de organización es impresionante y se nota que hay mucho trabajo detrás de cada evento. Totalmente recomendable para cualquier fan de GW2.',
         date: '2024-02-18',
         verified: true,
-        helpful: 34
+        helpful: 0
       },
       {
         id: 10,
@@ -147,7 +229,7 @@ export default function ReviewsPage() {
         content: 'Llevo jugando a GW2 desde el lanzamiento pero nunca había encontrado una comunidad tan acogedora. Los eventos de raid training son especialmente útiles para quienes queremos mejorar en ese aspecto del juego.',
         date: '2023-12-05',
         verified: true,
-        helpful: 28
+        helpful: 0
       },
       {
         id: 11,
@@ -158,7 +240,7 @@ export default function ReviewsPage() {
         content: 'Buenos eventos y gente agradable. He aprendido mucho sobre el juego desde que me uní. Las guías que comparten son muy útiles, especialmente para los nuevos modos de juego.',
         date: '2024-01-20',
         verified: false,
-        helpful: 19
+        helpful: 0
       },
       {
         id: 12,
@@ -169,12 +251,31 @@ export default function ReviewsPage() {
         content: 'Los beneficios de Patreon valen cada céntimo. Las sesiones de entrenamiento personalizadas me han ayudado a mejorar enormemente mi gameplay. El equipo siempre está abierto a sugerencias para nuevos contenidos.',
         date: '2023-11-10',
         verified: true,
-        helpful: 37
+        helpful: 0
       }
     ]
     
-    setReviews(dummyReviews)
-    setFilteredReviews(dummyReviews)
+    // Guardar datos en localStorage para simular una API
+    if (typeof window !== 'undefined') {
+      // Solo guardar si no existen ya
+      const existingData = localStorage.getItem('gw2_reviews_data')
+      if (!existingData) {
+        localStorage.setItem('gw2_reviews_data', JSON.stringify(dummyReviews))
+      } else {
+        // Usar los datos guardados
+        try {
+          setReviews(JSON.parse(existingData))
+          setFilteredReviews(JSON.parse(existingData))
+        } catch (error) {
+          console.error('Error al cargar reseñas guardadas:', error)
+          setReviews(dummyReviews)
+          setFilteredReviews(dummyReviews)
+        }
+      }
+    } else {
+      setReviews(dummyReviews)
+      setFilteredReviews(dummyReviews)
+    }
     
     // Inicializar AOS
     AOS.init({
@@ -221,6 +322,27 @@ export default function ReviewsPage() {
     setFilteredReviews(result)
   }, [reviews, filter, searchTerm, sortOrder])
   
+  // Función para cargar más reseñas
+  const loadMoreReviews = () => {
+    setLoadingMore(true)
+    
+    // Simular carga con un timeout
+    setTimeout(() => {
+      const nextPage = currentPage + 1
+      const endIndex = nextPage * reviewsPerPage
+      
+      setDisplayedReviews(filteredReviews.slice(0, endIndex))
+      setCurrentPage(nextPage)
+      setLoadingMore(false)
+    }, 800)
+  }
+  
+  // Actualizar las reseñas mostradas cuando cambien las filtradas
+  useEffect(() => {
+    setCurrentPage(1)
+    setDisplayedReviews(filteredReviews.slice(0, reviewsPerPage))
+  }, [filteredReviews])
+  
   // Renderizar estrellas
   const renderStars = (rating: number) => {
     const stars = []
@@ -261,13 +383,8 @@ export default function ReviewsPage() {
   const stats = calculateStats()
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-dark-900 text-white overflow-x-hidden">
       <Header />
-      
-      {/* Efectos visuales y fondo */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-900/10 via-secondary-900/10 to-primary-900/10"></div>
-      </div>
       
       {/* Hero Section */}
       <section className="relative py-24 bg-dark-800">
@@ -318,7 +435,7 @@ export default function ReviewsPage() {
       {/* Sección de filtros y búsqueda */}
       <section className="relative py-8">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="bg-dark-800/70 backdrop-blur-sm rounded-xl border border-white/5 shadow-xl p-6 mb-8">
+          <div className="bg-dark-800 rounded-xl border border-gray-600 shadow-xl p-6 mb-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="relative w-full md:w-96">
                 <Input
@@ -376,10 +493,8 @@ export default function ReviewsPage() {
                         setFilter('all')
                         setSortOrder('recent')
                       }}
-                      variant="outline"
+                      variant="gradient"
                       rounded="default"
-                      className="bg-dark-700 border-gray-600"
-                      size="sm"
                     >
                       Limpiar filtros
                     </Button>
@@ -388,7 +503,6 @@ export default function ReviewsPage() {
                       onClick={() => setIsFiltersVisible(false)}
                       variant="gradient"
                       rounded="default"
-                      className="bg-gradient-to-r from-primary-600 to-primary-700"
                       size="sm"
                     >
                       Aplicar
@@ -405,76 +519,104 @@ export default function ReviewsPage() {
       <section className="relative py-8">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {filteredReviews.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredReviews.map((review, index) => (
-                <Card 
-                  key={review.id}
-                  className="bg-dark-800/70 backdrop-blur-sm border border-white/5 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-                  data-aos="fade-up"
-                  data-aos-delay={index * 50}
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center">
-                        <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/10 bg-dark-700 mr-3">
-                          <Image
-                            src={review.avatar || '/images/avatars/default.jpg'}
-                            alt={review.author}
-                            fill
-                            className="object-cover"
-                          />
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {displayedReviews.map((review, index) => (
+                  <Card 
+                    key={review.id}
+                    className="bg-dark-800 border border-gray-600 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                    data-aos="fade-up"
+                    data-aos-delay={index * 50}
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center">
+                          <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-600 bg-dark-700 mr-3">
+                            <Image
+                              src={review.avatar || '/images/avatars/default.jpg'}
+                              alt={review.author}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-white flex items-center">
+                              {review.author}
+                              {review.verified && (
+                                <FaCheckCircle className="ml-2 text-primary-400 text-sm" title="Verificado" />
+                              )}
+                            </h3>
+                            <p className="text-sm text-gray-400 flex items-center">
+                              {review.role === 'member' && 'Miembro'}
+                              {review.role === 'patreon' && (
+                                <span className="text-yellow-400 flex items-center">
+                                  <FaStar className="mr-1" /> Patreon
+                                </span>
+                              )}
+                              {review.role === 'moderator' && (
+                                <span className="text-blue-400 flex items-center">
+                                  <FaUserCircle className="mr-1" /> Moderador
+                                </span>
+                              )}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-white flex items-center">
-                            {review.author}
-                            {review.verified && (
-                              <FaCheckCircle className="ml-2 text-primary-400 text-sm" title="Verificado" />
-                            )}
-                          </h3>
-                          <p className="text-sm text-gray-400 flex items-center">
-                            {review.role === 'member' && 'Miembro'}
-                            {review.role === 'patreon' && (
-                              <span className="text-yellow-400 flex items-center">
-                                <FaStar className="mr-1" /> Patreon
-                              </span>
-                            )}
-                            {review.role === 'moderator' && (
-                              <span className="text-blue-400 flex items-center">
-                                <FaUserCircle className="mr-1" /> Moderador
-                              </span>
-                            )}
-                          </p>
-                        </div>
+                        <span className="text-sm text-gray-500">{formatDate(review.date)}</span>
                       </div>
-                      <span className="text-sm text-gray-500">{formatDate(review.date)}</span>
-                    </div>
-                    
-                    <div className="flex my-3">
-                      {renderStars(review.rating)}
-                    </div>
-                    
-                    <p className="text-gray-300 mb-4">{review.content}</p>
-                    
-                    <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-700">
-                      <span className="text-sm text-gray-400 flex items-center">
-                        {review.helpful} personas encontraron esto útil
-                      </span>
-                      <Button
-                        variant="outline"
-                        rounded="default"
-                        className="bg-dark-700 border-gray-600 hover:bg-dark-600"
-                        size="sm"
-                      >
-                        Útil
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                      
+                      <div className="flex my-3">
+                        {renderStars(review.rating)}
+                      </div>
+                      
+                      <p className="text-gray-300 mb-4">{review.content}</p>
+                      
+                      <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-700">
+                        <span className="text-sm text-gray-400 flex items-center">
+                          {review.helpful} personas encontraron esto útil
+                        </span>
+                        <Button
+                          onClick={() => handleVote(review.id)}
+                          variant="outline"
+                          rounded="default"
+                          className={`bg-dark-700 border-gray-600 hover:bg-dark-600 ${userVotes[review.id.toString()] ? 'text-primary-400' : ''}`}
+                          size="sm"
+                          leftIcon={<FaThumbsUp className={userVotes[review.id.toString()] ? 'text-primary-400' : ''} />}
+                          disabled={userVotes[review.id.toString()]}
+                        >
+                          Útil
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              
+              {/* Botón de cargar más */}
+              {displayedReviews.length < filteredReviews.length && (
+                <div className="text-center mt-12">
+                  <Button
+                    onClick={loadMoreReviews}
+                    variant="outline"
+                    rounded="default"
+                    className="bg-dark-800 border-gray-600 px-8"
+                    leftIcon={loadingMore ? null : <FaChevronDown />}
+                    disabled={loadingMore}
+                  >
+                    {loadingMore ? 'Cargando...' : 'Cargar más reseñas'}
+                  </Button>
+                </div>
+              )}
+              
+              {/* Contador de reseñas */}
+              <div className="text-center mt-6">
+                <p className="text-gray-400 text-sm">
+                  Mostrando {displayedReviews.length} de {filteredReviews.length} reseñas
+                </p>
+              </div>
+            </>
           ) : (
             <div className="text-center py-12">
-              <div className="bg-dark-800/70 backdrop-blur-sm rounded-xl border border-white/5 shadow-xl p-8 max-w-lg mx-auto">
+              <div className="bg-dark-800 rounded-xl border border-gray-600 shadow-xl p-8 max-w-lg mx-auto">
                 <FaSearch className="text-gray-400 text-4xl mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-white mb-2">No hay resultados</h3>
                 <p className="text-gray-300 mb-6">
@@ -488,7 +630,6 @@ export default function ReviewsPage() {
                   }}
                   variant="gradient"
                   rounded="default"
-                  className="bg-gradient-to-r from-primary-600 to-primary-700"
                 >
                   Limpiar filtros
                 </Button>
@@ -500,18 +641,15 @@ export default function ReviewsPage() {
       
       {/* CTA Section */}
       <section className="relative py-20">
-        <div className="absolute inset-0 bg-dark-800"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 via-dark-900 to-secondary-900/20"></div>
+        <div className="bg-dark-800 absolute inset-0"></div>
         
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div 
-            className="bg-dark-800/70 backdrop-blur-sm rounded-3xl border border-white/5 shadow-2xl p-8 md:p-12 text-center"
+            className="bg-dark-700 rounded-3xl border border-gray-600 shadow-2xl p-8 md:p-12 text-center"
             data-aos="fade-up"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-              <span className="bg-gradient-to-r from-primary-300 to-secondary-300 bg-clip-text text-transparent">
-                ¿Quieres compartir tu experiencia?
-              </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary-300">
+              ¿Quieres compartir tu experiencia?
             </h2>
             <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
               Únete a nuestra comunidad y forma parte de esta gran familia de jugadores de Guild Wars 2.
@@ -523,7 +661,7 @@ export default function ReviewsPage() {
                 variant="gradient"
                 size="lg"
                 rounded="default"
-                className="bg-gradient-to-r from-indigo-600 to-indigo-700 border border-indigo-500 shadow-lg shadow-indigo-900/20"
+                className="bg-indigo-600 border border-indigo-500 shadow-lg"
               >
                 Unirse a Discord
               </Button>
