@@ -211,7 +211,7 @@ export default function ReviewsPage() {
     }
   }, [])
 
-  // Función para votar en una reseña
+  // Modificar la función handleVote para incluir mejor manejo de errores
   const handleVote = async (reviewId: number) => {
     // Verificar si el usuario ya votó
     const reviewIdStr = reviewId.toString()
@@ -221,6 +221,9 @@ export default function ReviewsPage() {
     }
 
     try {
+      // Mostrar notificación de carga
+      showNotification("info", "Guardando tu voto...", 0)
+
       // Llamar a la API para guardar el voto
       const response = await fetch("/api/reviews", {
         method: "POST",
@@ -234,8 +237,14 @@ export default function ReviewsPage() {
         }),
       })
 
+      // Cerrar notificación de carga
+      closeNotification()
+
+      // Verificar si la respuesta es exitosa
       if (!response.ok) {
-        throw new Error("Error al guardar el voto")
+        const errorData = await response.json().catch(() => ({}))
+        console.error("Error en la respuesta:", response.status, errorData)
+        throw new Error(errorData.error || `Error ${response.status}: No se pudo guardar el voto`)
       }
 
       const data = await response.json()
@@ -271,15 +280,28 @@ export default function ReviewsPage() {
       showNotification("success", "Gracias por valorar esta reseña como útil.")
     } catch (error) {
       console.error("Error al votar:", error)
-      showNotification("error", "No se pudo guardar tu voto. Inténtalo de nuevo más tarde.")
+      showNotification("error", error.message || "No se pudo guardar tu voto. Inténtalo de nuevo más tarde.")
+
+      // Para depuración, intentar obtener información sobre el estado del sistema de archivos
+      fetch("/api/debug")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Debug info:", data)
+        })
+        .catch((err) => {
+          console.error("Error al obtener información de depuración:", err)
+        })
     }
   }
 
-  // Función para calificar una reseña
+  // Modificar la función handleRateReview para incluir mejor manejo de errores
   const handleRateReview = async (reviewId: number, rating: number) => {
     const reviewIdStr = reviewId.toString()
 
     try {
+      // Mostrar notificación de carga
+      showNotification("info", "Guardando tu calificación...", 0)
+
       // Llamar a la API para guardar la calificación
       const response = await fetch("/api/reviews", {
         method: "POST",
@@ -293,8 +315,14 @@ export default function ReviewsPage() {
         }),
       })
 
+      // Cerrar notificación de carga
+      closeNotification()
+
+      // Verificar si la respuesta es exitosa
       if (!response.ok) {
-        throw new Error("Error al guardar la calificación")
+        const errorData = await response.json().catch(() => ({}))
+        console.error("Error en la respuesta:", response.status, errorData)
+        throw new Error(errorData.error || `Error ${response.status}: No se pudo guardar la calificación`)
       }
 
       const data = await response.json()
@@ -337,7 +365,17 @@ export default function ReviewsPage() {
       showNotification("success", `Has calificado esta opinión con ${rating} estrellas.`)
     } catch (error) {
       console.error("Error al calificar:", error)
-      showNotification("error", "No se pudo guardar tu calificación. Inténtalo de nuevo más tarde.")
+      showNotification("error", error.message || "No se pudo guardar tu calificación. Inténtalo de nuevo más tarde.")
+
+      // Para depuración, intentar obtener información sobre el estado del sistema de archivos
+      fetch("/api/debug")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Debug info:", data)
+        })
+        .catch((err) => {
+          console.error("Error al obtener información de depuración:", err)
+        })
     }
   }
 
