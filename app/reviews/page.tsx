@@ -72,12 +72,6 @@ interface Review {
   content: string
   date: string
   verified: boolean
-  userRating?: number // Rating dado por el usuario actual
-}
-
-// Sistema de ratings de usuario
-interface UserRatingsData {
-  [reviewId: string]: number
 }
 
 // Notificación
@@ -97,13 +91,10 @@ export default function ReviewsPage() {
   const [filter, setFilter] = useState<"all" | "member" | "patreon" | "moderator">("all")
   const [sortOrder, setSortOrder] = useState<"recent" | "highest" | "lowest">("recent")
   const [isFiltersVisible, setIsFiltersVisible] = useState(false)
-  const [userRatings, setUserRatings] = useState<UserRatingsData>({})
   const [expandedReview, setExpandedReview] = useState<number | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const reviewsPerPage = 6
   const [loadingMore, setLoadingMore] = useState(false)
-  const [activeStars, setActiveStars] = useState<{ [key: string]: number }>({})
-  const [hoverStars, setHoverStars] = useState<{ [key: string]: number }>({})
   const [notification, setNotification] = useState<Notification | null>(null)
 
   // Sistema de notificaciones en página
@@ -155,24 +146,6 @@ export default function ReviewsPage() {
           // No mostrar alerta al usuario, simplemente loguear el error
         })
 
-      // Cargar ratings guardados para mostrar UI correcta (solo para esta sesión)
-      const savedRatings = localStorage.getItem("gw2_user_ratings")
-      if (savedRatings) {
-        try {
-          const ratings = JSON.parse(savedRatings)
-          setUserRatings(ratings)
-
-          // Actualizar UI de estrellas activas
-          const activeStarsState: { [key: string]: number } = {}
-          Object.entries(ratings).forEach(([reviewId, rating]) => {
-            activeStarsState[reviewId] = rating as number
-          })
-          setActiveStars(activeStarsState)
-        } catch (error) {
-          console.error("Error al cargar ratings guardados:", error)
-        }
-      }
-
       // Inicializar AOS
       AOS.init({
         duration: 1000,
@@ -184,93 +157,6 @@ export default function ReviewsPage() {
       window.scrollTo(0, 0)
     }
   }, [])
-
-  // Función para calificar una reseña
-  const handleRateReview = async (reviewId: number, rating: number) => {
-    const reviewIdStr = reviewId.toString()
-
-    try {
-      // Mostrar notificación de carga
-      showNotification("info", "Guardando tu calificación...", 0)
-
-      // Llamar a la API para guardar la calificación
-      const response = await fetch("/api/reviews", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          reviewId,
-          rating,
-        }),
-      })
-
-      // Cerrar notificación de carga
-      closeNotification()
-
-      // Verificar si la respuesta es exitosa
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        console.error("Error en la respuesta:", response.status, errorData)
-        throw new Error(errorData.error || `Error ${response.status}: No se pudo guardar la calificación`)
-      }
-
-      const data = await response.json()
-
-      // Guardar la calificación del usuario (solo para esta sesión)
-      const updatedRatings = {
-        ...userRatings,
-        [reviewIdStr]: rating,
-      }
-      setUserRatings(updatedRatings)
-
-      // Actualizar UI de estrellas
-      setActiveStars((prev) => ({
-        ...prev,
-        [reviewIdStr]: rating,
-      }))
-
-      // Guardar rating en localStorage (solo para esta sesión)
-      localStorage.setItem("gw2_user_ratings", JSON.stringify(updatedRatings))
-
-      // Actualizar el estado de las reseñas con la nueva calificación promedio
-      if (data.review && data.review.rating) {
-        const updatedReviews = reviews.map((review) => {
-          if (review.id === reviewId) {
-            return {
-              ...review,
-              rating: data.review.rating,
-            }
-          }
-          return review
-        })
-
-        setReviews(updatedReviews)
-        setFilteredReviews((prev) =>
-          prev.map((review) => (review.id === reviewId ? { ...review, rating: data.review.rating } : review)),
-        )
-      }
-
-      // Mostrar confirmación
-      showNotification("success", `Has calificado esta opinión con ${rating} estrellas.`)
-    } catch (error) {
-      console.error("Error al calificar:", error)
-      showNotification(
-        "error",
-        error instanceof Error ? error.message : "No se pudo guardar tu calificación. Inténtalo de nuevo más tarde.",
-      )
-
-      // Para depuración, intentar obtener información sobre el estado del sistema de archivos
-      fetch("/api/debug")
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Debug info:", data)
-        })
-        .catch((err) => {
-          console.error("Error al obtener información de depuración:", err)
-        })
-    }
-  }
 
   // Filtrar y ordenar reseñas
   useEffect(() => {
@@ -296,18 +182,10 @@ export default function ReviewsPage() {
         result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         break
       case "highest":
-        result.sort((a, b) => {
-          const ratingA = a.userRating || a.rating || 0
-          const ratingB = b.userRating || b.rating || 0
-          return ratingB - ratingA
-        })
+        result.sort((a, b) => b.rating - a.rating)
         break
       case "lowest":
-        result.sort((a, b) => {
-          const ratingA = a.userRating || a.rating || 0
-          const ratingB = b.userRating || b.rating || 0
-          return ratingA - ratingB
-        })
+        result.sort((a, b) => a.rating - b.rating)
         break
     }
 
@@ -369,7 +247,6 @@ export default function ReviewsPage() {
 
     // Calcular promedio usando valoraciones precargadas
     const sum = reviews.reduce((acc, review) => {
-      // Usar valoración precargada para el promedio general
       return acc + (review.rating || 0)
     }, 0)
 
@@ -722,8 +599,8 @@ export default function ReviewsPage() {
                           <h3 className="text-lg font-bold text-white">{review.author}</h3>
                           <span className="text-sm text-gray-400">{formatDate(review.date)}</span>
                           <div className="flex mt-1 space-x-1">
-                            {/* Mostrar estrellas - dar prioridad a la valoración personal si existe */}
-                            {renderStars(activeStars[review.id.toString()] || review.rating || 0)}
+                            {/* Mostrar estrellas de la valoración existente */}
+                            {renderStars(review.rating || 0)}
                           </div>
                         </div>
                       </div>
@@ -746,30 +623,6 @@ export default function ReviewsPage() {
                             {expandedReview === review.id ? "Leer menos" : "Leer más"}
                           </button>
                         )}
-                      </div>
-
-                      {/* Acciones de usuario - Solo valoración con estrellas */}
-                      <div className="mt-6 pt-4 border-t border-gray-700">
-                        <div>
-                          <p className="text-sm text-gray-400 mb-1">Tu valoración:</p>
-                          <div className="flex space-x-1">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <button
-                                key={star}
-                                onClick={() => handleRateReview(review.id, star)}
-                                onMouseEnter={() => setHoverStars((prev) => ({ ...prev, [review.id]: star }))}
-                                onMouseLeave={() => setHoverStars((prev) => ({ ...prev, [review.id]: 0 }))}
-                                className="text-xl focus:outline-none transition-colors"
-                              >
-                                {star <= (hoverStars[review.id] || activeStars[review.id] || 0) ? (
-                                  <FaStar className="text-yellow-400" />
-                                ) : (
-                                  <FaRegStar className="text-gray-400 hover:text-yellow-400" />
-                                )}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
                       </div>
                     </CardContent>
                   </Card>
