@@ -11,7 +11,6 @@ import {
   FaRegStar,
   FaSortAmountDown,
   FaSortAmountUp,
-  FaThumbsUp,
   FaChevronDown,
   FaQuoteRight,
   FaComments,
@@ -30,7 +29,6 @@ import { Input } from "../components/Input"
 import { Label } from "../components/Label"
 import { Tabs, TabsList, TabsTrigger } from "../components/Tabs"
 import Image from "next/image"
-// import { toast, ToastContainer } from '../components/Toast'
 
 // Estilos para las animaciones de notificaciones
 const notificationStyles = `
@@ -74,13 +72,7 @@ interface Review {
   content: string
   date: string
   verified: boolean
-  helpful: number
   userRating?: number // Rating dado por el usuario actual
-}
-
-// Sistema de votos
-interface VotesData {
-  [reviewId: string]: boolean
 }
 
 // Sistema de ratings de usuario
@@ -96,13 +88,6 @@ interface Notification {
   duration?: number
 }
 
-// Sistema de notificaciones simplificado
-const showToast = (message: string, type: string) => {
-  if (typeof window !== "undefined") {
-    alert(`${type.toUpperCase()}: ${message}`)
-  }
-}
-
 export default function ReviewsPage() {
   // Estado para las reseñas
   const [reviews, setReviews] = useState<Review[]>([])
@@ -112,7 +97,6 @@ export default function ReviewsPage() {
   const [filter, setFilter] = useState<"all" | "member" | "patreon" | "moderator">("all")
   const [sortOrder, setSortOrder] = useState<"recent" | "highest" | "lowest">("recent")
   const [isFiltersVisible, setIsFiltersVisible] = useState(false)
-  const [userVotes, setUserVotes] = useState<VotesData>({})
   const [userRatings, setUserRatings] = useState<UserRatingsData>({})
   const [expandedReview, setExpandedReview] = useState<number | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
@@ -171,16 +155,6 @@ export default function ReviewsPage() {
           // No mostrar alerta al usuario, simplemente loguear el error
         })
 
-      // Cargar votos guardados para mostrar UI correcta (solo para esta sesión)
-      const savedVotes = localStorage.getItem("gw2_review_votes")
-      if (savedVotes) {
-        try {
-          setUserVotes(JSON.parse(savedVotes))
-        } catch (error) {
-          console.error("Error al cargar votos guardados:", error)
-        }
-      }
-
       // Cargar ratings guardados para mostrar UI correcta (solo para esta sesión)
       const savedRatings = localStorage.getItem("gw2_user_ratings")
       if (savedRatings) {
@@ -211,90 +185,7 @@ export default function ReviewsPage() {
     }
   }, [])
 
-  // Modificar la función handleVote para incluir mejor manejo de errores
-  const handleVote = async (reviewId: number) => {
-    // Verificar si el usuario ya votó
-    const reviewIdStr = reviewId.toString()
-    if (userVotes[reviewIdStr]) {
-      showNotification("warning", "Ya has marcado esta reseña como útil anteriormente.")
-      return
-    }
-
-    try {
-      // Mostrar notificación de carga
-      showNotification("info", "Guardando tu voto...", 0)
-
-      // Llamar a la API para guardar el voto
-      const response = await fetch("/api/reviews", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          reviewId,
-          action: "vote",
-          value: 1,
-        }),
-      })
-
-      // Cerrar notificación de carga
-      closeNotification()
-
-      // Verificar si la respuesta es exitosa
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        console.error("Error en la respuesta:", response.status, errorData)
-        throw new Error(errorData.error || `Error ${response.status}: No se pudo guardar el voto`)
-      }
-
-      const data = await response.json()
-
-      // Actualizar el estado local
-      const updatedReviews = reviews.map((review) => {
-        if (review.id === reviewId) {
-          return {
-            ...review,
-            helpful: data.review.helpful,
-          }
-        }
-        return review
-      })
-
-      // Guardar el voto del usuario (solo para esta sesión)
-      const updatedVotes = {
-        ...userVotes,
-        [reviewIdStr]: true,
-      }
-      setUserVotes(updatedVotes)
-
-      // Actualizar el estado
-      setReviews(updatedReviews)
-      setFilteredReviews((prev) =>
-        prev.map((review) => (review.id === reviewId ? { ...review, helpful: data.review.helpful } : review)),
-      )
-
-      // Guardar voto en localStorage (solo para esta sesión)
-      localStorage.setItem("gw2_review_votes", JSON.stringify(updatedVotes))
-
-      // Mostrar confirmación
-      showNotification("success", "Gracias por valorar esta reseña como útil.")
-    } catch (error) {
-      console.error("Error al votar:", error)
-      showNotification("error", error.message || "No se pudo guardar tu voto. Inténtalo de nuevo más tarde.")
-
-      // Para depuración, intentar obtener información sobre el estado del sistema de archivos
-      fetch("/api/debug")
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Debug info:", data)
-        })
-        .catch((err) => {
-          console.error("Error al obtener información de depuración:", err)
-        })
-    }
-  }
-
-  // Modificar la función handleRateReview para incluir mejor manejo de errores
+  // Función para calificar una reseña
   const handleRateReview = async (reviewId: number, rating: number) => {
     const reviewIdStr = reviewId.toString()
 
@@ -310,8 +201,7 @@ export default function ReviewsPage() {
         },
         body: JSON.stringify({
           reviewId,
-          action: "rate",
-          value: rating,
+          rating,
         }),
       })
 
@@ -365,7 +255,10 @@ export default function ReviewsPage() {
       showNotification("success", `Has calificado esta opinión con ${rating} estrellas.`)
     } catch (error) {
       console.error("Error al calificar:", error)
-      showNotification("error", error.message || "No se pudo guardar tu calificación. Inténtalo de nuevo más tarde.")
+      showNotification(
+        "error",
+        error instanceof Error ? error.message : "No se pudo guardar tu calificación. Inténtalo de nuevo más tarde.",
+      )
 
       // Para depuración, intentar obtener información sobre el estado del sistema de archivos
       fetch("/api/debug")
@@ -855,8 +748,8 @@ export default function ReviewsPage() {
                         )}
                       </div>
 
-                      {/* Acciones de usuario */}
-                      <div className="mt-6 pt-4 border-t border-gray-700 grid grid-cols-2 gap-4">
+                      {/* Acciones de usuario - Solo valoración con estrellas */}
+                      <div className="mt-6 pt-4 border-t border-gray-700">
                         <div>
                           <p className="text-sm text-gray-400 mb-1">Tu valoración:</p>
                           <div className="flex space-x-1">
@@ -876,24 +769,6 @@ export default function ReviewsPage() {
                               </button>
                             ))}
                           </div>
-                        </div>
-
-                        <div className="text-right">
-                          <Button
-                            onClick={() => handleVote(review.id)}
-                            variant="outline"
-                            rounded="full"
-                            className={`bg-dark-700 border-gray-600 hover:bg-dark-600 ${userVotes[review.id.toString()] ? "text-primary-400 border-primary-400" : ""}`}
-                            size="sm"
-                            leftIcon={
-                              <FaThumbsUp className={userVotes[review.id.toString()] ? "text-primary-400" : ""} />
-                            }
-                            disabled={userVotes[review.id.toString()]}
-                          >
-                            <span>
-                              {review.helpful} útil{review.helpful !== 1 ? "es" : ""}
-                            </span>
-                          </Button>
                         </div>
                       </div>
                     </CardContent>
