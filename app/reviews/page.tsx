@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react'
-import { FaStar, FaStarHalfAlt, FaFilter, FaSearch, FaUserCircle, FaCheckCircle, FaRegStar, FaSortAmountDown, FaSortAmountUp, FaThumbsUp, FaChevronDown } from 'react-icons/fa'
+import { FaStar, FaStarHalfAlt, FaFilter, FaSearch, FaUserCircle, FaCheckCircle, FaRegStar, FaSortAmountDown, FaSortAmountUp, FaThumbsUp, FaChevronDown, FaQuoteRight, FaPen, FaComments } from 'react-icons/fa'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Header from '../Header'
@@ -26,11 +26,26 @@ interface Review {
   date: string
   verified: boolean
   helpful: number
+  userRating?: number // Rating dado por el usuario actual
 }
 
 // Sistema de votos
 interface VotesData {
   [reviewId: string]: boolean;
+}
+
+// Sistema de ratings de usuario
+interface UserRatingsData {
+  [reviewId: string]: number;
+}
+
+// Formulario de reseña
+interface ReviewFormData {
+  name: string;
+  email: string;
+  rating: number;
+  content: string;
+  acceptTerms: boolean;
 }
 
 // Sistema de notificaciones simplificado (en lugar de usar el componente Toast)
@@ -50,11 +65,28 @@ export default function ReviewsPage() {
   const [sortOrder, setSortOrder] = useState<'recent' | 'highest' | 'lowest'>('recent')
   const [isFiltersVisible, setIsFiltersVisible] = useState(false)
   const [userVotes, setUserVotes] = useState<VotesData>({})
+  const [userRatings, setUserRatings] = useState<UserRatingsData>({})
+  const [expandedReview, setExpandedReview] = useState<number | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const reviewsPerPage = 6
   const [loadingMore, setLoadingMore] = useState(false)
+  const [activeStars, setActiveStars] = useState<{[key: string]: number}>({})
+  const [hoverStars, setHoverStars] = useState<{[key: string]: number}>({})
   
-  // Cargar votos guardados
+  // Estado para el formulario
+  const [reviewForm, setReviewForm] = useState<ReviewFormData>({
+    name: '',
+    email: '',
+    rating: 0,
+    content: '',
+    acceptTerms: false
+  })
+  const [formRatingHover, setFormRatingHover] = useState(0)
+  const [submitting, setSubmitting] = useState(false)
+  const [formErrors, setFormErrors] = useState<{[key: string]: string}>({})
+  const [formSuccess, setFormSuccess] = useState(false)
+  
+  // Cargar votos y ratings guardados
   useEffect(() => {
     // Solo ejecutar en el cliente
     if (typeof window !== 'undefined') {
@@ -63,8 +95,13 @@ export default function ReviewsPage() {
         if (savedVotes) {
           setUserVotes(JSON.parse(savedVotes))
         }
+        
+        const savedRatings = localStorage.getItem('gw2_user_ratings')
+        if (savedRatings) {
+          setUserRatings(JSON.parse(savedRatings))
+        }
       } catch (error) {
-        console.error('Error al cargar votos:', error)
+        console.error('Error al cargar datos guardados:', error)
       }
     }
   }, [])
@@ -75,6 +112,13 @@ export default function ReviewsPage() {
       localStorage.setItem('gw2_review_votes', JSON.stringify(userVotes))
     }
   }, [userVotes])
+  
+  // Guardar ratings cuando cambien
+  useEffect(() => {
+    if (typeof window !== 'undefined' && Object.keys(userRatings).length > 0) {
+      localStorage.setItem('gw2_user_ratings', JSON.stringify(userRatings))
+    }
+  }, [userRatings])
   
   // Función para votar en una reseña
   const handleVote = (reviewId: number) => {
@@ -116,6 +160,30 @@ export default function ReviewsPage() {
     
     // Mostrar confirmación
     showToast('Gracias por valorar esta reseña como útil.', 'éxito');
+  }
+  
+  // Función para calificar una reseña
+  const handleRateReview = (reviewId: number, rating: number) => {
+    const reviewIdStr = reviewId.toString()
+    
+    // Guardar la calificación del usuario
+    setUserRatings(prev => ({
+      ...prev,
+      [reviewIdStr]: rating
+    }))
+    
+    setActiveStars(prev => ({
+      ...prev,
+      [reviewIdStr]: rating
+    }))
+    
+    // Mostrar confirmación
+    showToast(`Has calificado esta opinión con ${rating} estrellas`, 'éxito');
+  }
+  
+  // Función para expandir/colapsar una reseña
+  const toggleExpandReview = (reviewId: number) => {
+    setExpandedReview(expandedReview === reviewId ? null : reviewId)
   }
   
   // Datos de ejemplo
@@ -382,131 +450,363 @@ export default function ReviewsPage() {
   
   const stats = calculateStats()
 
+  // Validar formulario
+  const validateForm = (): boolean => {
+    const errors: {[key: string]: string} = {}
+    
+    if (!reviewForm.name.trim()) {
+      errors.name = 'El nombre es obligatorio'
+    }
+    
+    if (!reviewForm.email.trim()) {
+      errors.email = 'El email es obligatorio'
+    } else if (!/\S+@\S+\.\S+/.test(reviewForm.email)) {
+      errors.email = 'El email no es válido'
+    }
+    
+    if (reviewForm.rating === 0) {
+      errors.rating = 'Debes dar una valoración'
+    }
+    
+    if (!reviewForm.content.trim()) {
+      errors.content = 'El contenido de la opinión es obligatorio'
+    } else if (reviewForm.content.length < 20) {
+      errors.content = 'La opinión debe tener al menos 20 caracteres'
+    }
+    
+    if (!reviewForm.acceptTerms) {
+      errors.acceptTerms = 'Debes aceptar los términos'
+    }
+    
+    setFormErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+  
+  // Manejar cambios en el formulario
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target
+    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined
+    
+    setReviewForm(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }))
+    
+    // Limpiar el error al editar el campo
+    if (formErrors[name]) {
+      setFormErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
+  }
+  
+  // Manejar el envío del formulario
+  const handleSubmitReview = (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!validateForm()) {
+      return
+    }
+    
+    setSubmitting(true)
+    
+    // Simular envío
+    setTimeout(() => {
+      // Crear nueva reseña
+      const newReview: Review = {
+        id: reviews.length + 1,
+        author: reviewForm.name,
+        avatar: '/images/avatars/default.jpg',
+        role: 'member',
+        rating: reviewForm.rating,
+        content: reviewForm.content,
+        date: new Date().toISOString().split('T')[0],
+        verified: false,
+        helpful: 0
+      }
+      
+      // Actualizar reseñas
+      const updatedReviews = [newReview, ...reviews]
+      setReviews(updatedReviews)
+      
+      // Guardar en localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews))
+      }
+      
+      // Resetear formulario
+      setReviewForm({
+        name: '',
+        email: '',
+        rating: 0,
+        content: '',
+        acceptTerms: false
+      })
+      
+      setSubmitting(false)
+      setFormSuccess(true)
+      
+      // Ocultar mensaje de éxito después de unos segundos
+      setTimeout(() => {
+        setFormSuccess(false)
+      }, 5000)
+      
+      // Mostrar confirmación
+      showToast('Tu opinión ha sido enviada con éxito. ¡Gracias por compartir tu experiencia!', 'éxito')
+      
+      // Hacer scroll hacia arriba después de enviar
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    }, 1500)
+  }
+
   return (
     <div className="min-h-screen bg-dark-900 text-white overflow-x-hidden">
       <Header />
       
       {/* Hero Section */}
-      <section className="relative py-24 bg-dark-800">
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          <div data-aos="fade-up">
-            <Badge className="mb-4 bg-primary-500 text-white px-6 py-2 text-base font-medium rounded-full shadow-lg">Opiniones</Badge>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-primary-300">
-              Lo que dicen nuestros miembros
+      <section className="relative py-24 bg-dark-950 overflow-hidden">
+        {/* Patrón de fondo */}
+        <div className="absolute inset-0 z-0 opacity-10">
+          <div className="absolute inset-0" style={{ 
+            backgroundImage: 'url("/images/patterns/grid.svg")', 
+            backgroundSize: '30px 30px',
+            transform: 'rotate(45deg)' 
+          }}></div>
+        </div>
+        
+        {/* Efecto de iluminación */}
+        <div className="absolute top-0 left-1/4 w-64 h-64 rounded-full bg-primary-500 filter blur-[100px] opacity-20"></div>
+        <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-secondary-500 filter blur-[100px] opacity-20"></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="text-center" data-aos="fade-up">
+            <div className="inline-block relative mb-6">
+              <Badge className="px-6 py-2 text-base font-medium rounded-full bg-primary-500 text-white shadow-lg shadow-primary-500/20">
+                Reviews
+              </Badge>
+              <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-primary-500"></span>
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
+              <span className="text-white">Lo que dicen nuestros </span>
+              <span className="text-primary-400">miembros</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
-              Descubre por qué nuestra comunidad GW2 es valorada por sus miembros. Opiniones reales de jugadores reales.
+            
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-12">
+              Descubre por qué nuestra comunidad GW2 es valorada por sus miembros. 
+              Opiniones reales de jugadores reales.
             </p>
           </div>
           
           {/* Resumen de valoraciones */}
           <div 
-            className="bg-dark-700 rounded-xl border border-gray-600 shadow-xl p-6 max-w-lg mx-auto mb-10"
+            className="bg-dark-800 rounded-xl border border-gray-700 shadow-xl p-8 max-w-3xl mx-auto transform hover:scale-[1.02] transition-transform duration-300"
             data-aos="fade-up" 
             data-aos-delay="100"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-4xl font-bold text-white">{stats.avg}</h3>
-                <div className="flex space-x-1 my-2">
+            <div className="grid grid-cols-3 gap-6 items-center">
+              <div className="text-center p-4 border-r border-gray-700">
+                <h3 className="text-5xl font-bold text-primary-400">{stats.avg}</h3>
+                <div className="flex justify-center space-x-1 my-3">
                   {renderStars(stats.avg)}
                 </div>
-                <p className="text-gray-400 text-sm">Valoración media</p>
+                <p className="text-gray-400 font-medium">Valoración media</p>
               </div>
               
-              <div className="w-px h-14 bg-gray-700 mx-4"></div>
-              
-              <div>
-                <h3 className="text-2xl font-bold text-white">{stats.total}</h3>
-                <p className="text-gray-400 text-sm">Opiniones totales</p>
+              <div className="text-center p-4 border-r border-gray-700">
+                <h3 className="text-5xl font-bold text-indigo-400">{stats.total}</h3>
+                <div className="flex justify-center mt-3 mb-3">
+                  <FaComments className="text-indigo-400 text-2xl" />
+                </div>
+                <p className="text-gray-400 font-medium">Opiniones totales</p>
               </div>
               
-              <div className="w-px h-14 bg-gray-700 mx-4"></div>
-              
-              <div>
-                <h3 className="text-2xl font-bold text-white">{stats.verified}</h3>
-                <p className="text-gray-400 text-sm">Verificadas</p>
+              <div className="text-center p-4">
+                <h3 className="text-5xl font-bold text-green-400">{stats.verified}</h3>
+                <div className="flex justify-center mt-3 mb-3">
+                  <FaCheckCircle className="text-green-400 text-2xl" />
+                </div>
+                <p className="text-gray-400 font-medium">Verificadas</p>
               </div>
+            </div>
+            
+            <div className="mt-8 pt-6 border-t border-gray-700 flex justify-center">
+              <Button
+                variant="gradient"
+                rounded="full"
+                className="shadow-xl"
+                size="lg"
+                leftIcon={<FaPen />}
+                onClick={() => window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})}
+              >
+                Escribe tu opinión
+              </Button>
             </div>
           </div>
         </div>
       </section>
       
       {/* Sección de filtros y búsqueda */}
-      <section className="relative py-8">
+      <section className="relative py-12">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="bg-dark-800 rounded-xl border border-gray-600 shadow-xl p-6 mb-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="relative w-full md:w-96">
-                <Input
-                  placeholder="Buscar en las opiniones..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="bg-dark-700 border-gray-600 focus:border-primary-500 pl-10"
-                />
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <div className="bg-dark-800/80 backdrop-blur-sm rounded-2xl border border-gray-700 shadow-xl p-6 mb-8"
+              data-aos="fade-up">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="w-full md:w-auto">
+                <h3 className="text-xl font-bold mb-4 text-white flex items-center">
+                  <FaFilter className="mr-2 text-primary-400" /> Filtrar y buscar
+                </h3>
               </div>
               
-              <div className="flex items-center space-x-2">
+              <div className="relative w-full md:w-96">
+                <Input
+                  placeholder="Buscar por nombre o contenido..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="bg-dark-700 border-gray-600 focus:border-primary-500 pl-10 pr-10 py-6 rounded-xl shadow-inner"
+                />
+                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-400" />
+                {searchTerm && (
+                  <button 
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                    onClick={() => setSearchTerm('')}
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+              
+              <div className="flex items-center space-x-3 w-full md:w-auto">
                 <Button
-                  onClick={() => setIsFiltersVisible(!isFiltersVisible)}
+                  onClick={() => setSortOrder(
+                    sortOrder === 'recent' 
+                      ? 'highest' 
+                      : sortOrder === 'highest' 
+                        ? 'lowest' 
+                        : 'recent'
+                  )}
                   variant="outline"
-                  rounded="default"
-                  className="bg-dark-700 border-gray-600"
-                  leftIcon={<FaFilter />}
+                  rounded="lg"
+                  className="bg-dark-700 border-gray-600 flex-1 md:flex-none"
+                  leftIcon={
+                    sortOrder === 'recent' 
+                      ? <FaSortAmountDown className="text-primary-400" /> 
+                      : sortOrder === 'highest' 
+                        ? <FaSortAmountUp className="text-yellow-400" /> 
+                        : <FaSortAmountUp className="text-gray-400" />
+                  }
                 >
-                  Filtros
+                  <span className="whitespace-nowrap">
+                    {sortOrder === 'recent' 
+                      ? 'Recientes' 
+                      : sortOrder === 'highest' 
+                        ? 'Mayor valoración' 
+                        : 'Menor valoración'
+                    }
+                  </span>
                 </Button>
                 
                 <Button
-                  onClick={() => setSortOrder(sortOrder === 'recent' ? 'highest' : 'recent')}
-                  variant="outline"
-                  rounded="default"
-                  className="bg-dark-700 border-gray-600"
-                  leftIcon={sortOrder === 'recent' ? <FaSortAmountDown /> : <FaSortAmountUp />}
+                  onClick={() => setIsFiltersVisible(!isFiltersVisible)}
+                  variant={isFiltersVisible ? "gradient" : "outline"}
+                  rounded="lg"
+                  className={isFiltersVisible ? "bg-primary-500" : "bg-dark-700 border-gray-600"}
+                  leftIcon={<FaFilter />}
                 >
-                  {sortOrder === 'recent' ? 'Recientes' : sortOrder === 'highest' ? 'Mayor valoración' : 'Menor valoración'}
+                  Filtros
                 </Button>
               </div>
             </div>
             
             {isFiltersVisible && (
-              <div className="mt-4 pt-4 border-t border-gray-700">
-                <Tabs defaultValue="all" value={filter} onValueChange={(value) => setFilter(value as any)}>
-                  <TabsList className="bg-dark-700">
-                    <TabsTrigger value="all">Todas</TabsTrigger>
-                    <TabsTrigger value="member">Miembros</TabsTrigger>
-                    <TabsTrigger value="patreon">Patreons</TabsTrigger>
-                    <TabsTrigger value="moderator">Moderadores</TabsTrigger>
-                  </TabsList>
-                </Tabs>
-                
-                <div className="flex justify-between items-center mt-4">
-                  <p className="text-gray-400 text-sm">
-                    Mostrando {filteredReviews.length} de {reviews.length} opiniones
-                  </p>
+              <div 
+                className="mt-6 pt-6 border-t border-gray-700"
+                data-aos={isFiltersVisible ? "fade-down" : ""}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                  <div className="col-span-1 md:col-span-3">
+                    <Label className="text-white mb-2 block">Filtrar por tipo de miembro</Label>
+                    <Tabs 
+                      defaultValue="all" 
+                      value={filter} 
+                      onValueChange={(value) => setFilter(value as any)}
+                      className="w-full"
+                    >
+                      <TabsList className="bg-dark-700 grid grid-cols-4 rounded-xl p-1">
+                        <TabsTrigger 
+                          value="all" 
+                          className={`rounded-lg data-[state=active]:bg-primary-500 data-[state=active]:text-white ${filter === 'all' ? 'shadow-lg' : ''}`}
+                        >
+                          Todas
+                        </TabsTrigger>
+                        <TabsTrigger 
+                          value="member"
+                          className={`rounded-lg data-[state=active]:bg-blue-500 data-[state=active]:text-white ${filter === 'member' ? 'shadow-lg' : ''}`}
+                        >
+                          <span className="flex items-center">
+                            <FaUserCircle className="mr-1 hidden md:inline" /> Miembros
+                          </span>
+                        </TabsTrigger>
+                        <TabsTrigger 
+                          value="patreon"
+                          className={`rounded-lg data-[state=active]:bg-yellow-500 data-[state=active]:text-white ${filter === 'patreon' ? 'shadow-lg' : ''}`}
+                        >
+                          <span className="flex items-center">
+                            <FaStar className="mr-1 hidden md:inline" /> Patreon
+                          </span>
+                        </TabsTrigger>
+                        <TabsTrigger 
+                          value="moderator"
+                          className={`rounded-lg data-[state=active]:bg-green-500 data-[state=active]:text-white ${filter === 'moderator' ? 'shadow-lg' : ''}`}
+                        >
+                          <span className="flex items-center">
+                            <FaUserCircle className="mr-1 hidden md:inline" /> Mods
+                          </span>
+                        </TabsTrigger>
+                      </TabsList>
+                    </Tabs>
+                  </div>
                   
-                  <div className="space-x-2">
-                    <Button 
-                      onClick={() => {
-                        setSearchTerm('')
-                        setFilter('all')
-                        setSortOrder('recent')
-                      }}
-                      variant="gradient"
-                      rounded="default"
-                    >
-                      Limpiar filtros
-                    </Button>
-                    
-                    <Button
-                      onClick={() => setIsFiltersVisible(false)}
-                      variant="gradient"
-                      rounded="default"
-                      size="sm"
-                    >
-                      Aplicar
-                    </Button>
+                  <div className="col-span-1">
+                    <Label className="text-white mb-2 block">Acciones</Label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button 
+                        onClick={() => {
+                          setSearchTerm('')
+                          setFilter('all')
+                          setSortOrder('recent')
+                        }}
+                        variant="outline"
+                        rounded="lg"
+                        className="bg-dark-700 border-gray-600"
+                        size="sm"
+                      >
+                        Limpiar
+                      </Button>
+                      
+                      <Button
+                        onClick={() => setIsFiltersVisible(false)}
+                        variant="gradient"
+                        rounded="lg"
+                        size="sm"
+                      >
+                        Aplicar
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 pt-4 border-t border-gray-700 flex justify-between items-center">
+                  <div className="bg-dark-700 px-4 py-2 rounded-lg border border-gray-600">
+                    <p className="text-gray-300 text-sm flex items-center">
+                      <FaComments className="mr-2 text-primary-400" />
+                      Mostrando <span className="text-white font-bold mx-1">{filteredReviews.length}</span> de <span className="text-white font-bold mx-1">{reviews.length}</span> opiniones
+                    </p>
                   </div>
                 </div>
               </div>
@@ -516,75 +816,125 @@ export default function ReviewsPage() {
       </section>
       
       {/* Sección de reseñas */}
-      <section className="relative py-8">
+      <section className="relative py-12">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {filteredReviews.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <h2 className="text-2xl font-bold mb-8 text-white flex items-center border-b border-gray-700 pb-4">
+                <FaComments className="mr-3 text-primary-400" /> 
+                Opiniones de nuestra comunidad
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {displayedReviews.map((review, index) => (
                   <Card 
                     key={review.id}
-                    className="bg-dark-800 border border-gray-600 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                    className="bg-dark-800 border border-gray-700 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-visible"
                     data-aos="fade-up"
                     data-aos-delay={index * 50}
                   >
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center">
-                          <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-600 bg-dark-700 mr-3">
-                            <Image
-                              src={review.avatar || '/images/avatars/default.jpg'}
-                              alt={review.author}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-semibold text-white flex items-center">
-                              {review.author}
-                              {review.verified && (
-                                <FaCheckCircle className="ml-2 text-primary-400 text-sm" title="Verificado" />
-                              )}
-                            </h3>
-                            <p className="text-sm text-gray-400 flex items-center">
-                              {review.role === 'member' && 'Miembro'}
-                              {review.role === 'patreon' && (
-                                <span className="text-yellow-400 flex items-center">
-                                  <FaStar className="mr-1" /> Patreon
-                                </span>
-                              )}
-                              {review.role === 'moderator' && (
-                                <span className="text-blue-400 flex items-center">
-                                  <FaUserCircle className="mr-1" /> Moderador
-                                </span>
-                              )}
-                            </p>
+                    <CardContent className="p-6 relative">
+                      {/* Insignia de rol */}
+                      <div className="absolute -top-4 -right-4 z-10">
+                        {review.role === 'patreon' && (
+                          <Badge className="bg-yellow-500 text-black px-3 py-1 rounded-full font-semibold shadow-lg">
+                            <FaStar className="mr-1" /> Patreon
+                          </Badge>
+                        )}
+                        {review.role === 'moderator' && (
+                          <Badge className="bg-green-500 text-black px-3 py-1 rounded-full font-semibold shadow-lg">
+                            <FaUserCircle className="mr-1" /> Moderador
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      {/* Icono de comillas decorativo */}
+                      <div className="absolute top-6 right-6 text-primary-500/10 pointer-events-none">
+                        <FaQuoteRight size={48} />
+                      </div>
+                      
+                      {/* Cabecera de la review */}
+                      <div className="flex items-start mb-4">
+                        <div className="relative w-16 h-16 rounded-full overflow-hidden border-4 border-primary-500/20 bg-dark-700 mr-4 shadow-xl">
+                          <Image
+                            src={review.avatar || '/images/avatars/default.jpg'}
+                            alt={review.author}
+                            fill
+                            className="object-cover"
+                          />
+                          {review.verified && (
+                            <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1 border-2 border-dark-800" title="Verificado">
+                              <FaCheckCircle className="text-white text-xs" />
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-bold text-white">
+                            {review.author}
+                          </h3>
+                          <span className="text-sm text-gray-400">{formatDate(review.date)}</span>
+                          <div className="flex mt-1 space-x-1">
+                            {renderStars(review.rating)}
                           </div>
                         </div>
-                        <span className="text-sm text-gray-500">{formatDate(review.date)}</span>
                       </div>
                       
-                      <div className="flex my-3">
-                        {renderStars(review.rating)}
+                      {/* Contenido de la review */}
+                      <div className="relative mt-2">
+                        <p className={`text-gray-300 ${expandedReview === review.id ? '' : 'line-clamp-4'}`}>
+                          {review.content}
+                        </p>
+                        
+                        {review.content.length > 150 && expandedReview !== review.id && (
+                          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-dark-800 to-transparent"></div>
+                        )}
+                        
+                        {review.content.length > 150 && (
+                          <button 
+                            onClick={() => toggleExpandReview(review.id)}
+                            className="mt-2 text-primary-400 hover:text-primary-300 text-sm font-medium"
+                          >
+                            {expandedReview === review.id ? 'Leer menos' : 'Leer más'}
+                          </button>
+                        )}
                       </div>
                       
-                      <p className="text-gray-300 mb-4">{review.content}</p>
-                      
-                      <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-700">
-                        <span className="text-sm text-gray-400 flex items-center">
-                          {review.helpful} personas encontraron esto útil
-                        </span>
-                        <Button
-                          onClick={() => handleVote(review.id)}
-                          variant="outline"
-                          rounded="default"
-                          className={`bg-dark-700 border-gray-600 hover:bg-dark-600 ${userVotes[review.id.toString()] ? 'text-primary-400' : ''}`}
-                          size="sm"
-                          leftIcon={<FaThumbsUp className={userVotes[review.id.toString()] ? 'text-primary-400' : ''} />}
-                          disabled={userVotes[review.id.toString()]}
-                        >
-                          Útil
-                        </Button>
+                      {/* Acciones de usuario */}
+                      <div className="mt-6 pt-4 border-t border-gray-700 grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-sm text-gray-400 mb-1">Tu valoración:</p>
+                          <div className="flex space-x-1">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <button
+                                key={star}
+                                onClick={() => handleRateReview(review.id, star)}
+                                onMouseEnter={() => setHoverStars(prev => ({...prev, [review.id]: star}))}
+                                onMouseLeave={() => setHoverStars(prev => ({...prev, [review.id]: 0}))}
+                                className="text-xl focus:outline-none transition-colors"
+                              >
+                                {star <= (hoverStars[review.id] || activeStars[review.id] || 0) ? (
+                                  <FaStar className="text-yellow-400" />
+                                ) : (
+                                  <FaRegStar className="text-gray-400 hover:text-yellow-400" />
+                                )}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div className="text-right">
+                          <Button
+                            onClick={() => handleVote(review.id)}
+                            variant="outline"
+                            rounded="full"
+                            className={`bg-dark-700 border-gray-600 hover:bg-dark-600 ${userVotes[review.id.toString()] ? 'text-primary-400 border-primary-400' : ''}`}
+                            size="sm"
+                            leftIcon={<FaThumbsUp className={userVotes[review.id.toString()] ? 'text-primary-400' : ''} />}
+                            disabled={userVotes[review.id.toString()]}
+                          >
+                            <span>{review.helpful} útil{review.helpful !== 1 ? 'es' : ''}</span>
+                          </Button>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -597,12 +947,12 @@ export default function ReviewsPage() {
                   <Button
                     onClick={loadMoreReviews}
                     variant="outline"
-                    rounded="default"
-                    className="bg-dark-800 border-gray-600 px-8"
-                    leftIcon={loadingMore ? null : <FaChevronDown />}
+                    rounded="full"
+                    className="bg-dark-800 border-gray-600 px-8 shadow-lg hover:shadow-xl transition-all"
+                    leftIcon={loadingMore ? null : <FaChevronDown className="animate-bounce" />}
                     disabled={loadingMore}
                   >
-                    {loadingMore ? 'Cargando...' : 'Cargar más reseñas'}
+                    {loadingMore ? 'Cargando...' : 'Cargar más opiniones'}
                   </Button>
                 </div>
               )}
@@ -610,16 +960,18 @@ export default function ReviewsPage() {
               {/* Contador de reseñas */}
               <div className="text-center mt-6">
                 <p className="text-gray-400 text-sm">
-                  Mostrando {displayedReviews.length} de {filteredReviews.length} reseñas
+                  Mostrando {displayedReviews.length} de {filteredReviews.length} opiniones
                 </p>
               </div>
             </>
           ) : (
             <div className="text-center py-12">
-              <div className="bg-dark-800 rounded-xl border border-gray-600 shadow-xl p-8 max-w-lg mx-auto">
-                <FaSearch className="text-gray-400 text-4xl mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">No hay resultados</h3>
-                <p className="text-gray-300 mb-6">
+              <div className="bg-dark-800 rounded-xl border border-gray-700 shadow-xl p-12 max-w-lg mx-auto">
+                <div className="bg-dark-700 rounded-full p-6 w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                  <FaSearch className="text-gray-400 text-4xl" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">No hay resultados</h3>
+                <p className="text-gray-300 mb-8">
                   No se encontraron opiniones que coincidan con tus criterios de búsqueda.
                 </p>
                 <Button 
@@ -629,7 +981,8 @@ export default function ReviewsPage() {
                     setSortOrder('recent')
                   }}
                   variant="gradient"
-                  rounded="default"
+                  rounded="full"
+                  className="shadow-lg"
                 >
                   Limpiar filtros
                 </Button>
@@ -640,41 +993,178 @@ export default function ReviewsPage() {
       </section>
       
       {/* CTA Section */}
-      <section className="relative py-20">
-        <div className="bg-dark-800 absolute inset-0"></div>
+      <section id="write-review" className="relative py-20 bg-dark-800">
+        <div className="absolute inset-0 z-0 overflow-hidden opacity-20">
+          <div className="absolute top-0 right-0 w-full h-64 bg-primary-500 filter blur-[100px]"></div>
+          <div className="absolute bottom-0 left-0 w-full h-64 bg-indigo-500 filter blur-[100px]"></div>
+        </div>
         
-        <div className="max-w-4xl mx-auto px-6 relative z-10">
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
           <div 
-            className="bg-dark-700 rounded-3xl border border-gray-600 shadow-2xl p-8 md:p-12 text-center"
+            className="bg-dark-900 rounded-3xl border border-gray-700 shadow-2xl p-8 md:p-12"
             data-aos="fade-up"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary-300">
-              ¿Quieres compartir tu experiencia?
-            </h2>
-            <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
-              Únete a nuestra comunidad y forma parte de esta gran familia de jugadores de Guild Wars 2.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                href="https://discord.gg/gatitos2"
-                external
-                variant="gradient"
-                size="lg"
-                rounded="default"
-                className="bg-indigo-600 border border-indigo-500 shadow-lg"
-              >
-                Unirse a Discord
-              </Button>
-              <Button 
-                href="/contact"
-                variant="outline"
-                size="lg"
-                rounded="default"
-                className="bg-dark-700 border-gray-600 shadow-lg"
-              >
-                Contactar
-              </Button>
+            <div className="text-center mb-10">
+              <Badge className="px-6 py-2 text-base font-medium rounded-full bg-indigo-500 text-white mb-4 shadow-lg">
+                Tu opinión importa
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+                Comparte tu <span className="text-primary-400">experiencia</span>
+              </h2>
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+                ¿Has participado en nuestra comunidad? Nos encantaría conocer tu opinión. 
+                Tu feedback nos ayuda a seguir mejorando.
+              </p>
             </div>
+            
+            {formSuccess ? (
+              <div className="bg-green-900/30 border border-green-500 rounded-xl p-6 text-center max-w-lg mx-auto mb-8">
+                <FaCheckCircle className="text-green-400 text-4xl mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-white mb-2">¡Gracias por tu opinión!</h3>
+                <p className="text-gray-300 mb-4">
+                  Tu reseña ha sido enviada con éxito y aparecerá en la lista de opiniones.
+                </p>
+                <Button
+                  onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+                  variant="outline"
+                  rounded="full"
+                  className="border-green-500 text-green-400"
+                >
+                  Volver al inicio
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmitReview} className="max-w-3xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div>
+                    <Label htmlFor="name" className="text-white mb-2 block">Nombre <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      placeholder="Tu nombre"
+                      value={reviewForm.name}
+                      onChange={handleFormChange}
+                      className={`bg-dark-800 border-gray-600 focus:border-primary-500 ${formErrors.name ? 'border-red-500' : ''}`}
+                    />
+                    {formErrors.name && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.name}</p>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="email" className="text-white mb-2 block">Email <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="tu@email.com"
+                      value={reviewForm.email}
+                      onChange={handleFormChange}
+                      className={`bg-dark-800 border-gray-600 focus:border-primary-500 ${formErrors.email ? 'border-red-500' : ''}`}
+                    />
+                    {formErrors.email && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="mb-8">
+                  <Label className="text-white mb-2 block">Valoración <span className="text-red-500">*</span></Label>
+                  <div className="flex space-x-2 items-center">
+                    <div className="flex space-x-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => setReviewForm(prev => ({ ...prev, rating: star }))}
+                          onMouseEnter={() => setFormRatingHover(star)}
+                          onMouseLeave={() => setFormRatingHover(0)}
+                          className="text-3xl focus:outline-none transition-transform hover:scale-110"
+                        >
+                          {star <= (formRatingHover || reviewForm.rating) ? (
+                            <FaStar className="text-yellow-400" />
+                          ) : (
+                            <FaRegStar className="text-gray-400" />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                    <span className="text-gray-400 ml-2">
+                      {reviewForm.rating > 0 ? (
+                        <>
+                          <span className="text-white font-bold">{reviewForm.rating}</span> de 5
+                        </>
+                      ) : 'Sin valorar'}
+                    </span>
+                  </div>
+                  {formErrors.rating && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.rating}</p>
+                  )}
+                </div>
+                
+                <div className="mb-8">
+                  <Label htmlFor="content" className="text-white mb-2 block">Tu opinión <span className="text-red-500">*</span></Label>
+                  <textarea
+                    id="content"
+                    name="content"
+                    rows={6}
+                    placeholder="Comparte tu experiencia con nosotros..."
+                    value={reviewForm.content}
+                    onChange={handleFormChange}
+                    className={`w-full rounded-lg bg-dark-800 border border-gray-600 focus:border-primary-500 p-3 text-white ${formErrors.content ? 'border-red-500' : ''}`}
+                  ></textarea>
+                  <div className="flex justify-between mt-1">
+                    {formErrors.content ? (
+                      <p className="text-red-500 text-sm">{formErrors.content}</p>
+                    ) : (
+                      <p className="text-gray-400 text-sm">Mínimo 20 caracteres</p>
+                    )}
+                    <p className="text-gray-400 text-sm">{reviewForm.content.length} / 500</p>
+                  </div>
+                </div>
+                
+                <div className="mb-8">
+                  <div className="flex items-start">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="acceptTerms"
+                        name="acceptTerms"
+                        type="checkbox"
+                        checked={reviewForm.acceptTerms}
+                        onChange={handleFormChange}
+                        className="h-4 w-4 rounded border-gray-600 bg-dark-800 text-primary-500 focus:ring-primary-500"
+                      />
+                    </div>
+                    <div className="ml-3 text-sm">
+                      <label htmlFor="acceptTerms" className="text-gray-300">
+                        Acepto los <a href="#" className="text-primary-400 hover:underline">términos y condiciones</a> y la <a href="#" className="text-primary-400 hover:underline">política de privacidad</a>
+                      </label>
+                      {formErrors.acceptTerms && (
+                        <p className="text-red-500 text-sm mt-1">{formErrors.acceptTerms}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <Button
+                    type="submit"
+                    variant="gradient"
+                    rounded="full"
+                    size="lg"
+                    className="px-12 shadow-xl"
+                    disabled={submitting}
+                  >
+                    {submitting ? (
+                      <>
+                        <span className="inline-block h-4 w-4 mr-2 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
+                        Enviando...
+                      </>
+                    ) : 'Enviar mi opinión'}
+                  </Button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </section>
