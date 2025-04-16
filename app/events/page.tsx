@@ -18,7 +18,6 @@ import { Card, CardHeader, CardContent, CardFooter } from "../components/Card"
 import { Button } from "../components/Button"
 import AOS from "aos"
 import "aos/dist/aos.css"
-import { Badge } from "../components/Badge"
 
 interface Event {
   id: number
@@ -195,6 +194,14 @@ export default function EventsPage() {
     }
   }
 
+  // Create a custom badge component that uses the Badge component internally
+  const CategoryBadge = ({ category }: { category: string }) => {
+    const colorClasses = getCategoryColor(category)
+    return (
+      <div className={`absolute top-4 right-4 px-2 py-1 rounded-md ${colorClasses}`}>{getCategoryName(category)}</div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-dark-900 text-white">
       <Header />
@@ -286,9 +293,7 @@ export default function EventsPage() {
                           fill
                           className="object-cover"
                         />
-                        <Badge variant="solid" className={`absolute top-4 right-4 ${getCategoryColor(event.category)}`}>
-                          {getCategoryName(event.category)}
-                        </Badge>
+                        <CategoryBadge category={event.category} />
                       </div>
                       <div className="p-6">
                         <div className="flex items-center justify-between mb-3">
@@ -356,9 +361,7 @@ export default function EventsPage() {
                           fill
                           className="object-cover rounded-t-lg"
                         />
-                        <Badge variant="solid" className={`absolute top-4 right-4 ${getCategoryColor(event.category)}`}>
-                          {getCategoryName(event.category)}
-                        </Badge>
+                        <CategoryBadge category={event.category} />
                       </div>
                     </CardHeader>
                     <CardContent className="flex-1">
