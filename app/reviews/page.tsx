@@ -128,32 +128,165 @@ export default function ReviewsPage() {
     setNotification(null);
   };
 
-  // Cargar votos y ratings guardados
-  useEffect(() => {
-    // Solo ejecutar en el cliente
+  // Función para expandir/colapsar una reseña
+  const toggleExpandReview = (reviewId: number) => {
+    setExpandedReview(expandedReview === reviewId ? null : reviewId)
+  }
+
+  // Función para votar en una reseña
+  const handleVote = (reviewId: number) => {
+    // Verificar si el usuario ya votó
+    const reviewIdStr = reviewId.toString()
+    if (userVotes[reviewIdStr]) {
+      showNotification('warning', 'Ya has marcado esta reseña como útil anteriormente.');
+      return
+    }
+    
+    // Cargar las reviews actuales desde localStorage (para asegurarnos de tener los datos más recientes)
+    const currentReviewsData = localStorage.getItem('gw2_reviews_data');
+    let currentReviews: Review[] = [];
+    
+    if (currentReviewsData) {
+      try {
+        currentReviews = JSON.parse(currentReviewsData);
+      } catch (error) {
+        console.error('Error al parsear datos de reseñas:', error);
+        currentReviews = [...reviews];
+      }
+    } else {
+      currentReviews = [...reviews];
+    }
+    
+    // Actualizar el número de votos útiles en la review
+    const updatedReviews = currentReviews.map(review => {
+      if (review.id === reviewId) {
+        return {
+          ...review,
+          helpful: (review.helpful || 0) + 1
+        }
+      }
+      return review
+    });
+    
+    // Guardar el voto del usuario en su sesión local
+    const updatedVotes = {
+      ...userVotes,
+      [reviewIdStr]: true
+    };
+    
+    setUserVotes(updatedVotes);
+    
+    // Actualizar las reseñas en el estado local
+    setReviews(updatedReviews);
+    setFilteredReviews(prev => {
+      return prev.map(review => {
+        if (review.id === reviewId) {
+          return {
+            ...review,
+            helpful: (review.helpful || 0) + 1
+          }
+        }
+        return review
+      })
+    });
+    
+    // Actualizar en localStorage (datos globales y sesión individual)
     if (typeof window !== 'undefined') {
       try {
-        const savedVotes = localStorage.getItem('gw2_review_votes')
-        if (savedVotes) {
-          setUserVotes(JSON.parse(savedVotes))
-        }
-        
-        const savedRatings = localStorage.getItem('gw2_user_ratings')
-        if (savedRatings) {
-          setUserRatings(JSON.parse(savedRatings))
-          
-          // Actualizar UI de estrellas activas basado en ratings guardadas
-          const activeStarsState: {[key: string]: number} = {};
-          Object.entries(JSON.parse(savedRatings)).forEach(([reviewId, rating]) => {
-            activeStarsState[reviewId] = rating as number;
-          });
-          setActiveStars(activeStarsState);
-        }
+        localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews));
+        localStorage.setItem('gw2_review_votes', JSON.stringify(updatedVotes));
       } catch (error) {
-        console.error('Error al cargar datos guardados:', error)
+        console.error('Error al guardar reseñas:', error)
       }
     }
-  }, [])
+    
+    // Mostrar confirmación
+    showNotification('success', 'Gracias por valorar esta reseña como útil. Tu voto ha sido registrado para todos los usuarios.');
+  }
+  
+  // Función para calificar una reseña
+  const handleRateReview = (reviewId: number, rating: number) => {
+    const reviewIdStr = reviewId.toString();
+    
+    // Cargar las reviews actuales desde localStorage (para asegurarnos de tener los datos más recientes)
+    const currentReviewsData = localStorage.getItem('gw2_reviews_data');
+    let currentReviews: Review[] = [];
+    
+    if (currentReviewsData) {
+      try {
+        currentReviews = JSON.parse(currentReviewsData);
+      } catch (error) {
+        console.error('Error al parsear datos de reseñas:', error);
+        currentReviews = [...reviews];
+      }
+    } else {
+      currentReviews = [...reviews];
+    }
+    
+    // Encontrar la review actual y calcular la nueva valoración global
+    let updatedReviews = [...currentReviews];
+    const reviewToUpdate = updatedReviews.find(r => r.id === reviewId);
+    
+    if (reviewToUpdate) {
+      // Si el usuario ya había valorado, reemplazar su valoración anterior
+      // Si no había valorado, añadir su nueva valoración
+      
+      // Guardar la calificación del usuario en su sesión local
+      const updatedRatings = {
+        ...userRatings,
+        [reviewIdStr]: rating
+      };
+      
+      setUserRatings(updatedRatings);
+      
+      // Actualizar UI de estrellas
+      setActiveStars(prev => ({
+        ...prev,
+        [reviewIdStr]: rating
+      }));
+      
+      // Actualizar la valoración global de la review
+      // Aquí usamos un enfoque simplificado: la valoración del usuario se convierte en la valoración global
+      reviewToUpdate.rating = rating;
+      
+      // Actualizar las reseñas en el estado
+      updatedReviews = currentReviews.map(review => {
+        if (review.id === reviewId) {
+          return {
+            ...review,
+            rating
+          };
+        }
+        return review;
+      });
+      
+      setReviews(updatedReviews);
+      setFilteredReviews(prev => {
+        return prev.map(review => {
+          if (review.id === reviewId) {
+            return {
+              ...review,
+              rating
+            }
+          }
+          return review;
+        });
+      });
+      
+      // Guardar en localStorage (tanto datos globales como preferencias del usuario)
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews));
+          localStorage.setItem('gw2_user_ratings', JSON.stringify(updatedRatings));
+        } catch (error) {
+          console.error('Error al guardar reseñas:', error);
+        }
+      }
+      
+      // Mostrar confirmación
+      showNotification('success', `Has calificado esta opinión con ${rating} estrellas. Tu valoración es visible para todos los usuarios.`);
+    }
+  }
   
   // Guardar votos cuando cambien
   useEffect(() => {
@@ -168,95 +301,7 @@ export default function ReviewsPage() {
       localStorage.setItem('gw2_user_ratings', JSON.stringify(userRatings))
     }
   }, [userRatings])
-  
-  // Función para votar en una reseña
-  const handleVote = (reviewId: number) => {
-    // Verificar si el usuario ya votó
-    const reviewIdStr = reviewId.toString()
-    if (userVotes[reviewIdStr]) {
-      showNotification('warning', 'Ya has marcado esta reseña como útil anteriormente.');
-      return
-    }
-    
-    // Actualizar el estado de reviews
-    const updatedReviews = reviews.map(review => {
-      if (review.id === reviewId) {
-        return {
-          ...review,
-          helpful: review.helpful + 1
-        }
-      }
-      return review
-    })
-    
-    // Guardar el voto del usuario
-    setUserVotes(prev => ({
-      ...prev,
-      [reviewIdStr]: true
-    }))
-    
-    // Actualizar las reseñas
-    setReviews(updatedReviews)
-    
-    // Actualizar en localStorage
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews))
-      } catch (error) {
-        console.error('Error al guardar reseñas:', error)
-      }
-    }
-    
-    // Mostrar confirmación
-    showNotification('success', 'Gracias por valorar esta reseña como útil.');
-  }
-  
-  // Función para calificar una reseña
-  const handleRateReview = (reviewId: number, rating: number) => {
-    const reviewIdStr = reviewId.toString()
-    
-    // Guardar la calificación del usuario
-    setUserRatings(prev => ({
-      ...prev,
-      [reviewIdStr]: rating
-    }))
-    
-    setActiveStars(prev => ({
-      ...prev,
-      [reviewIdStr]: rating
-    }))
-    
-    // Actualizar las reseñas con la calificación del usuario
-    const updatedReviews = reviews.map(review => {
-      if (review.id === reviewId) {
-        return {
-          ...review,
-          userRating: rating
-        }
-      }
-      return review
-    })
-    
-    setReviews(updatedReviews)
-    
-    // Guardar en localStorage
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem('gw2_reviews_data', JSON.stringify(updatedReviews))
-      } catch (error) {
-        console.error('Error al guardar reseñas:', error)
-      }
-    }
-    
-    // Mostrar confirmación
-    showNotification('success', `Has calificado esta opinión con ${rating} estrellas`);
-  }
-  
-  // Función para expandir/colapsar una reseña
-  const toggleExpandReview = (reviewId: number) => {
-    setExpandedReview(expandedReview === reviewId ? null : reviewId)
-  }
-  
+
   // Datos de ejemplo
   useEffect(() => {
     const dummyReviews: Review[] = [
@@ -396,15 +441,48 @@ export default function ReviewsPage() {
     
     // Guardar datos en localStorage para simular una API
     if (typeof window !== 'undefined') {
-      // Solo guardar si no existen ya
+      // Cargar los datos guardados o usar los datos de ejemplo
       const existingData = localStorage.getItem('gw2_reviews_data')
       if (!existingData) {
         localStorage.setItem('gw2_reviews_data', JSON.stringify(dummyReviews))
+        setReviews(dummyReviews)
+        setFilteredReviews(dummyReviews)
       } else {
         // Usar los datos guardados
         try {
-          setReviews(JSON.parse(existingData))
-          setFilteredReviews(JSON.parse(existingData))
+          const savedReviews = JSON.parse(existingData);
+          
+          // Cargar votos guardados para actualizar el estado helpful de las reseñas
+          const savedVotes = localStorage.getItem('gw2_review_votes')
+          if (savedVotes) {
+            const votes = JSON.parse(savedVotes);
+            setUserVotes(votes);
+          }
+          
+          // Cargar ratings guardados para actualizar las estrellas activas
+          const savedRatings = localStorage.getItem('gw2_user_ratings')
+          if (savedRatings) {
+            const ratings = JSON.parse(savedRatings);
+            setUserRatings(ratings);
+            
+            // Actualizar UI de estrellas activas basado en ratings guardadas
+            const activeStarsState: {[key: string]: number} = {};
+            Object.entries(ratings).forEach(([reviewId, rating]) => {
+              activeStarsState[reviewId] = rating as number;
+            });
+            setActiveStars(activeStarsState);
+            
+            // Actualizar las reseñas con las valoraciones del usuario
+            savedReviews.forEach((review: Review) => {
+              const reviewId = review.id.toString();
+              if (ratings[reviewId]) {
+                review.userRating = ratings[reviewId];
+              }
+            });
+          }
+          
+          setReviews(savedReviews)
+          setFilteredReviews(savedReviews)
         } catch (error) {
           console.error('Error al cargar reseñas guardadas:', error)
           setReviews(dummyReviews)
@@ -451,10 +529,18 @@ export default function ReviewsPage() {
         result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         break
       case 'highest':
-        result.sort((a, b) => b.rating - a.rating)
+        result.sort((a, b) => {
+          const ratingA = a.userRating || a.rating || 0
+          const ratingB = b.userRating || b.rating || 0
+          return ratingB - ratingA
+        })
         break
       case 'lowest':
-        result.sort((a, b) => a.rating - b.rating)
+        result.sort((a, b) => {
+          const ratingA = a.userRating || a.rating || 0
+          const ratingB = b.userRating || b.rating || 0
+          return ratingA - ratingB
+        })
         break
     }
     
@@ -513,7 +599,8 @@ export default function ReviewsPage() {
     
     const total = reviews.length
     const verified = reviews.filter(r => r.verified).length
-    const sum = reviews.reduce((acc, review) => acc + review.rating, 0)
+    // Calcular promedio usando las valoraciones guardadas globalmente
+    const sum = reviews.reduce((acc, review) => acc + (review.rating || 0), 0)
     const avg = Math.round((sum / total) * 10) / 10
     
     return { avg, total, verified }
@@ -861,7 +948,7 @@ export default function ReviewsPage() {
                           </h3>
                           <span className="text-sm text-gray-400">{formatDate(review.date)}</span>
                           <div className="flex mt-1 space-x-1">
-                            {renderStars(review.rating)}
+                            {renderStars(review.rating || review.userRating || 0)}
                           </div>
                         </div>
                       </div>
