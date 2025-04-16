@@ -390,7 +390,7 @@ export default function ReviewsPage() {
       <section className="relative py-24 bg-dark-800">
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
           <div data-aos="fade-up">
-            <Badge className="mb-4 bg-primary-500 text-white">Opiniones</Badge>
+            <Badge className="mb-4 bg-primary-500 text-white px-6 py-2 text-base font-medium rounded-full shadow-lg">Opiniones</Badge>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-primary-300">
               Lo que dicen nuestros miembros
             </h1>
