@@ -23,8 +23,9 @@ export async function GET() {
         // Obtener permisos del archivo
         const stats = fs.statSync(filePath)
         filePermissions = stats.mode.toString(8)
-      } catch (error) {
-        fileContent = `Error al leer: ${error.message}`
+      } catch (readError) {
+        // Usamos una variable diferente para este error
+        fileContent = `Error al leer: ${readError instanceof Error ? readError.message : "Error desconocido"}`
       }
     }
 
@@ -41,7 +42,7 @@ export async function GET() {
         fs.unlinkSync(testPath) // Eliminar el archivo de prueba
       }
       writePermission = true
-    } catch (error) {
+    } catch (writeError) {
       writePermission = false
     }
 
@@ -61,6 +62,11 @@ export async function GET() {
       env: process.env.NODE_ENV,
     })
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json(
+      {
+        error: error instanceof Error ? error.message : "Error desconocido",
+      },
+      { status: 500 },
+    )
   }
 }
