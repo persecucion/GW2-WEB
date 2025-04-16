@@ -1,15 +1,33 @@
 import { NextResponse } from "next/server"
-import fs from "fs/promises"
+import fs from "fs"
 import path from "path"
 
 // Path to the JSON file
 const dataFilePath = path.join(process.cwd(), "public", "data", "reviews.json")
 
+// Función para asegurar que el directorio existe
+function ensureDirectoryExists() {
+  const dirPath = path.join(process.cwd(), "public", "data")
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true })
+  }
+}
+
+// Función para asegurar que el archivo existe
+function ensureFileExists() {
+  if (!fs.existsSync(dataFilePath)) {
+    fs.writeFileSync(dataFilePath, JSON.stringify([]), "utf8")
+  }
+}
+
 // Get all reviews
 export async function GET() {
   try {
-    const fileData = await fs.readFile(dataFilePath, "utf8")
-    const reviews = JSON.parse(fileData)
+    ensureDirectoryExists()
+    ensureFileExists()
+
+    const fileData = fs.readFileSync(dataFilePath, "utf8")
+    const reviews = JSON.parse(fileData || "[]")
     return NextResponse.json(reviews)
   } catch (error) {
     console.error("Error reading reviews:", error)
@@ -20,11 +38,14 @@ export async function GET() {
 // Update a review (vote or rating)
 export async function POST(request: Request) {
   try {
+    ensureDirectoryExists()
+    ensureFileExists()
+
     const { reviewId, action, value } = await request.json()
 
     // Read the current data
-    const fileData = await fs.readFile(dataFilePath, "utf8")
-    const reviews = JSON.parse(fileData)
+    const fileData = fs.readFileSync(dataFilePath, "utf8")
+    const reviews = JSON.parse(fileData || "[]")
 
     // Find the review to update
     const reviewIndex = reviews.findIndex((review: any) => review.id === reviewId)
@@ -52,7 +73,7 @@ export async function POST(request: Request) {
     }
 
     // Write the updated data back to the file
-    await fs.writeFile(dataFilePath, JSON.stringify(reviews, null, 2), "utf8")
+    fs.writeFileSync(dataFilePath, JSON.stringify(reviews, null, 2), "utf8")
 
     return NextResponse.json({ success: true, review: reviews[reviewIndex] })
   } catch (error) {
