@@ -428,7 +428,7 @@ export default function EventsPage() {
                   </p>
                 </div>
                 <div className="flex flex-col space-y-4">
-                  <Button variant="primary" size="lg" className="justify-center" leftIcon={<FaDiscord />}>
+                  <Button variant="default" size="lg" className="justify-center" leftIcon={<FaDiscord />}>
                     Contactar vía Discord
                   </Button>
                   <Button variant="outline" size="lg" className="justify-center" leftIcon={<FaEnvelope />}>
