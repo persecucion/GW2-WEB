@@ -11,6 +11,7 @@ const navItems = [
   { name: 'Eventos', path: '/events' },
   { name: 'Patreon', path: '/patreon' },
   { name: 'Comunidad', path: '/community' },
+  { name: 'Minecraft', path: '/minecraft' },
   { name: 'Reviews', path: '/reviews' },
   { name: 'Contacto', path: '/contact' },
 ]
