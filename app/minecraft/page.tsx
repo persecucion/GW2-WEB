@@ -1,16 +1,22 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaServer, FaDiscord, FaCalendarAlt, FaUsers, FaScroll, FaComments, FaCube, FaImage } from 'react-icons/fa'
-
-export const metadata = {
-  title: 'Minecraft - GW2',
-  description: 'Servidor de Minecraft de la comunidad GW2 - Únete a nuestra experiencia de juego única',
-}
+import { useState } from 'react'
 
 // Define una imagen de fallback que se usará cuando no existan las imágenes
 const fallbackImageUrl = "/images/logo.png";
 
 export default function MinecraftPage() {
+  const [ipCopied, setIpCopied] = useState(false);
+  
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setIpCopied(true);
+    setTimeout(() => setIpCopied(false), 2000);
+  };
+
   return (
     <main className="pt-28 pb-20 min-h-screen bg-dark-950">
       {/* Hero Section */}
@@ -36,12 +42,12 @@ export default function MinecraftPage() {
             </p>
             
             <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <button onClick={() => {
-                navigator.clipboard.writeText('mc.gw2.gg');
-                alert('IP copiada al portapapeles');
-              }} className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg flex items-center justify-center gap-2 transition-all">
+              <button 
+                onClick={() => copyToClipboard('mc.gw2.gg')} 
+                className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg flex items-center justify-center gap-2 transition-all"
+              >
                 <FaServer className="text-xl" />
-                <span>mc.gw2.gg</span>
+                <span>{ipCopied ? 'IP Copiada!' : 'mc.gw2.gg'}</span>
               </button>
               
               <a href="https://discord.gg/gatitos2" target="_blank" rel="noopener noreferrer" 
@@ -394,12 +400,12 @@ export default function MinecraftPage() {
             Únete a cientos de jugadores en el servidor Minecraft de GW2 y forma parte de nuestra creciente comunidad
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => {
-              navigator.clipboard.writeText('mc.gw2.gg');
-              alert('IP copiada al portapapeles');
-            }} className="px-8 py-4 bg-white hover:bg-gray-200 text-primary-900 font-bold rounded-lg flex items-center justify-center gap-2 transition-all">
+            <button 
+              onClick={() => copyToClipboard('mc.gw2.gg')} 
+              className="px-8 py-4 bg-white hover:bg-gray-200 text-primary-900 font-bold rounded-lg flex items-center justify-center gap-2 transition-all"
+            >
               <FaServer className="text-xl" />
-              <span>Copiar IP del servidor</span>
+              <span>{ipCopied ? '¡IP Copiada!' : 'Copiar IP del servidor'}</span>
             </button>
             
             <a href="https://discord.gg/gatitos2" target="_blank" rel="noopener noreferrer" 
