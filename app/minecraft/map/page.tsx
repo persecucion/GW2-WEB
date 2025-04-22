@@ -4,10 +4,13 @@ import Link from 'next/link'
 import { FaServer, FaDiscord, FaHome, FaMapMarkedAlt, FaInfoCircle, FaCogs, FaArrowLeft } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 
+// Definir un tipo específico para los tipos de mapa
+type MapType = 'surface' | 'nether' | 'end';
+
 export default function MinecraftMapPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [mapType, setMapType] = useState('surface'); // 'surface', 'nether', 'end'
+  const [mapType, setMapType] = useState<MapType>('surface'); // Con tipo explícito
   
   useEffect(() => {
     // Simula un tiempo de carga
@@ -18,7 +21,7 @@ export default function MinecraftMapPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const mapUrl = {
+  const mapUrl: Record<MapType, string> = {
     surface: "https://ejemplo.com/mapa/#world",
     nether: "https://ejemplo.com/mapa/#nether",
     end: "https://ejemplo.com/mapa/#end"
