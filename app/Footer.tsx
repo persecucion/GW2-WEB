@@ -19,24 +19,11 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative">
-      {/* Gradiente de fondo y efectos visuales */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark-800 to-dark-900">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary-600/30 rounded-full mix-blend-multiply filter blur-[110px]"></div>
-          <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-secondary-600/30 rounded-full mix-blend-multiply filter blur-[100px]"></div>
-          <div className="absolute bottom-1/3 right-0 w-72 h-72 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-[90px]"></div>
-        </div>
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      </div>
-
-      {/* Borde superior con gradiente */}
-      <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
-
-      {/* Contenido del Footer */}
-      <div className="max-w-7xl mx-auto px-4 pt-16 pb-8 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          {/* Logo y descripción */}
+    <footer className="bg-dark-900 border-t border-gray-800">
+      <div className="container mx-auto px-4 pt-16 pb-8">
+        {/* Top footer content with logo and sections */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          {/* Logo and description */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-6">
               <div className="relative w-12 h-12 overflow-hidden rounded-full border-2 border-primary-400/50 shadow-lg shadow-primary-900/30">
@@ -109,44 +96,29 @@ export default function Footer() {
             </div>
           </div>
           
-          {/* Enlaces */}
+          {/* Links section - Adding Minecraft category */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4 border-b border-primary-700/50 pb-2 bg-gradient-to-r from-primary-400 to-transparent bg-clip-text text-transparent">Enlaces</h3>
-            <ul className="space-y-3 bg-dark-800/30 backdrop-blur-sm p-4 rounded-lg border border-white/5 shadow-md">
-              <li>
-                <Link href="/" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
-                  Inicio
-                </Link>
-              </li>
-              <li>
-                <Link href="/events" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
-                  Eventos
-                </Link>
-              </li>
-              <li>
-                <Link href="/patreon" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
-                  Patreon
-                </Link>
-              </li>
-              <li>
-                <Link href="/community" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
-                  Comunidad
-                </Link>
-              </li>
-              <li>
-                <Link href="/reviews" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
-                  Reviews
-                </Link>
-              </li>
-            </ul>
+            <h3 className="text-lg font-semibold text-white mb-4">Enlaces</h3>
+            <nav className="flex flex-col space-y-3">
+              <Link href="/" className="text-gray-400 hover:text-primary-500 transition">
+                Inicio
+              </Link>
+              <Link href="/blog" className="text-gray-400 hover:text-primary-500 transition">
+                Blog
+              </Link>
+              <Link href="/minecraft" className="text-gray-400 hover:text-primary-500 transition">
+                Minecraft
+              </Link>
+              <Link href="/legal/privacy" className="text-gray-400 hover:text-primary-500 transition">
+                Privacidad
+              </Link>
+              <Link href="/legal/terms" className="text-gray-400 hover:text-primary-500 transition">
+                Términos
+              </Link>
+            </nav>
           </div>
           
-          {/* Legal */}
+          {/* Legal section */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4 border-b border-secondary-700/50 pb-2 bg-gradient-to-r from-secondary-400 to-transparent bg-clip-text text-transparent">Legal</h3>
             <ul className="space-y-3 bg-dark-800/30 backdrop-blur-sm p-4 rounded-lg border border-white/5 shadow-md">
@@ -171,7 +143,7 @@ export default function Footer() {
             </ul>
           </div>
           
-          {/* Contacto */}
+          {/* Contact section */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4 border-b border-purple-700/50 pb-2 bg-gradient-to-r from-purple-400 to-transparent bg-clip-text text-transparent">Contacto</h3>
             <ul className="space-y-3 bg-dark-800/30 backdrop-blur-sm p-4 rounded-lg border border-white/5 shadow-md">
@@ -208,25 +180,21 @@ export default function Footer() {
           </div>
         </div>
         
-        {/* Copyright y Créditos */}
-        <div className="pt-6 mt-6 border-t border-gray-800 flex flex-col-reverse sm:flex-row justify-between items-center">
-          <p className="text-gray-400 text-center sm:text-left mt-4 sm:mt-0 bg-dark-800/30 py-1 px-3 rounded-lg border border-white/5">
-            &copy; {currentYear} GW2. Todos los derechos reservados.
-          </p>
-          <div className="flex items-center bg-dark-800/30 py-2 px-4 rounded-lg border border-white/5 shadow-md">
-            <span className="text-gray-400 flex items-center">
-              Hecho con <FaHeart className="mx-1 text-red-500 animate-pulse" /> por{' '}
-              <a href="https://github.com/Junsred" className="text-primary-400 ml-1 hover:underline hover:text-primary-300">
-                Junsred
-              </a>
-            </span>
-            <button 
-              onClick={scrollToTop} 
-              className="ml-6 p-2 rounded-full bg-primary-900/30 text-primary-400 hover:bg-primary-800/40 hover:text-primary-300 transition-colors transform hover:scale-110 shadow-md"
-              aria-label="Volver arriba"
+        {/* Bottom footer content */}
+        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+          <div className="text-sm text-gray-400 mb-4 md:mb-0">
+            &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
+          </div>
+          <div className="text-sm text-gray-500 flex items-center">
+            Hecho con <span className="mx-1 text-gray-400"><FaHeart /></span> por{" "}
+            <a
+              href="https://twitter.com/juansrd"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary-500 hover:text-primary-400 ml-1"
             >
-              <FaArrowUp size={16} />
-            </button>
+              Junsred
+            </a>
           </div>
         </div>
       </div>
