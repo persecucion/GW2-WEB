@@ -302,7 +302,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative h-screen flex flex-col items-center justify-between overflow-hidden">
+      <section className="relative min-h-screen md:h-screen flex flex-col items-center justify-between overflow-hidden py-10 md:py-0">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
@@ -315,21 +315,21 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto text-center pt-48 flex-1 flex flex-col justify-center">
+        <div className="container relative z-10 px-4 mx-auto text-center pt-20 md:pt-48 flex-1 flex flex-col justify-center mb-8 md:mb-0">
           <div className="max-w-3xl mx-auto">
             <div className="hero-title">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
                 Bienvenido a GW2
               </h1>
             </div>
             
-            <div className="hero-subtitle mb-10">
-              <p className="text-xl md:text-2xl text-gray-300">
+            <div className="hero-subtitle mb-8 md:mb-10">
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-300">
                 Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-5 justify-center hero-buttons">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center hero-buttons">
               <Button 
                 href="https://discord.gg/gatitos2"
                 external
@@ -338,7 +338,7 @@ export default function HomePage() {
                 rounded="full"
                 leftIcon={<FaDiscord className="text-xl" />}
                 rightIcon={<FaArrowRight />}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 border border-blue-500/50 shadow-lg text-white hover:shadow-blue-500/40 transition-all duration-300 text-lg px-7 py-4"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 border border-blue-500/50 shadow-lg text-white hover:shadow-blue-500/40 transition-all duration-300 text-base sm:text-lg px-5 sm:px-7 py-3 sm:py-4"
               >
                 Únete a la Aventura
               </Button>
@@ -348,7 +348,7 @@ export default function HomePage() {
                 variant="outline"
                 size="lg"
                 rounded="full"
-                className="bg-dark-800/50 backdrop-blur-sm border-blue-500/30 hover:border-blue-500/60 shadow-lg text-white hover:shadow-blue-500/20 transition-all duration-300 text-lg px-7 py-4"
+                className="bg-dark-800/50 backdrop-blur-sm border-blue-500/30 hover:border-blue-500/60 shadow-lg text-white hover:shadow-blue-500/20 transition-all duration-300 text-base sm:text-lg px-5 sm:px-7 py-3 sm:py-4"
               >
                 Descubre más
               </Button>
@@ -356,10 +356,10 @@ export default function HomePage() {
           </div>
         </div>
         
-        {/* Main hero image with border effect - with exact dimensions */}
-        <div className="container relative z-10 px-4 mx-auto mb-16 flex justify-center">
+        {/* Main hero image with border effect - with exact dimensions, responsive */}
+        <div className="container relative z-10 px-4 mx-auto mb-8 md:mb-16 flex justify-center">
           <div className="img-border w-full" style={{ maxWidth: "1383px" }}>
-            <div className="relative w-full" style={{ height: "451px" }}>
+            <div className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[451px]">
               <Image 
                 src="/images/server.png" 
                 alt="GW2 Server" 
