@@ -18,8 +18,10 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-black relative z-50 border-t-2 border-gray-800">
-      <div className="absolute inset-0 bg-black w-full h-full"></div>
+    <footer className="relative z-50 border-t border-primary-900/30">
+      <div className="absolute inset-0 bg-gradient-to-b from-dark-950 to-black w-full h-full"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-primary-950/10 via-dark-950 to-primary-950/10 opacity-80"></div>
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-800/20 to-transparent"></div>
       <div className="container mx-auto px-4 pt-16 pb-8 relative z-10">
         {/* Top footer content with logo and sections */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -37,10 +39,10 @@ export default function Footer() {
               </div>
               <span className="text-2xl font-bold text-white">GW2</span>
             </div>
-            <p className="text-gray-300 mb-6 bg-dark-900 p-3 rounded-lg border border-gray-800 shadow-inner">
+            <p className="text-gray-300 mb-6 bg-dark-900/80 p-3 rounded-lg border border-primary-900/20 shadow-inner backdrop-blur-sm">
               Comunidad gaming enfocada en crear experiencias únicas y memorables para todos nuestros miembros.
             </p>
-            <div className="flex space-x-4 bg-dark-900 p-3 rounded-lg border border-gray-800 shadow-md">
+            <div className="flex space-x-4 bg-dark-900/80 p-3 rounded-lg border border-primary-900/20 shadow-md backdrop-blur-sm">
               <a 
                 href="https://discord.gg/gatitos2" 
                 target="_blank" 
@@ -99,7 +101,7 @@ export default function Footer() {
           {/* Links section - Adding Minecraft category */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4 border-b border-primary-700/50 pb-2 bg-gradient-to-r from-primary-400 to-transparent bg-clip-text text-transparent">Enlaces</h3>
-            <nav className="flex flex-col space-y-3 bg-dark-900 p-4 rounded-lg border border-gray-800 shadow-md">
+            <nav className="flex flex-col space-y-3 bg-dark-900/80 p-4 rounded-lg border border-primary-900/20 shadow-md backdrop-blur-sm">
               <Link href="/" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Inicio
@@ -126,7 +128,7 @@ export default function Footer() {
           {/* Legal section */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4 border-b border-secondary-700/50 pb-2 bg-gradient-to-r from-secondary-400 to-transparent bg-clip-text text-transparent">Legal</h3>
-            <ul className="space-y-3 bg-dark-900 p-4 rounded-lg border border-gray-800 shadow-md">
+            <ul className="space-y-3 bg-dark-900/80 p-4 rounded-lg border border-primary-900/20 shadow-md backdrop-blur-sm">
               <li>
                 <Link href="/terms" className="text-gray-300 hover:text-secondary-400 transition-colors flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-secondary-500"></div>
@@ -151,7 +153,7 @@ export default function Footer() {
           {/* Contact section */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4 border-b border-purple-700/50 pb-2 bg-gradient-to-r from-purple-400 to-transparent bg-clip-text text-transparent">Contacto</h3>
-            <ul className="space-y-3 bg-dark-900 p-4 rounded-lg border border-gray-800 shadow-md">
+            <ul className="space-y-3 bg-dark-900/80 p-4 rounded-lg border border-primary-900/20 shadow-md backdrop-blur-sm">
               <li>
                 <Link href="/contact" className="text-gray-300 hover:text-purple-400 transition-colors flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-purple-900/50 flex items-center justify-center">
@@ -186,11 +188,11 @@ export default function Footer() {
         </div>
         
         {/* Bottom footer content */}
-        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-gray-400 mb-4 md:mb-0">
+        <div className="pt-8 border-t border-primary-900/20 flex flex-col md:flex-row justify-between items-center">
+          <div className="text-sm text-gray-400 mb-4 md:mb-0 bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm">
             &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
           </div>
-          <div className="text-sm text-gray-500 whitespace-nowrap">
+          <div className="text-sm text-gray-400 whitespace-nowrap bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm">
             Hecho con <span className="text-red-500 mx-1 inline-block"><FaHeart /></span> por <a href="https://twitter.com/juansrd" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-400 font-medium inline-block">Junsred</a>
           </div>
         </div>
