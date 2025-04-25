@@ -186,7 +186,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
           </div>
           <div className="text-sm text-gray-500 flex items-center">
-            Hecho con <span className="mx-1 text-gray-400"><FaHeart /></span> por{" "}
+            Hecho con <span className="mx-1 text-red-500"><FaHeart /></span> por{" "}
             <a
               href="https://twitter.com/juansrd"
               target="_blank"
