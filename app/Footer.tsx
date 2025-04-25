@@ -103,9 +103,9 @@ export default function Footer() {
                 <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Inicio
               </Link>
-              <Link href="/blog" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
+              <Link href="/eventos" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
-                Blog
+                Eventos
               </Link>
               <Link href="/minecraft" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
@@ -189,16 +189,19 @@ export default function Footer() {
           <div className="text-sm text-gray-400 mb-4 md:mb-0">
             &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
           </div>
-          <div className="text-sm text-gray-500 flex items-center">
-            Hecho con <span className="mx-1 text-red-500"><FaHeart /></span> por{" "}
-            <a
-              href="https://twitter.com/juansrd"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary-500 hover:text-primary-400 ml-1"
-            >
-              Junsred
-            </a>
+          <div className="text-sm text-gray-500 flex items-center bg-dark-800/60 py-2 px-4 rounded-full border border-white/5 shadow-md">
+            <span className="relative">
+              <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-red-500 via-primary-500 to-red-500"></span>
+              Hecho con <span className="mx-1 text-red-500"><FaHeart /></span> por{" "}
+              <a
+                href="https://twitter.com/juansrd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-500 hover:text-primary-400 ml-1 font-medium"
+              >
+                Junsred
+              </a>
+            </span>
           </div>
         </div>
       </div>
