@@ -4,7 +4,6 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import { FaDiscord, FaTwitter, FaInstagram, FaYoutube, FaTwitch, FaHeart, FaArrowUp, FaEnvelope, FaGlobe, FaCode } from 'react-icons/fa'
 import { SiPatreon } from 'react-icons/si'
 
@@ -35,7 +34,7 @@ export default function Footer() {
                   sizes="48px"
                 />
               </div>
-              <span className="text-2xl font-bold text-gradient-animate">GW2</span>
+              <span className="text-2xl font-bold text-white">GW2</span>
             </div>
             <p className="text-gray-300 mb-6 backdrop-blur-sm bg-dark-800/30 p-3 rounded-lg border border-white/5 shadow-inner">
               Comunidad gaming enfocada en crear experiencias únicas y memorables para todos nuestros miembros.
@@ -98,21 +97,26 @@ export default function Footer() {
           
           {/* Links section - Adding Minecraft category */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Enlaces</h3>
-            <nav className="flex flex-col space-y-3">
-              <Link href="/" className="text-gray-400 hover:text-primary-500 transition">
+            <h3 className="text-lg font-semibold text-white mb-4 border-b border-primary-700/50 pb-2 bg-gradient-to-r from-primary-400 to-transparent bg-clip-text text-transparent">Enlaces</h3>
+            <nav className="flex flex-col space-y-3 bg-dark-800/30 backdrop-blur-sm p-4 rounded-lg border border-white/5 shadow-md">
+              <Link href="/" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Inicio
               </Link>
-              <Link href="/blog" className="text-gray-400 hover:text-primary-500 transition">
+              <Link href="/blog" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Blog
               </Link>
-              <Link href="/minecraft" className="text-gray-400 hover:text-primary-500 transition">
+              <Link href="/minecraft" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Minecraft
               </Link>
-              <Link href="/legal/privacy" className="text-gray-400 hover:text-primary-500 transition">
+              <Link href="/legal/privacy" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Privacidad
               </Link>
-              <Link href="/legal/terms" className="text-gray-400 hover:text-primary-500 transition">
+              <Link href="/legal/terms" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Términos
               </Link>
             </nav>
