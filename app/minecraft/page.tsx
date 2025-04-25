@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react'
 // Define una imagen de fallback que se usará cuando no existan las imágenes
 const fallbackImageUrl = "/images/logo.png";
 
+// Define servidor con puerto 
+const serverIP = 'mc.gw2.xyz:25565';
+
 // Estilos para las animaciones de luciérnagas y efectos luminosos
 const firefliesStyle = `
   .firefly {
@@ -331,12 +334,12 @@ export default function MinecraftPage() {
             
             <div className="flex flex-col md:flex-row gap-5 justify-center mt-10">
               <button 
-                onClick={() => copyToClipboard('mc.gw2.gg')} 
+                onClick={() => copyToClipboard(serverIP)} 
                 className="group relative overflow-hidden px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-bold rounded-xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-primary-900/30 border border-primary-500"
               >
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary-400 to-primary-600 transition-all duration-300 transform group-hover:translate-y-0 translate-y-full"></span>
                 <FaServer className="text-2xl relative z-10" />
-                <span className="relative z-10 text-lg">{ipCopied ? '¡IP Copiada!' : 'mc.gw2.gg'}</span>
+                <span className="relative z-10 text-lg">{ipCopied ? '¡IP Copiada!' : serverIP}</span>
               </button>
               
               <a 
@@ -415,10 +418,10 @@ export default function MinecraftPage() {
                   <div className="flex justify-between items-center py-2 border-b border-dark-700">
                     <span className="text-gray-400">IP del servidor</span>
                     <button 
-                      onClick={() => copyToClipboard('mc.gw2.gg')}
+                      onClick={() => copyToClipboard(serverIP)}
                       className="font-mono bg-dark-700 px-3 py-1 rounded text-primary-400 hover:bg-dark-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
-                      mc.gw2.gg
+                      {serverIP}
                     </button>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-dark-700">
@@ -574,7 +577,7 @@ export default function MinecraftPage() {
                   </div>
                   <div>
                     <div className="bg-primary-900 text-primary-400 px-3 py-1 rounded-full inline-block font-medium">
-                      Próximamente - 2024
+                      28 de Abril, 2024
                     </div>
                     <h3 className="text-2xl font-bold text-white mt-1">Preparación para Lanzamiento Público</h3>
                   </div>
@@ -589,8 +592,8 @@ export default function MinecraftPage() {
                       Estado del Servidor
                     </h4>
                     <p className="text-gray-300 mb-4">
-                      Estamos finalizando los preparativos para el lanzamiento público de nuestro servidor Minecraft SMP. 
-                      Actualmente nos encontramos en fase beta con acceso limitado para testers mientras completamos la configuración.
+                      Estamos finalizando los preparativos para el lanzamiento público de nuestro servidor Minecraft SMP el 28 de abril. 
+                      Actualmente nos encontramos en fase beta con acceso limitado para testers mientras completamos la configuración y arreglamos bugs.
                     </p>
                     <div className="bg-dark-900/50 p-4 rounded-lg">
                       <div className="flex items-center mb-2">
@@ -612,7 +615,7 @@ export default function MinecraftPage() {
                         </div>
                         <div className="flex items-center">
                           <span className="text-yellow-500 mr-2">⟳</span>
-                          <span className="text-gray-300">Optimización final del rendimiento</span>
+                          <span className="text-gray-300">Corrección de bugs y optimización final</span>
                         </div>
                         <div className="flex items-center">
                           <span className="text-yellow-500 mr-2">⟳</span>
@@ -637,7 +640,7 @@ export default function MinecraftPage() {
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-purple-400 mt-1">•</span> 
-                          <span>Lanzamiento Público: Apertura del servidor a todos los jugadores</span>
+                          <span>Lanzamiento Público: 28 de abril (¡Pronto!)</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-purple-400 mt-1">•</span> 
@@ -654,7 +657,7 @@ export default function MinecraftPage() {
                         Mantente Informado
                       </h4>
                       <p className="text-gray-300 mb-3">
-                        Para conocer la fecha exacta de lanzamiento y todas las novedades, únete a nuestro Discord oficial.
+                        Para conocer todos los detalles del lanzamiento y ser de los primeros en unirte, únete a nuestro Discord oficial.
                       </p>
                       <a 
                         href="https://discord.gg/gatitos2" 
@@ -725,41 +728,6 @@ export default function MinecraftPage() {
         </div>
       </section>
       
-      {/* Community & Forum CTA */}
-      <section className="container mx-auto px-4 mb-16">
-        <div className="bg-gradient-to-r from-primary-900 to-dark-900 rounded-xl p-8 md:p-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Únete a nuestra comunidad</h2>
-              <p className="text-gray-300 mb-6 md:pr-12">
-                Participa en discusiones, comparte tus creaciones, encuentra amigos para jugar y mantente al día con todas las novedades de nuestro servidor.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a href="https://discord.gg/gatitos2" target="_blank" rel="noopener noreferrer" 
-                  className="px-6 py-3 bg-[#5865F2] hover:bg-[#4752c4] text-white font-bold rounded-lg flex items-center justify-center gap-2 transition-all">
-                  <FaDiscord className="text-xl" />
-                  <span>Discord</span>
-                </a>
-                <Link href="#forum-section" 
-                  className="px-6 py-3 bg-white text-primary-900 hover:bg-gray-200 font-bold rounded-lg flex items-center justify-center gap-2 transition-all">
-                  <FaComments className="text-xl" />
-                  <span>Foro Comunitario</span>
-                </Link>
-              </div>
-            </div>
-            <div className="relative h-60 md:h-80 rounded-lg overflow-hidden bg-dark-800 flex items-center justify-center border border-primary-700">
-              <FaUsers className="text-primary-400 opacity-20 text-9xl" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-dark-900/80 px-6 py-4 rounded-lg text-center">
-                  <h3 className="text-white font-bold text-xl mb-2">¡Únete a +500 jugadores!</h3>
-                  <p className="text-gray-300">Nuestra comunidad crece día a día</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
       {/* FAQ */}
       <section className="container mx-auto px-4 mb-20">
         <div className="text-center mb-12">
@@ -777,7 +745,7 @@ export default function MinecraftPage() {
             <div className="p-6">
               <h3 className="text-xl font-bold text-white mb-2">¿Cómo me uno al servidor?</h3>
               <p className="text-gray-300">
-                Simplemente usa la IP <span className="font-mono bg-dark-700 px-2 py-1 rounded text-primary-400">mc.gw2.gg</span> en Minecraft Java Edition. 
+                Simplemente usa la IP <span className="font-mono bg-dark-700 px-2 py-1 rounded text-primary-400">{serverIP}</span> en Minecraft Java Edition. 
                 Asegúrate de tener la versión 1.21.4 para disfrutar de todas las características del servidor.
               </p>
             </div>
@@ -933,12 +901,12 @@ export default function MinecraftPage() {
                     </div>
                     
                     <button 
-                      onClick={() => copyToClipboard('mc.gw2.gg')} 
+                      onClick={() => copyToClipboard(serverIP)} 
                       className="w-full py-3 px-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-medium rounded-lg flex items-center justify-center gap-2 transition-colors relative overflow-hidden group"
                     >
                       <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary-400/0 via-primary-300/10 to-primary-400/0 group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
                       <FaServer className="text-lg relative z-10" />
-                      <span className="relative z-10">{ipCopied ? '¡IP Copiada!' : 'Copiar IP del servidor'}</span>
+                      <span className="relative z-10">{ipCopied ? '¡IP Copiada!' : serverIP}</span>
                     </button>
                   </div>
                 </div>
@@ -994,7 +962,7 @@ export default function MinecraftPage() {
                             <span className="text-primary-400 font-bold text-sm">3</span>
                           </div>
                           <div>
-                            <p className="text-gray-300 text-sm">Introduce la IP: <span className="font-mono bg-dark-700 px-2 py-0.5 rounded text-primary-400">mc.gw2.gg</span></p>
+                            <p className="text-gray-300 text-sm">Introduce la IP: <span className="font-mono bg-dark-700 px-2 py-0.5 rounded text-primary-400">{serverIP}</span></p>
                           </div>
                         </div>
                         
@@ -1031,7 +999,7 @@ export default function MinecraftPage() {
       
       {/* CTA */}
       <section className="container mx-auto px-4 py-16">
-        <div className="py-16 px-6 md:px-12 bg-gradient-to-br from-primary-900 via-primary-800 to-dark-900 rounded-2xl shadow-2xl relative overflow-hidden">
+        <div className="py-16 px-6 md:px-12 bg-gradient-radial from-primary-800 via-primary-900 to-dark-950 rounded-2xl shadow-2xl relative overflow-hidden">
           {/* Background elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute inset-0 opacity-10">
@@ -1041,8 +1009,17 @@ export default function MinecraftPage() {
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary-400/20 to-transparent rounded-full filter blur-[80px]"></div>
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-secondary-500/10 to-transparent rounded-full filter blur-[80px]"></div>
             
+            {/* Circle glow effects */}
+            <div className="absolute left-1/4 top-1/4 w-40 h-40 rounded-full bg-primary-500/5 animate-pulse-slow"></div>
+            <div className="absolute right-1/3 bottom-1/3 w-40 h-40 rounded-full bg-secondary-500/5 animate-pulse-slow animation-delay-1000"></div>
+            
             {/* Particles/fireflies */}
             <div className="absolute inset-0">
+              <div className="firefly"></div>
+              <div className="firefly"></div>
+              <div className="firefly"></div>
+              <div className="firefly"></div>
+              <div className="firefly"></div>
               <div className="firefly"></div>
               <div className="firefly"></div>
               <div className="firefly"></div>
@@ -1066,7 +1043,11 @@ export default function MinecraftPage() {
           
           <div className="relative z-10">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-2 drop-shadow-glow">
+              <div className="mb-4">
+                <span className="bg-gradient-to-r from-yellow-500 to-yellow-600 px-4 py-1 rounded-full text-sm font-bold text-dark-900 inline-block shadow-inner shadow-yellow-700/20">¡Apertura 28 de abril!</span>
+              </div>
+              
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 drop-shadow-glow">
                 ¿Listo para comenzar tu aventura?
               </h2>
               
@@ -1082,24 +1063,24 @@ export default function MinecraftPage() {
               
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <button 
-                  onClick={() => copyToClipboard('mc.gw2.gg')} 
-                  className="px-8 py-4 bg-white hover:bg-gray-200 text-primary-900 font-bold rounded-xl flex items-center justify-center gap-2 transition-all relative overflow-hidden group shadow-xl shadow-primary-950/20"
+                  onClick={() => copyToClipboard(serverIP)} 
+                  className="px-8 py-4 bg-gradient-to-r from-white to-gray-100 hover:from-gray-100 hover:to-white text-primary-900 font-bold rounded-xl flex items-center justify-center gap-2 transition-all relative overflow-hidden group shadow-xl shadow-primary-950/20"
                 >
                   <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-primary-300/10 to-transparent group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
                   <FaServer className="text-xl relative z-10" />
-                  <span className="relative z-10">{ipCopied ? '¡IP Copiada!' : 'Copiar IP del servidor'}</span>
+                  <span className="relative z-10">{ipCopied ? '¡IP Copiada!' : serverIP}</span>
                 </button>
                 
                 <a href="https://discord.gg/gatitos2" target="_blank" rel="noopener noreferrer" 
-                  className="px-8 py-4 bg-dark-900 hover:bg-dark-800 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-xl shadow-primary-950/20 relative overflow-hidden group"
+                  className="px-8 py-4 bg-gradient-to-r from-[#5865F2] to-[#4752c4] hover:from-[#4752c4] hover:to-[#3c46a3] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-xl shadow-primary-950/20 relative overflow-hidden group"
                 >
-                  <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-primary-600/5 to-transparent group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#6d78ff]/10 to-transparent group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
                   <FaDiscord className="text-xl relative z-10" />
                   <span className="relative z-10">Únete a la comunidad</span>
                 </a>
                 
                 <Link href="/minecraft/map"
-                  className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-xl shadow-primary-950/20 relative overflow-hidden group"
+                  className="px-8 py-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-xl shadow-primary-950/20 relative overflow-hidden group"
                 >
                   <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-green-400/10 to-transparent group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
                   <FaMapMarkedAlt className="text-xl relative z-10" />
@@ -1117,4 +1098,4 @@ export default function MinecraftPage() {
       </style>
     </main>
   )
-} 
+}
