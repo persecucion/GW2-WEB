@@ -7,6 +7,42 @@ import Image from 'next/image'
 import { FaDiscord, FaTwitter, FaInstagram, FaYoutube, FaTwitch, FaHeart, FaArrowUp, FaEnvelope, FaGlobe, FaCode } from 'react-icons/fa'
 import { SiPatreon } from 'react-icons/si'
 
+// Estilo para la animación de la línea en movimiento
+const movingBorderAnimation = `
+  @keyframes rotateGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .moving-border {
+    position: relative;
+    z-index: 0;
+  }
+  
+  .moving-border::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -1.5px;
+    border-radius: 9999px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.1)
+    );
+    background-size: 200% 200%;
+    animation: rotateGradient 3s linear infinite;
+  }
+`
+
 const currentYear = new Date().getFullYear()
 
 export default function Footer() {
@@ -192,11 +228,13 @@ export default function Footer() {
           <div className="text-sm text-gray-400 mb-4 md:mb-0 bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm">
             &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
           </div>
-          <div className="text-sm text-gray-400 whitespace-nowrap bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm">
+          <div className="text-sm text-gray-400 whitespace-nowrap bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm moving-border">
             Hecho con <span className="text-red-500 mx-1 inline-block"><FaHeart /></span> por <a href="https://twitter.com/juansrd" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-400 font-medium inline-block">Junsred</a>
           </div>
         </div>
       </div>
+      
+      <style jsx global>{movingBorderAnimation}</style>
     </footer>
   )
 }
