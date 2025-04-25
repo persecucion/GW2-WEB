@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { FaDiscord, FaTwitter, FaInstagram, FaYoutube, FaTwitch, FaHeart, FaArrowUp, FaEnvelope, FaGlobe, FaCode } from 'react-icons/fa'
 import { SiPatreon } from 'react-icons/si'
 
-// Estilo para la animación de la línea en movimiento alrededor del óvalo
+// Estilo para la animación de la línea en movimiento
 const movingBorderAnimation = `
   @keyframes borderRotate {
     0% {
@@ -54,38 +54,49 @@ const movingBorderAnimation = `
     z-index: -1;
   }
   
-  .top-line {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: rgba(0, 4, 40, 0.7);
+  /* Línea móvil que recorre todo el borde del panel */
+  .page-border {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
   }
   
-  .moving-line {
+  .border-line {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 1px;
-    overflow: hidden;
+    height: 100%;
+    pointer-events: none;
     z-index: 60;
   }
   
-  .moving-line::before {
+  .border-line::before {
     content: '';
     position: absolute;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(59, 130, 246, 0.7) 50%,
-      transparent 100%
-    );
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background-image: linear-gradient(to right, transparent, #0066ff, transparent);
+    background-origin: border-box;
     background-size: 200% 100%;
-    animation: moveGradient 3s linear infinite;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: rotate-border 4s linear infinite;
+  }
+  
+  @keyframes rotate-border {
+    0% {
+      background-position: 0% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
   
   .footer-divider {
@@ -96,15 +107,6 @@ const movingBorderAnimation = `
     height: 3px;
     background: linear-gradient(90deg, rgba(23, 37, 84, 0.8), rgba(59, 130, 246, 0.8), rgba(23, 37, 84, 0.8));
     z-index: 50;
-  }
-  
-  @keyframes moveGradient {
-    0% {
-      transform: translateX(-50%);
-    }
-    100% {
-      transform: translateX(50%);
-    }
   }
 `
 
@@ -119,15 +121,12 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative z-50">
+    <footer className="relative z-50 page-border">
+      {/* Línea animada que recorre todo el borde */}
+      <div className="border-line"></div>
+      
       {/* Divisor del footer - línea distintiva en la parte superior */}
       <div className="footer-divider"></div>
-      
-      {/* Línea de fondo estática */}
-      <div className="top-line"></div>
-      
-      {/* Línea animada que se mueve */}
-      <div className="moving-line"></div>
       
       <div className="absolute inset-0 bg-gradient-to-b from-dark-950 to-black w-full h-full"></div>
       <div className="absolute inset-0 bg-gradient-to-r from-primary-950/10 via-dark-950 to-primary-950/10 opacity-80"></div>
