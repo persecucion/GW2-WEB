@@ -18,7 +18,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-dark-900 border-t border-gray-800">
+    <footer className="bg-dark-950 border-t border-gray-800">
       <div className="container mx-auto px-4 pt-16 pb-8">
         {/* Top footer content with logo and sections */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -36,10 +36,10 @@ export default function Footer() {
               </div>
               <span className="text-2xl font-bold text-white">GW2</span>
             </div>
-            <p className="text-gray-300 mb-6 backdrop-blur-sm bg-dark-800/30 p-3 rounded-lg border border-white/5 shadow-inner">
+            <p className="text-gray-300 mb-6 bg-dark-900 p-3 rounded-lg border border-gray-800 shadow-inner">
               Comunidad gaming enfocada en crear experiencias únicas y memorables para todos nuestros miembros.
             </p>
-            <div className="flex space-x-4 bg-dark-800/50 p-3 rounded-lg border border-white/5 shadow-md">
+            <div className="flex space-x-4 bg-dark-900 p-3 rounded-lg border border-gray-800 shadow-md">
               <a 
                 href="https://discord.gg/gatitos2" 
                 target="_blank" 
@@ -98,7 +98,7 @@ export default function Footer() {
           {/* Links section - Adding Minecraft category */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4 border-b border-primary-700/50 pb-2 bg-gradient-to-r from-primary-400 to-transparent bg-clip-text text-transparent">Enlaces</h3>
-            <nav className="flex flex-col space-y-3 bg-dark-800/30 backdrop-blur-sm p-4 rounded-lg border border-white/5 shadow-md">
+            <nav className="flex flex-col space-y-3 bg-dark-900 p-4 rounded-lg border border-gray-800 shadow-md">
               <Link href="/" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Inicio
@@ -125,7 +125,7 @@ export default function Footer() {
           {/* Legal section */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4 border-b border-secondary-700/50 pb-2 bg-gradient-to-r from-secondary-400 to-transparent bg-clip-text text-transparent">Legal</h3>
-            <ul className="space-y-3 bg-dark-800/30 backdrop-blur-sm p-4 rounded-lg border border-white/5 shadow-md">
+            <ul className="space-y-3 bg-dark-900 p-4 rounded-lg border border-gray-800 shadow-md">
               <li>
                 <Link href="/terms" className="text-gray-300 hover:text-secondary-400 transition-colors flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-secondary-500"></div>
@@ -150,7 +150,7 @@ export default function Footer() {
           {/* Contact section */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4 border-b border-purple-700/50 pb-2 bg-gradient-to-r from-purple-400 to-transparent bg-clip-text text-transparent">Contacto</h3>
-            <ul className="space-y-3 bg-dark-800/30 backdrop-blur-sm p-4 rounded-lg border border-white/5 shadow-md">
+            <ul className="space-y-3 bg-dark-900 p-4 rounded-lg border border-gray-800 shadow-md">
               <li>
                 <Link href="/contact" className="text-gray-300 hover:text-purple-400 transition-colors flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-purple-900/50 flex items-center justify-center">
@@ -189,19 +189,8 @@ export default function Footer() {
           <div className="text-sm text-gray-400 mb-4 md:mb-0">
             &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
           </div>
-          <div className="text-sm text-gray-500 flex items-center bg-dark-800/60 py-2 px-4 rounded-full border border-white/5 shadow-md">
-            <span className="relative">
-              <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-red-500 via-primary-500 to-red-500"></span>
-              Hecho con <span className="mx-1 text-red-500"><FaHeart /></span> por{" "}
-              <a
-                href="https://twitter.com/juansrd"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-500 hover:text-primary-400 ml-1 font-medium"
-              >
-                Junsred
-              </a>
-            </span>
+          <div className="text-sm text-gray-500">
+            Hecho con <span className="text-red-500 mx-1"><FaHeart /></span> por <a href="https://twitter.com/juansrd" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-400 font-medium">Junsred</a>
           </div>
         </div>
       </div>
