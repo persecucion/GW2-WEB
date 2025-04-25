@@ -302,7 +302,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pb-40">
+      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pb-60">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
@@ -315,7 +315,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto text-center mb-12 mt-40">
+        <div className="container relative z-10 px-4 mx-auto text-center mb-12 mt-48">
           <div className="max-w-3xl mx-auto">
             <div className="hero-title">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
@@ -357,9 +357,9 @@ export default function HomePage() {
         </div>
         
         {/* Main hero image with border effect - wider and filling more space */}
-        <div className="container relative z-10 px-4 mx-auto mt-8">
+        <div className="container relative z-10 px-4 mx-auto mt-16">
           <div className="img-border mx-auto w-full max-w-6xl">
-            <div className="relative aspect-[21/10] w-full rounded-xl overflow-hidden">
+            <div className="relative aspect-[21/11] w-full rounded-xl overflow-hidden">
               <Image 
                 src="/images/server.png" 
                 alt="GW2 Server" 
@@ -370,18 +370,6 @@ export default function HomePage() {
               
               {/* Enhanced bottom gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/80 to-transparent pointer-events-none"></div>
-              
-              {/* Logo overlay */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                <div className="relative w-48 h-48">
-                  <Image 
-                    src="/images/logo.png" 
-                    alt="GW2 Watermark" 
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
