@@ -41,6 +41,49 @@ const movingBorderAnimation = `
     background-size: 200% 200%;
     animation: rotateGradient 3s linear infinite;
   }
+
+  .top-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0, 4, 40, 0.7);
+  }
+  
+  .moving-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    overflow: hidden;
+    z-index: 60;
+  }
+  
+  .moving-line::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(59, 130, 246, 0.7) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: moveGradient 3s linear infinite;
+  }
+  
+  @keyframes moveGradient {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(50%);
+    }
+  }
 `
 
 const currentYear = new Date().getFullYear()
@@ -54,10 +97,15 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative z-50 border-t border-primary-900/30">
+    <footer className="relative z-50">
+      {/* Línea de fondo estática */}
+      <div className="top-line"></div>
+      
+      {/* Línea animada que se mueve */}
+      <div className="moving-line"></div>
+      
       <div className="absolute inset-0 bg-gradient-to-b from-dark-950 to-black w-full h-full"></div>
       <div className="absolute inset-0 bg-gradient-to-r from-primary-950/10 via-dark-950 to-primary-950/10 opacity-80"></div>
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-800/20 to-transparent"></div>
       <div className="container mx-auto px-4 pt-16 pb-8 relative z-10">
         {/* Top footer content with logo and sections */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
