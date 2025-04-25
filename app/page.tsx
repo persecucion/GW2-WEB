@@ -60,8 +60,23 @@ const heroAnimations = `
     100% { background-position: 200% 0; }
   }
   
+  @keyframes titleGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
   .hero-title {
     animation: floatUp 1.5s ease-out forwards;
+  }
+  
+  .hero-title h1 {
+    background: linear-gradient(90deg, #60a5fa, #ffffff, #818cf8);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titleGradient 5s ease infinite;
   }
   
   .hero-subtitle {
@@ -98,11 +113,11 @@ const heroAnimations = `
     right: -3px;
     bottom: -3px;
     border-radius: 15px;
-    background: linear-gradient(90deg, transparent, #0066ff, transparent);
-    background-size: 200% 100%;
-    animation: moveGradient 2s linear infinite;
+    background: linear-gradient(90deg, #1e40af, #3b82f6, #8b5cf6, #3b82f6, #1e40af);
+    background-size: 300% 100%;
+    animation: moveGradient 3s linear infinite;
     z-index: -1;
-    opacity: 0.8;
+    opacity: 0.9;
   }
   
   .img-border::after {
@@ -113,7 +128,7 @@ const heroAnimations = `
     right: -1px;
     bottom: -1px;
     border-radius: 14px;
-    box-shadow: 0 0 15px rgba(0, 102, 255, 0.5);
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.6);
     z-index: -1;
   }
   
@@ -303,7 +318,7 @@ export default function HomePage() {
         <div className="container relative z-10 px-4 mx-auto text-center mb-16 mt-48">
           <div className="max-w-3xl mx-auto">
             <div className="hero-title">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-white">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
                 Bienvenido a GW2
               </h1>
             </div>
