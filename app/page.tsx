@@ -66,6 +66,23 @@ const heroAnimations = `
     100% { background-position: 135% 0%; }
   }
   
+  @keyframes shimmer {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+  }
+  
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+  
+  @keyframes floatingParticle {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-15px) translateX(10px); }
+    50% { transform: translateY(0) translateX(15px); }
+    75% { transform: translateY(15px) translateX(5px); }
+  }
+  
   .hero-title {
     animation: floatUp 1.5s ease-out forwards;
   }
@@ -111,6 +128,29 @@ const heroAnimations = `
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+  }
+  
+  .floating-particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatingParticle 10s ease-in-out infinite, fadeInOut 8s ease-in-out infinite;
+  }
+  
+  .shimmer-effect {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2.5s infinite;
   }
 `;
 
@@ -242,46 +282,68 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        {/* Nuevo fondo con animación */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 hero-gradient-bg"></div>
+          {/* Base gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
           
-          {/* Efectos de iluminación mejorados */}
-          <div className="absolute top-1/4 left-1/3 w-[40rem] h-[40rem] bg-primary-600/20 rounded-full filter blur-[120px] hero-glow"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-[30rem] h-[30rem] bg-secondary-600/15 rounded-full filter blur-[100px] hero-glow" style={{animationDelay: '2s'}}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-primary-500/10 rounded-full filter blur-[150px] hero-glow" style={{animationDelay: '1s'}}></div>
+          {/* Animated gradient overlay */}
+          <div className="absolute inset-0 opacity-60 hero-gradient-bg"></div>
           
-          {/* Partículas flotantes */}
-          <div className="absolute inset-0">
-            {Array.from({ length: 20 }).map((_, index) => (
-              <div 
-                key={index}
-                className="absolute w-1.5 h-1.5 bg-white/40 rounded-full"
-                style={{
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  animationDuration: `${3 + Math.random() * 8}s`,
-                  animationDelay: `${Math.random() * 5}s`
-                }}
-              ></div>
-            ))}
-          </div>
-          
-          {/* Grid decorativo */}
+          {/* Decorative grid */}
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-10"></div>
+          
+          {/* Glowing orbs */}
+          <div className="absolute top-1/4 left-1/3 w-[45rem] h-[45rem] bg-primary-600/15 rounded-full filter blur-[130px] hero-glow"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-[35rem] h-[35rem] bg-secondary-600/10 rounded-full filter blur-[120px] hero-glow" style={{animationDelay: '2s'}}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[55rem] h-[55rem] bg-indigo-500/5 rounded-full filter blur-[160px] hero-glow" style={{animationDelay: '1s'}}></div>
+          
+          {/* Floating particles */}
+          {Array.from({ length: 15 }).map((_, index) => (
+            <div 
+              key={index}
+              className="floating-particle"
+              style={{
+                width: `${Math.random() * 6 + 2}px`,
+                height: `${Math.random() * 6 + 2}px`,
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                backgroundColor: `rgba(${200 + Math.random() * 55}, ${200 + Math.random() * 55}, ${255}, ${0.3 + Math.random() * 0.4})`,
+                boxShadow: `0 0 ${Math.random() * 10 + 5}px rgba(100, 150, 255, 0.6)`,
+                animationDuration: `${8 + Math.random() * 10}s`,
+                animationDelay: `${Math.random() * 5}s`
+              }}
+            ></div>
+          ))}
+          
+          {/* Subtle angular shapes */}
+          <div className="absolute top-1/4 left-1/5 w-64 h-64 border border-primary-500/10 transform rotate-45 rounded-2xl"></div>
+          <div className="absolute bottom-1/4 right-1/5 w-80 h-80 border border-secondary-500/10 transform -rotate-12 rounded-2xl"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto text-center">
-          <div className="bg-dark-900/30 backdrop-blur-xl p-12 rounded-3xl hero-border max-w-5xl mx-auto shadow-2xl">
-            <div className="hero-title">
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-300 via-white to-secondary-300 bg-clip-text text-transparent">
+        <div className="container relative z-10 px-4 mx-auto">
+          <div className="max-w-5xl mx-auto backdrop-blur-lg bg-dark-900/40 p-10 sm:p-14 rounded-[32px] shadow-2xl border border-white/5 relative overflow-hidden">
+            {/* Shimmer overlay */}
+            <div className="absolute inset-0 shimmer-effect"></div>
+            
+            {/* Subtle glass reflection */}
+            <div className="absolute -inset-1 bg-gradient-to-tr from-primary-500/5 via-transparent to-secondary-500/5 rounded-[40px] blur-sm"></div>
+            
+            {/* Glowing border */}
+            <div className="absolute inset-0 p-px rounded-[32px]">
+              <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-primary-500/30 via-transparent to-secondary-500/30 blur-[2px]"></div>
+            </div>
+            
+            <div className="hero-title relative">
+              <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-primary-300 via-white to-secondary-300 bg-clip-text text-transparent relative">
                 Bienvenido a GW2
+                <span className="absolute -bottom-3 left-0 w-24 h-1 bg-gradient-to-r from-primary-400 to-secondary-400 rounded-full"></span>
               </h1>
             </div>
             
             <div className="hero-subtitle">
-              <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto">
+              <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl">
                 Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
               </p>
             </div>
@@ -293,9 +355,9 @@ export default function HomePage() {
                 variant="gradient"
                 size="lg"
                 rounded="full"
-                leftIcon={<FaDiscord />}
+                leftIcon={<FaDiscord className="text-xl" />}
                 rightIcon={<FaArrowRight />}
-                className="bg-gradient-to-r from-primary-600 to-primary-700 border border-primary-500 shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 transition-all"
+                className="bg-gradient-to-r from-primary-600 to-primary-700 border border-primary-500/50 shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 transition-all duration-300 hover:-translate-y-1 text-lg px-8 py-4"
               >
                 Únete a la Aventura
               </Button>
@@ -305,7 +367,7 @@ export default function HomePage() {
                 variant="outline"
                 size="lg"
                 rounded="full"
-                className="bg-dark-700/50 backdrop-blur-sm border-primary-500/30 hover:border-primary-500/60 shadow-lg hover:shadow-primary-500/20 transition-all"
+                className="bg-dark-700/50 backdrop-blur-sm border-primary-500/30 hover:border-primary-500/60 shadow-lg hover:shadow-primary-500/20 transition-all duration-300 hover:-translate-y-1 text-lg px-8 py-4"
               >
                 Descubre más
               </Button>
@@ -314,8 +376,8 @@ export default function HomePage() {
           
           <div className="mt-16 flex justify-center" data-aos="fade-up" data-aos-delay="300">
             <Link href="#features" className="text-white hover:text-primary-300 transition-colors">
-              <div className="h-14 w-14 rounded-full bg-dark-800/80 backdrop-blur-sm border border-primary-500/30 hover:border-primary-500 transition-all duration-300 flex items-center justify-center">
-                <FaChevronDown className="h-6 w-6 animate-bounce" />
+              <div className="h-14 w-14 rounded-full bg-dark-800/80 backdrop-blur-sm border border-primary-500/30 hover:border-primary-500 transition-all duration-300 flex items-center justify-center animate-bounce">
+                <FaChevronDown className="h-6 w-6" />
               </div>
             </Link>
           </div>
