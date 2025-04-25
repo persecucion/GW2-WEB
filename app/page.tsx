@@ -55,29 +55,6 @@ const heroAnimations = `
     100% { background-position: 0% 50%; }
   }
   
-  @keyframes pulsate {
-    0% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.05); opacity: 1; }
-    100% { transform: scale(1); opacity: 0.8; }
-  }
-  
-  @keyframes shine {
-    0% { transform: translateX(-100%) rotate(-25deg); }
-    100% { transform: translateX(100%) rotate(-25deg); }
-  }
-  
-  @keyframes fadeInOut {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.7; }
-  }
-  
-  @keyframes floatingParticle {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    25% { transform: translateY(-15px) translateX(10px); }
-    50% { transform: translateY(0) translateX(15px); }
-    75% { transform: translateY(15px) translateX(5px); }
-  }
-  
   @keyframes moveGradient {
     0% { background-position: 0% 0; }
     100% { background-position: 200% 0; }
@@ -100,72 +77,40 @@ const heroAnimations = `
   }
   
   .hero-gradient-bg {
-    background: linear-gradient(-45deg, #0a1128, #1a2c62, #051024, #051832);
+    background: linear-gradient(-45deg, #080f1f, #0c1631, #040d1f, #05101f);
     background-size: 400% 400%;
     animation: gradientFlow 15s ease infinite;
   }
   
-  .hero-glow {
-    animation: pulsate 4s ease-in-out infinite;
-  }
-  
-  .floating-particle {
-    position: absolute;
-    border-radius: 50%;
-    animation: floatingParticle 10s ease-in-out infinite, fadeInOut 8s ease-in-out infinite;
-  }
-  
-  .moving-border {
+  .img-border {
     position: relative;
     z-index: 0;
+    border-radius: 12px;
+    overflow: hidden;
   }
   
-  .moving-border::before {
+  .img-border::before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 30px;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 15px;
     background: linear-gradient(90deg, transparent, #0066ff, transparent);
     background-size: 200% 100%;
     animation: moveGradient 2s linear infinite;
     z-index: -1;
   }
   
-  .moving-border::after {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    right: -1px;
-    bottom: -1px;
-    border-radius: 30px;
-    background: rgba(0, 4, 40, 0.9);
-    z-index: -1;
-  }
-  
-  .shine-effect {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .shine-effect::after {
-    content: '';
+  .footer-divider {
     position: absolute;
     top: 0;
     left: 0;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(255, 255, 255, 0.2) 50%,
-      transparent 100%
-    );
-    transform: translateX(-100%) rotate(-25deg);
-    animation: shine 4s infinite;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(23, 37, 84, 0.8), rgba(59, 130, 246, 0.8), rgba(23, 37, 84, 0.8));
+    z-index: 50;
   }
 `;
 
@@ -297,134 +242,85 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-32 pb-16">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-dark-950 to-dark-900"></div>
           
           {/* Animated gradient overlay */}
           <div className="absolute inset-0 opacity-60 hero-gradient-bg"></div>
           
           {/* Decorative grid */}
-          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-10"></div>
-          
-          {/* Glowing orbs */}
-          <div className="absolute top-1/4 left-1/3 w-[40rem] h-[40rem] bg-blue-600/10 rounded-full filter blur-[130px] hero-glow"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-[35rem] h-[35rem] bg-indigo-500/10 rounded-full filter blur-[120px] hero-glow" style={{animationDelay: '2s'}}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-indigo-500/5 rounded-full filter blur-[160px] hero-glow" style={{animationDelay: '1s'}}></div>
-          
-          {/* Floating particles */}
-          {Array.from({ length: 10 }).map((_, index) => (
-            <div 
-              key={index}
-              className="floating-particle"
-              style={{
-                width: `${Math.random() * 6 + 2}px`,
-                height: `${Math.random() * 6 + 2}px`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                backgroundColor: `rgba(${200 + Math.random() * 55}, ${200 + Math.random() * 55}, ${255}, ${0.3 + Math.random() * 0.4})`,
-                boxShadow: `0 0 ${Math.random() * 10 + 5}px rgba(100, 150, 255, 0.6)`,
-                animationDuration: `${8 + Math.random() * 10}s`,
-                animationDelay: `${Math.random() * 5}s`
-              }}
-            ></div>
-          ))}
+          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
-          {/* Left side content */}
-          <div className="lg:w-1/2 max-w-2xl">
-            <div className="bg-dark-900/50 backdrop-blur-lg p-8 sm:p-10 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden shine-effect">
-              <div className="hero-title relative">
-                <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-white to-indigo-400 bg-clip-text text-transparent">
-                  Bienvenido a GW2
-                </h1>
-                <div className="h-1 w-24 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mb-8"></div>
-              </div>
-              
-              <div className="hero-subtitle">
-                <p className="text-xl lg:text-2xl text-white/90 mb-8">
-                  Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
-                </p>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-5 hero-buttons">
-                <Button 
-                  href="https://discord.gg/gatitos2"
-                  external
-                  variant="gradient"
-                  size="lg"
-                  rounded="full"
-                  leftIcon={<FaDiscord className="text-xl" />}
-                  rightIcon={<FaArrowRight />}
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 border border-blue-500/50 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-1 text-lg px-7 py-4"
-                >
-                  Únete a la Aventura
-                </Button>
-                
-                <Button 
-                  href="#features"
-                  variant="outline"
-                  size="lg"
-                  rounded="full"
-                  className="bg-dark-800/50 backdrop-blur-sm border-blue-500/30 hover:border-blue-500/60 shadow-lg hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1 text-lg px-7 py-4"
-                >
-                  Descubre más
-                </Button>
-              </div>
-              
-              <div className="absolute -right-12 -bottom-12 w-48 h-48 bg-blue-500/10 rounded-full filter blur-[50px]"></div>
-              <div className="absolute -left-12 -top-12 w-48 h-48 bg-indigo-500/10 rounded-full filter blur-[50px]"></div>
+        <div className="container relative z-10 px-4 mx-auto text-center mb-12">
+          <div className="max-w-3xl mx-auto">
+            <div className="hero-title">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-white">
+                Bienvenido a GW2
+              </h1>
             </div>
             
-            {/* Moving border element */}
-            <div className="flex items-center justify-center mt-8">
-              <div className="moving-border py-2 px-6 rounded-full inline-flex items-center">
-                <span className="text-white/90 text-sm flex items-center">
-                  Hecho con <FaHeart className="mx-1.5 text-red-500" /> por <span className="text-blue-400 ml-1 font-medium">Junsred</span>
-                </span>
-              </div>
+            <div className="hero-subtitle mb-12">
+              <p className="text-xl md:text-2xl text-gray-300">
+                Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-5 justify-center hero-buttons">
+              <Button 
+                href="https://discord.gg/gatitos2"
+                external
+                variant="gradient"
+                size="lg"
+                rounded="full"
+                leftIcon={<FaDiscord className="text-xl" />}
+                rightIcon={<FaArrowRight />}
+                className="bg-gradient-to-r from-blue-600 to-blue-700 border border-blue-500/50 shadow-lg text-white hover:shadow-blue-500/40 transition-all duration-300 text-lg px-7 py-4"
+              >
+                Únete a la Aventura
+              </Button>
+              
+              <Button 
+                href="#features"
+                variant="outline"
+                size="lg"
+                rounded="full"
+                className="bg-dark-800/50 backdrop-blur-sm border-blue-500/30 hover:border-blue-500/60 shadow-lg text-white hover:shadow-blue-500/20 transition-all duration-300 text-lg px-7 py-4"
+              >
+                Descubre más
+              </Button>
             </div>
           </div>
-          
-          {/* Right side with server image */}
-          <div className="lg:w-1/2 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-blue-500/10 shine-effect">
-              <div className="aspect-[16/9] relative">
-                <Image 
-                  src="/images/server.png" 
-                  alt="GW2 Server" 
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-dark-900/50 via-transparent to-transparent"></div>
-              </div>
+        </div>
+        
+        {/* Main hero image with border effect */}
+        <div className="container relative z-10 px-4 mx-auto">
+          <div className="img-border mx-auto max-w-5xl">
+            <div className="relative aspect-[21/9] w-full">
+              <Image 
+                src="/images/server.png" 
+                alt="GW2 Server" 
+                fill
+                className="object-cover"
+                priority
+              />
               
-              {/* Server stats overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-dark-900/90 to-transparent">
-                <div className="flex flex-wrap gap-4 justify-center">
-                  <div className="bg-dark-800/80 backdrop-blur-md px-4 py-2 rounded-full border border-blue-500/20 flex items-center gap-2">
-                    <FaUsers className="text-blue-400" />
-                    <span className="text-white font-medium">1000+ Usuarios</span>
-                  </div>
-                  <div className="bg-dark-800/80 backdrop-blur-md px-4 py-2 rounded-full border border-indigo-500/20 flex items-center gap-2">
-                    <FaGamepad className="text-indigo-400" />
-                    <span className="text-white font-medium">Múltiples Eventos</span>
-                  </div>
-                  <div className="bg-dark-800/80 backdrop-blur-md px-4 py-2 rounded-full border border-purple-500/20 flex items-center gap-2">
-                    <FaCrown className="text-purple-400" />
-                    <span className="text-white font-medium">Premium Experience</span>
-                  </div>
+              {/* Bottom gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/70 to-transparent pointer-events-none"></div>
+              
+              {/* Logo overlay */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                <div className="relative w-48 h-48">
+                  <Image 
+                    src="/images/logo.png" 
+                    alt="GW2 Watermark" 
+                    fill
+                    className="object-contain"
+                  />
                 </div>
-              </div>
-              
-              {/* Status indicator */}
-              <div className="absolute top-4 right-4 bg-dark-800/80 backdrop-blur-md px-4 py-2 rounded-full border border-green-500/20 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span className="text-white text-sm font-medium">Online 24/7</span>
               </div>
             </div>
           </div>
