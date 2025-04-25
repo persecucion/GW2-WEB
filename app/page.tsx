@@ -358,13 +358,14 @@ export default function HomePage() {
         
         {/* Main hero image with border effect - with exact dimensions, responsive */}
         <div className="container relative z-10 px-4 mx-auto mb-8 md:mb-16 flex justify-center">
-          <div className="img-border w-full" style={{ maxWidth: "1383px" }}>
-            <div className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[451px]">
+          <div className="img-border w-full" style={{ maxWidth: "1200px" }}>
+            <div className="relative w-full aspect-[16/9] md:aspect-[21/9]">
               <Image 
                 src="/images/server.png" 
                 alt="GW2 Server" 
                 fill
                 className="object-cover rounded-xl"
+                sizes="(max-width: 768px) 100vw, 1200px"
                 priority
               />
               
