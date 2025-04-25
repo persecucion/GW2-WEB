@@ -370,8 +370,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        
-        <style jsx global>{heroAnimations}</style>
       </section>
 
       {/* Sección de Características */}
@@ -903,6 +901,8 @@ export default function HomePage() {
       </section>
 
       <Footer />
+      
+      {/* Single global style tag for all animations */}
       <style jsx global>{heroAnimations}</style>
     </div>
   )
