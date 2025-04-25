@@ -249,7 +249,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
           </div>
           <div className="text-sm text-gray-400 whitespace-nowrap bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm moving-border">
-            Hecho con <span className="text-red-500 mx-1 inline-block"><FaHeart /></span> por <a href="https://github.com/persecucion" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-400 font-medium inline-block">Junsred</a>
+            Hecho con <span className="text-red-500 mx-1 inline-block"><FaHeart /></span> por <a href="https://twitter.com/juansrd" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-400 font-medium inline-block">Junsred</a>
           </div>
         </div>
       </div>
