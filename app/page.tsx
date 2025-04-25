@@ -87,6 +87,7 @@ const heroAnimations = `
     z-index: 0;
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 0 50px rgba(0, 102, 255, 0.2);
   }
   
   .img-border::before {
@@ -242,7 +243,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-32 pb-16">
+      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pb-20">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
@@ -255,7 +256,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto text-center mb-12">
+        <div className="container relative z-10 px-4 mx-auto text-center mb-16 mt-40">
           <div className="max-w-3xl mx-auto">
             <div className="hero-title">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-white">
@@ -296,9 +297,9 @@ export default function HomePage() {
           </div>
         </div>
         
-        {/* Main hero image with border effect */}
-        <div className="container relative z-10 px-4 mx-auto">
-          <div className="img-border mx-auto max-w-5xl">
+        {/* Main hero image with border effect - wider and filling more space */}
+        <div className="container relative z-10 px-4 mx-auto mt-10">
+          <div className="img-border mx-auto w-full max-w-6xl">
             <div className="relative aspect-[21/9] w-full">
               <Image 
                 src="/images/server.png" 
