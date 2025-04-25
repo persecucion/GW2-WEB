@@ -37,10 +37,8 @@ import { Badge } from "./components/Badge"
 import Header from "./Header"
 import Footer from "./Footer"
 
-// Importar Snowfall dinámicamente para evitar problemas de hidratación
-const Snowfall = dynamic(() => import('react-snowfall'), { 
-  ssr: false 
-})
+// Definir un wallpaper atractivo para el fondo
+const heroWallpaper = "https://i.imgur.com/y3YDlzA.jpeg";
 
 // Importación para el iframe del chat - comentado temporalmente hasta crear el componente
 // const WidgetBotChat = dynamic(() => import('./components/WidgetBotChat'), {
@@ -174,35 +172,35 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900 text-white overflow-x-hidden">
       <Header />
 
-      {/* Efectos visuales */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <Snowfall
-          snowflakeCount={100}
-          radius={[0.5, 2.0]}
-          speed={[0.5, 2.0]}
-          wind={[-0.5, 1.0]}
-          color="rgba(255, 255, 255, 0.3)"
-          style={{
-            position: "fixed",
-            width: "100vw",
-            height: "100vh",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-900/10 via-secondary-900/10 to-primary-900/10"></div>
-      </div>
-
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center">
-        {/* Fondo con color sólido y degradado visible */}
-        <div className="absolute inset-0 bg-dark-800"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-900/20 via-dark-900 to-secondary-900/20"></div>
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-600/30 rounded-full mix-blend-multiply filter blur-[80px]"></div>
-          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-secondary-600/30 rounded-full mix-blend-multiply filter blur-[80px]"></div>
-          <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-[80px]"></div>
+        {/* Fondo mejorado con wallpaper y gradientes */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center" 
+            style={{ backgroundImage: `url(${heroWallpaper})` }}
+          ></div>
+          <div className="absolute inset-0 bg-dark-900/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-primary-950/80 via-dark-950/50 to-dark-950/90"></div>
+          <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-primary-900/20 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-dark-950 to-transparent"></div>
+          
+          {/* Enhanced glow effects */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/10 rounded-full filter blur-[120px]"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary-600/10 rounded-full filter blur-[120px]"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-primary-500/5 rounded-full filter blur-[80px] animate-pulse-slow"></div>
+          
+          {/* Partículas decorativas */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 bg-primary-400/80 rounded-full shadow-lg shadow-primary-400/30 animate-pulse-slow"></div>
+            <div className="absolute top-1/3 right-1/3 w-2 h-2 bg-secondary-400/80 rounded-full shadow-lg shadow-secondary-400/30 animate-pulse-medium"></div>
+            <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-primary-400/80 rounded-full shadow-lg shadow-primary-400/30 animate-pulse-fast"></div>
+            <div className="absolute bottom-1/3 right-1/4 w-1.5 h-1.5 bg-secondary-400/80 rounded-full shadow-lg shadow-secondary-400/30 animate-pulse-slow"></div>
+            <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-white/80 rounded-full shadow-lg shadow-white/30 animate-pulse-medium"></div>
+          </div>
         </div>
-        
-        <div className="relative z-10 max-w-5xl mx-auto text-center px-6 pt-24">
+
+        <div className="container relative z-10 px-4 mx-auto text-center">
           <div data-aos="fade-up" data-aos-delay="100">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-300 to-secondary-300 bg-clip-text text-transparent">
               Bienvenido a GW2
