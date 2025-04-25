@@ -7,41 +7,53 @@ import Image from 'next/image'
 import { FaDiscord, FaTwitter, FaInstagram, FaYoutube, FaTwitch, FaHeart, FaArrowUp, FaEnvelope, FaGlobe, FaCode } from 'react-icons/fa'
 import { SiPatreon } from 'react-icons/si'
 
-// Estilo para la animación de la línea en movimiento
+// Estilo para la animación de la línea en movimiento alrededor del óvalo
 const movingBorderAnimation = `
-  @keyframes rotateGradient {
+  @keyframes borderRotate {
     0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
+      transform: rotate(0deg);
     }
     100% {
-      background-position: 0% 50%;
+      transform: rotate(360deg);
     }
   }
   
-  .moving-border {
+  .oval-border {
     position: relative;
     z-index: 0;
   }
   
-  .moving-border::before {
+  .oval-border::before {
     content: '';
     position: absolute;
-    z-index: -1;
-    inset: -1.5px;
-    border-radius: 9999px;
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.1)
+    top: -3px;
+    bottom: -3px;
+    left: -3px;
+    right: -3px;
+    border-radius: 30px;
+    background: conic-gradient(
+      from 0deg,
+      transparent,
+      rgba(59, 130, 246, 0.8),
+      transparent,
+      transparent
     );
-    background-size: 200% 200%;
-    animation: rotateGradient 3s linear infinite;
+    animation: borderRotate 4s linear infinite;
+    z-index: -1;
   }
-
+  
+  .oval-border::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    border-radius: 30px;
+    background: rgba(0, 4, 40, 0.9);
+    z-index: -1;
+  }
+  
   .top-line {
     position: absolute;
     top: 0;
@@ -76,6 +88,16 @@ const movingBorderAnimation = `
     animation: moveGradient 3s linear infinite;
   }
   
+  .footer-divider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(23, 37, 84, 0.8), rgba(59, 130, 246, 0.8), rgba(23, 37, 84, 0.8));
+    z-index: 50;
+  }
+  
   @keyframes moveGradient {
     0% {
       transform: translateX(-50%);
@@ -98,6 +120,9 @@ export default function Footer() {
 
   return (
     <footer className="relative z-50">
+      {/* Divisor del footer - línea distintiva en la parte superior */}
+      <div className="footer-divider"></div>
+      
       {/* Línea de fondo estática */}
       <div className="top-line"></div>
       
@@ -276,7 +301,7 @@ export default function Footer() {
           <div className="text-sm text-gray-400 mb-4 md:mb-0 bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm">
             &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
           </div>
-          <div className="text-sm text-gray-400 whitespace-nowrap bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm moving-border">
+          <div className="text-sm text-gray-400 whitespace-nowrap bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm oval-border">
             Hecho con <span className="text-red-500 mx-1 inline-block"><FaHeart /></span> por <a href="https://twitter.com/juansrd" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-400 font-medium inline-block">Junsred</a>
           </div>
         </div>
