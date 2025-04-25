@@ -18,8 +18,9 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-dark-950 border-t border-gray-800">
-      <div className="container mx-auto px-4 pt-16 pb-8">
+    <footer className="bg-black relative z-50 border-t-2 border-gray-800">
+      <div className="absolute inset-0 bg-black w-full h-full"></div>
+      <div className="container mx-auto px-4 pt-16 pb-8 relative z-10">
         {/* Top footer content with logo and sections */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Logo and description */}
@@ -189,8 +190,8 @@ export default function Footer() {
           <div className="text-sm text-gray-400 mb-4 md:mb-0">
             &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
           </div>
-          <div className="text-sm text-gray-500">
-            Hecho con <span className="text-red-500 mx-1"><FaHeart /></span> por <a href="https://twitter.com/juansrd" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-400 font-medium">Junsred</a>
+          <div className="text-sm text-gray-500 whitespace-nowrap">
+            Hecho con <span className="text-red-500 mx-1 inline-block"><FaHeart /></span> por <a href="https://twitter.com/juansrd" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-400 font-medium inline-block">Junsred</a>
           </div>
         </div>
       </div>
