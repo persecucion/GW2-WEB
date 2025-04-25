@@ -101,35 +101,35 @@ const heroAnimations = `
     position: relative;
     z-index: 0;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 0 0 70px rgba(0, 102, 255, 0.25);
   }
   
   .img-border::before {
     content: '';
     position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border-radius: 15px;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 16px;
     background: linear-gradient(90deg, #1e40af, #3b82f6, #8b5cf6, #3b82f6, #1e40af);
     background-size: 300% 100%;
     animation: moveGradient 3s linear infinite;
     z-index: -1;
-    opacity: 0.9;
+    opacity: 1;
   }
   
   .img-border::after {
     content: '';
     position: absolute;
-    top: -1px;
-    left: -1px;
-    right: -1px;
-    bottom: -1px;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
     border-radius: 14px;
     box-shadow: 0 0 20px rgba(79, 70, 229, 0.6);
-    z-index: -1;
+    z-index: -2;
   }
   
   .footer-divider {
@@ -302,7 +302,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pb-32">
+      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pb-40">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
@@ -315,7 +315,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto text-center mb-16 mt-48">
+        <div className="container relative z-10 px-4 mx-auto text-center mb-12 mt-40">
           <div className="max-w-3xl mx-auto">
             <div className="hero-title">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
@@ -323,7 +323,7 @@ export default function HomePage() {
               </h1>
             </div>
             
-            <div className="hero-subtitle mb-12">
+            <div className="hero-subtitle mb-10">
               <p className="text-xl md:text-2xl text-gray-300">
                 Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
               </p>
@@ -357,9 +357,9 @@ export default function HomePage() {
         </div>
         
         {/* Main hero image with border effect - wider and filling more space */}
-        <div className="container relative z-10 px-4 mx-auto mt-10">
+        <div className="container relative z-10 px-4 mx-auto mt-8">
           <div className="img-border mx-auto w-full max-w-6xl">
-            <div className="relative aspect-[21/9] w-full">
+            <div className="relative aspect-[21/10] w-full rounded-xl overflow-hidden">
               <Image 
                 src="/images/server.png" 
                 alt="GW2 Server" 
