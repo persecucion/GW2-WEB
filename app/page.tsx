@@ -87,7 +87,7 @@ const heroAnimations = `
     z-index: 0;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 0 50px rgba(0, 102, 255, 0.2);
+    box-shadow: 0 0 70px rgba(0, 102, 255, 0.25);
   }
   
   .img-border::before {
@@ -102,6 +102,19 @@ const heroAnimations = `
     background-size: 200% 100%;
     animation: moveGradient 2s linear infinite;
     z-index: -1;
+    opacity: 0.8;
+  }
+  
+  .img-border::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: 14px;
+    box-shadow: 0 0 15px rgba(0, 102, 255, 0.5);
+    z-index: -1;
   }
   
   .footer-divider {
@@ -112,6 +125,37 @@ const heroAnimations = `
     height: 3px;
     background: linear-gradient(90deg, rgba(23, 37, 84, 0.8), rgba(59, 130, 246, 0.8), rgba(23, 37, 84, 0.8));
     z-index: 50;
+  }
+  
+  .moving-border {
+    position: relative;
+    z-index: 0;
+  }
+  
+  .moving-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, transparent, #0066ff, transparent);
+    background-size: 200% 100%;
+    animation: moveGradient 2s linear infinite;
+    z-index: -1;
+  }
+  
+  .moving-border::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: 30px;
+    background: rgba(0, 4, 40, 0.9);
+    z-index: -1;
   }
 `;
 
@@ -243,7 +287,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pb-20">
+      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pb-32">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
@@ -256,7 +300,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto text-center mb-16 mt-40">
+        <div className="container relative z-10 px-4 mx-auto text-center mb-16 mt-48">
           <div className="max-w-3xl mx-auto">
             <div className="hero-title">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-white">
@@ -309,8 +353,8 @@ export default function HomePage() {
                 priority
               />
               
-              {/* Bottom gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/70 to-transparent pointer-events-none"></div>
+              {/* Enhanced bottom gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/80 to-transparent pointer-events-none"></div>
               
               {/* Logo overlay */}
               <div className="absolute inset-0 flex items-center justify-center opacity-20">
@@ -859,6 +903,7 @@ export default function HomePage() {
       </section>
 
       <Footer />
+      <style jsx global>{heroAnimations}</style>
     </div>
   )
 }
