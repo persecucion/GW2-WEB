@@ -10,8 +10,11 @@ import Footer from '../Footer';
 // Define una imagen de fallback que se usará cuando no existan las imágenes
 const fallbackImageUrl = "/images/logo.png";
 
+// Define un wallpaper atractivo para el fondo
+const minecraftWallpaper = "https://i.imgur.com/ZcCJu04.jpeg";
+
 // Define servidor con puerto 
-const serverIP = "mc.gatewaymc.net:25565";
+const serverIP = "mc.gw2.xyz:25592";
 
 // Estilos para las animaciones de luciérnagas y efectos luminosos
 const firefliesStyle = `
@@ -370,7 +373,11 @@ export default function MinecraftPage() {
           <section className="relative h-[90vh] min-h-[700px] flex items-center justify-center overflow-hidden">
             {/* Enhanced background with better gradients */}
             <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute inset-0 bg-dark-900/90"></div>
+              <div className="absolute inset-0 bg-dark-900/70"></div>
+              <div 
+                className="absolute inset-0 bg-cover bg-center" 
+                style={{ backgroundImage: `url(${minecraftWallpaper})` }}
+              ></div>
               <div className="absolute inset-0 bg-gradient-to-b from-primary-950/80 via-dark-950/50 to-dark-950/90"></div>
               <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-primary-900/20 to-transparent"></div>
               <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-dark-950 to-transparent"></div>
@@ -404,7 +411,7 @@ export default function MinecraftPage() {
                   <div className="inline-block relative">
                     <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-600 opacity-50 blur-lg rounded-full"></div>
                     <h1 className="relative text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-primary-200 uppercase tracking-tight">
-                      Gateway <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400">MC</span>
+                      GATITOS <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400">CRAFT</span>
                     </h1>
                   </div>
                 </div>
@@ -808,7 +815,7 @@ export default function MinecraftPage() {
                             <FaCube className="text-2xl text-primary-400 drop-shadow-glow" />
                           </div>
                           <div>
-                            <h3 className="text-xl font-bold text-white">SMP con Plugins</h3>
+                            <h3 className="text-xl font-bold text-white">GATITOSCRAFT</h3>
                             <p className="text-sm text-gray-400">Versión 1.21.4 - Premium y No-Premium</p>
                           </div>
                         </div>
@@ -1028,7 +1035,7 @@ export default function MinecraftPage() {
                   </div>
                   
                   <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-                    Únete a nuestra comunidad Minecraft SMP con plugins y forma parte de un mundo en constante crecimiento. 
+                    Únete a nuestra comunidad GATITOSCRAFT con plugins y forma parte de un mundo en constante crecimiento. 
                     Acepta tanto cuentas premium como no premium.
                   </p>
                   
