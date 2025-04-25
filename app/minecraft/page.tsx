@@ -11,7 +11,7 @@ import Footer from '../Footer';
 const fallbackImageUrl = "/images/logo.png";
 
 // Define un wallpaper atractivo para el fondo
-const minecraftWallpaper = "https://i.imgur.com/ZcCJu04.jpeg";
+const minecraftWallpaper = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDEwdXFuN216bXc1dmF2dDgxMnB0MWk2ZnFuZDM2YW10czdzM2YyNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6wYyXghVjlsxe3uuY5/giphy.gif";
 
 // Define servidor con puerto 
 const serverIP = "mc.gw2.xyz:25592";
