@@ -9,88 +9,39 @@ import { SiPatreon } from 'react-icons/si'
 
 // Estilo para la animación de la línea en movimiento
 const movingBorderAnimation = `
-  @keyframes borderRotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .oval-border {
+  /* Línea animada que recorre todo el borde del óvalo "Hecho con ❤️ por Junsred" */
+  .moving-border {
     position: relative;
     z-index: 0;
   }
   
-  .oval-border::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    bottom: -3px;
-    left: -3px;
-    right: -3px;
-    border-radius: 30px;
-    background: conic-gradient(
-      from 0deg,
-      transparent,
-      rgba(59, 130, 246, 0.8),
-      transparent,
-      transparent
-    );
-    animation: borderRotate 4s linear infinite;
-    z-index: -1;
-  }
-  
-  .oval-border::after {
+  .moving-border::before {
     content: '';
     position: absolute;
     top: -2px;
-    bottom: -2px;
     left: -2px;
     right: -2px;
+    bottom: -2px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, transparent, #0066ff, transparent);
+    background-size: 200% 100%;
+    animation: moveGradient 2s linear infinite;
+    z-index: -1;
+  }
+  
+  .moving-border::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
     border-radius: 30px;
     background: rgba(0, 4, 40, 0.9);
     z-index: -1;
   }
   
-  /* Línea móvil que recorre todo el borde del panel */
-  .page-border {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  
-  .border-line {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 60;
-  }
-  
-  .border-line::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    background-image: linear-gradient(to right, transparent, #0066ff, transparent);
-    background-origin: border-box;
-    background-size: 200% 100%;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: rotate-border 4s linear infinite;
-  }
-  
-  @keyframes rotate-border {
+  @keyframes moveGradient {
     0% {
       background-position: 0% 0;
     }
@@ -121,10 +72,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative z-50 page-border">
-      {/* Línea animada que recorre todo el borde */}
-      <div className="border-line"></div>
-      
+    <footer className="relative z-50">
       {/* Divisor del footer - línea distintiva en la parte superior */}
       <div className="footer-divider"></div>
       
@@ -300,7 +248,7 @@ export default function Footer() {
           <div className="text-sm text-gray-400 mb-4 md:mb-0 bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm">
             &copy; {new Date().getFullYear()} GW2.XYZ. Todos los derechos reservados.
           </div>
-          <div className="text-sm text-gray-400 whitespace-nowrap bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm oval-border">
+          <div className="text-sm text-gray-400 whitespace-nowrap bg-dark-900/50 py-1.5 px-4 rounded-full backdrop-blur-sm moving-border">
             Hecho con <span className="text-red-500 mx-1 inline-block"><FaHeart /></span> por <a href="https://twitter.com/juansrd" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-400 font-medium inline-block">Junsred</a>
           </div>
         </div>
