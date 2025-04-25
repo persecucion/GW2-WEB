@@ -315,7 +315,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto text-center pt-32">
+        <div className="container relative z-10 px-4 mx-auto text-center pt-48 flex-1 flex flex-col justify-center">
           <div className="max-w-3xl mx-auto">
             <div className="hero-title">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
@@ -357,7 +357,7 @@ export default function HomePage() {
         </div>
         
         {/* Main hero image with border effect - with exact dimensions */}
-        <div className="container relative z-10 px-4 mx-auto mt-auto mb-10 flex justify-center">
+        <div className="container relative z-10 px-4 mx-auto mb-16 flex justify-center">
           <div className="img-border w-full" style={{ maxWidth: "1383px" }}>
             <div className="relative w-full" style={{ height: "451px" }}>
               <Image 
