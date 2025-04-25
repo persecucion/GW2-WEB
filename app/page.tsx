@@ -315,7 +315,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto text-center pt-20 md:pt-48 flex-1 flex flex-col justify-center mb-8 md:mb-0">
+        <div className="container relative z-10 px-4 mx-auto text-center pt-16 md:pt-36 flex-1 flex flex-col justify-center mb-8 md:mb-0">
           <div className="max-w-3xl mx-auto">
             <div className="hero-title">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
