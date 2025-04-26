@@ -162,7 +162,7 @@ export default function Footer() {
                 <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Inicio
               </Link>
-              <Link href="/eventos" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
+              <Link href="/events" className="text-gray-300 hover:text-primary-400 transition-colors flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                 Eventos
               </Link>
