@@ -65,7 +65,7 @@ export default function EventsPage() {
         date: "25 Jun 2023",
         time: "19:00 CEST",
         description: "¡Enfrenta a tu guild contra las mejores de toda la comunidad hispana! Premios para los tres primeros puestos incluyendo oro, gemas y más.",
-        location: "Fields of Ruin",
+        location: "Discord",
         category: "competition",
         platform: "discord",
         registrationOpen: true,
@@ -78,9 +78,9 @@ export default function EventsPage() {
         date: "18 Jun 2023",
         time: "21:00 CEST",
         description: "Una noche divertida llena de minijuegos en Guild Wars 2. Participa en carreras, acertijos, competiciones de salto y mucho más.",
-        location: "Divinity's Reach",
+        location: "Discord",
         category: "community",
-        platform: "discord-twitch",
+        platform: "discord",
         registrationOpen: true,
         featured: false,
         image: "/images/event-minigames.jpg"
@@ -91,7 +91,7 @@ export default function EventsPage() {
         date: "2 Jul 2023",
         time: "20:00 CEST",
         description: "Muestra tus habilidades de decoración en este festival comunitario. Las mejores guildas recibirán reconocimiento y premios especiales.",
-        location: "Guild Hall",
+        location: "Discord",
         category: "community",
         platform: "discord",
         registrationOpen: true,
@@ -104,7 +104,7 @@ export default function EventsPage() {
         date: "12 Jun 2023",
         time: "18:30 CEST",
         description: "Aprende los fundamentos de los raids con instructores experimentados. Sesión ideal para jugadores que quieren iniciarse en el contenido endgame.",
-        location: "Lion's Arch Aerodrome",
+        location: "Discord",
         category: "community",
         platform: "discord",
         registrationOpen: false,
@@ -117,9 +117,9 @@ export default function EventsPage() {
         date: "30 Jun 2023",
         time: "20:00 CEST",
         description: "Celebramos el 5º aniversario del servidor de Discord con una noche llena de actividades, sorteos y premios especiales para todos los asistentes.",
-        location: "Lion's Arch",
+        location: "Discord",
         category: "special",
-        platform: "discord-twitch",
+        platform: "discord",
         registrationOpen: true,
         featured: true,
         image: "/images/event-anniversary.jpg"
@@ -130,9 +130,9 @@ export default function EventsPage() {
         date: "21 Jun 2023",
         time: "19:00 CEST",
         description: "Sesión de preguntas y respuestas con desarrolladores de ArenaNet. Oportunidad única para conocer detalles sobre el futuro del juego.",
-        location: "Stream",
+        location: "Discord",
         category: "special",
-        platform: "twitch",
+        platform: "discord",
         registrationOpen: true,
         featured: false,
         image: "/images/event-qa.jpg"
@@ -143,9 +143,9 @@ export default function EventsPage() {
         date: "15 Jul 2023",
         time: "17:00 CEST",
         description: "Demuestra tu habilidad en combate en este torneo de PvP en formato 2v2. Habrá premios para los equipos ganadores.",
-        location: "Heart of the Mists",
+        location: "Discord",
         category: "competition",
-        platform: "discord-twitch",
+        platform: "discord",
         registrationOpen: true,
         featured: false,
         image: "/images/event-pvp.jpg"
@@ -156,7 +156,7 @@ export default function EventsPage() {
         date: "8 Jul 2023",
         time: "21:30 CEST",
         description: "Concurso de moda con temática veraniega. Crea tu mejor look y compite por premios y el reconocimiento de la comunidad.",
-        location: "Rata Sum",
+        location: "Discord",
         category: "community",
         platform: "discord",
         registrationOpen: true,
@@ -520,14 +520,7 @@ export default function EventsPage() {
                         <h3 className="text-xl lg:text-2xl font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
                         <p className="text-gray-300 mb-6">{event.description}</p>
 
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
-                              <FaMapMarkerAlt className="text-primary-400" />
-                            </div>
-                            <span className="text-gray-300">{event.location}</span>
-                          </div>
-                          
+                        <div className="flex items-center justify-center mb-6">
                           <div className="flex items-center gap-2">
                             <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
                               {getPlatformIcon(event.platform)}
@@ -545,7 +538,7 @@ export default function EventsPage() {
                           rounded="lg"
                           className={`relative z-10 w-full justify-center ${
                             event.registrationOpen 
-                              ? `bg-gradient-to-r ${getCategoryColor(event.category)} hover:brightness-110` 
+                              ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 shadow-md' 
                               : 'bg-gray-900/50 border-gray-600/50 backdrop-blur-sm'
                           }`}
                         >
@@ -606,16 +599,11 @@ export default function EventsPage() {
                           {getCategoryName(event.category)}
                         </div>
                         
-                        <div className="absolute bottom-4 left-4">
+                        <div className="absolute bottom-4 left-4 right-4">
                           <div className="flex items-center gap-2 text-sm font-medium text-white bg-gray-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
                             <FaCalendarAlt className="text-primary-400" />
                             <span>{event.date}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="absolute bottom-4 right-4">
-                          <div className="flex items-center gap-2 text-sm font-medium text-white bg-gray-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
-                            <FaClock className="text-primary-400" />
+                            <span className="mx-2 text-primary-400/50">•</span>
                             <span>{event.time}</span>
                           </div>
                         </div>
@@ -626,14 +614,7 @@ export default function EventsPage() {
                       <h3 className="text-lg font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
                       <p className="text-gray-300 text-sm mb-5 flex-grow">{event.description}</p>
 
-                      <div className="flex justify-between mb-6">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center">
-                            <FaMapMarkerAlt className="text-primary-400 text-xs" />
-                          </div>
-                          <span className="text-gray-300 text-xs">{event.location}</span>
-                        </div>
-                        
+                      <div className="flex justify-center mb-6">
                         <div className="flex items-center gap-2">
                           <div className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center">
                             {getPlatformIcon(event.platform)}
@@ -652,7 +633,7 @@ export default function EventsPage() {
                         size="sm"
                         className={`relative z-10 w-full justify-center ${
                           event.registrationOpen 
-                            ? `bg-gradient-to-r ${getCategoryColor(event.category)} hover:brightness-110` 
+                            ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 shadow-sm' 
                             : 'bg-gray-900/50 border-gray-600/50 backdrop-blur-sm'
                         }`}
                       >
