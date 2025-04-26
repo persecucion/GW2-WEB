@@ -136,365 +136,416 @@ export default function PatreonPage() {
   ]
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white overflow-x-hidden">
       <Header />
-      <main className="min-h-screen bg-dark-900">
-        {/* Hero Section */}
-        <section className="relative pt-28 pb-16 bg-dark-800">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary-900/20 to-dark-900"></div>
-          <div className="relative z-10 max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto" data-aos="fade-up">
-              <span className="bg-primary-900/30 text-primary-400 text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4">
-                Patreon
-              </span>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
-                Apoya nuestra <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">Comunidad</span>
-              </h1>
-              <p className="text-lg text-gray-300 mb-8 max-w-3xl mx-auto">
-                Únete a nuestro Patreon y obtén acceso a beneficios exclusivos mientras apoyas el crecimiento de nuestra comunidad.
-              </p>
-            </div>
-          </div>
-        </section>
 
-        {/* Tabs Navigation */}
-        <div className="container-custom mb-16">
-          <div className="flex justify-center mb-12" data-aos="fade-up">
-            <div className="inline-flex p-1 bg-dark-800 rounded-lg">
+      {/* Hero Section - Modernized */}
+      <section className="relative pt-40 pb-24 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Base gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950 to-gray-900"></div>
+          
+          {/* Animated gradient overlay */}
+          <div className="absolute inset-0 opacity-60 bg-gradient-to-br from-blue-900/10 via-gray-900 to-purple-900/10"></div>
+          
+          {/* Particle effect overlay */}
+          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+
+          {/* Decorative orbs */}
+          <div className="absolute top-1/4 right-1/5 w-64 h-64 rounded-full bg-primary-900/20 blur-[100px]"></div>
+          <div className="absolute bottom-1/4 left-1/5 w-96 h-96 rounded-full bg-purple-900/20 blur-[120px]"></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
+          <div className="max-w-3xl mx-auto" data-aos="fade-up">
+            <div className="inline-block mb-4">
+              <div className="px-4 py-1.5 bg-gradient-to-r from-primary-900/60 to-purple-900/60 backdrop-blur-md rounded-full border border-blue-500/20 text-blue-300 text-sm font-medium">
+                <FaPatreon className="inline-block mr-2 text-[#F96854]" /> APOYA NUESTRA COMUNIDAD
+              </div>
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Conviértete en </span>
+              <span className="bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">Patreon</span>
+            </h1>
+            
+            <p className="text-lg text-blue-100/80 mb-10 max-w-4xl mx-auto">
+              Únete a nuestro Patreon y obtén acceso a beneficios exclusivos mientras apoyas el crecimiento de nuestra comunidad de Guild Wars 2.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Tabs Navigation - Modernized */}
+      <section className="relative pb-8">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex justify-center" data-aos="fade-up">
+            <div className="inline-flex p-1 bg-gray-900/80 backdrop-blur-sm rounded-xl border border-gray-800/80 shadow-lg">
               {[
-                { id: 'plans', label: 'Planes Patreon' },
-                { id: 'faq', label: 'Preguntas Frecuentes' },
-                { id: 'testimonials', label: 'Testimonios' }
+                { id: 'plans', label: 'Planes Patreon', icon: <FaCrown className="mr-2" /> },
+                { id: 'faq', label: 'Preguntas Frecuentes', icon: <FaQuestionCircle className="mr-2" /> },
+                { id: 'testimonials', label: 'Testimonios', icon: <FaUser className="mr-2" /> }
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                  className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center ${
                     activeTab === tab.id 
-                      ? 'bg-primary-900 text-white' 
-                      : 'text-gray-400 hover:text-white'
+                      ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg' 
+                      : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
                   }`}
                   onClick={() => setActiveTab(tab.id as any)}
                 >
+                  {tab.icon}
                   {tab.label}
                 </button>
               ))}
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Period Toggle */}
-        {activeTab === 'plans' && (
-          <div className="container-custom">
-            <div className="flex justify-center mb-20" data-aos="fade-up">
-              <div className="inline-flex items-center bg-dark-800 p-2 rounded-full shadow-lg">
-                <span className={`mr-4 font-medium px-4 py-2 rounded-full ${period === 'monthly' ? 'bg-primary-900 text-white' : 'text-gray-400'}`}>
-                  Mensual
-                </span>
-                <div 
-                  className="relative w-16 h-8 bg-dark-700 rounded-full cursor-pointer"
-                  onClick={() => setPeriod(period === 'monthly' ? 'yearly' : 'monthly')}
+      {/* Period Toggle - Modernized */}
+      {activeTab === 'plans' && (
+        <section className="relative pb-12">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex justify-center mb-12" data-aos="fade-up">
+              <div className="inline-flex items-center bg-gray-900/80 backdrop-blur-sm p-2 rounded-xl border border-gray-800/80 shadow-lg">
+                <button 
+                  className={`px-5 py-2 rounded-lg font-medium transition-all duration-300 ${
+                    period === 'monthly' 
+                      ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg' 
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                  onClick={() => setPeriod('monthly')}
                 >
-                  <div 
-                    className={`absolute w-6 h-6 bg-primary-500 rounded-full transition-all duration-300 transform ${
-                      period === 'yearly' ? 'translate-x-9' : 'translate-x-1'
-                    } top-1`} 
-                  />
-                </div>
-                <div className="ml-4 flex items-center">
-                  <span className={`font-medium px-4 py-2 rounded-full ${period === 'yearly' ? 'bg-primary-900 text-white' : 'text-gray-400'}`}>
-                    Anual
-                  </span>
-                  <span className="ml-3 text-xs bg-green-900 text-green-400 px-3 py-1 rounded-full">
+                  Mensual
+                </button>
+                
+                <div className="mx-3 text-gray-500">|</div>
+                
+                <button 
+                  className={`px-5 py-2 rounded-lg font-medium transition-all duration-300 flex items-center ${
+                    period === 'yearly' 
+                      ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg' 
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                  onClick={() => setPeriod('yearly')}
+                >
+                  Anual
+                  <span className="ml-2 text-xs bg-green-900/80 text-green-400 px-2 py-0.5 rounded-full">
                     20% Descuento
                   </span>
-                </div>
+                </button>
               </div>
             </div>
           </div>
-        )}
+        </section>
+      )}
 
-        {/* Plans Section */}
-        {activeTab === 'plans' && (
-          <section className="pb-32 bg-dark-900">
-            <div className="container-custom">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                {patreonPlans.map((plan) => (
-                  <div 
-                    key={plan.id}
-                    className={`relative ${plan.popular ? 'transform -translate-y-4 md:scale-105' : ''}`}
-                    data-aos="fade-up"
-                  >
-                    {plan.badge && (
-                      <div className="absolute -top-5 inset-x-0 flex justify-center">
-                        <span className="bg-primary-500 text-white px-6 py-2 rounded-full text-sm font-medium shadow-lg">
-                          {plan.badge}
-                        </span>
+      {/* Plans Section - Modernized */}
+      {activeTab === 'plans' && (
+        <section className="relative pb-32">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute w-96 h-96 -top-24 -right-24 bg-gradient-to-br from-primary-600/20 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute w-96 h-96 -bottom-24 -left-24 bg-gradient-to-br from-primary-600/20 to-transparent rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {patreonPlans.map((plan) => (
+                <div 
+                  key={plan.id}
+                  className={`relative ${plan.popular ? 'md:-translate-y-4' : ''}`}
+                  data-aos="fade-up"
+                >
+                  {plan.badge && (
+                    <div className="absolute -top-5 inset-x-0 flex justify-center z-10">
+                      <span className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-6 py-2 rounded-full text-sm font-medium shadow-lg border border-yellow-400/30 flex items-center gap-1">
+                        <FaStar className="text-white" />
+                        {plan.badge}
+                      </span>
+                    </div>
+                  )}
+                  
+                  <div className={`relative bg-gradient-to-br from-gray-900/90 to-gray-950 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-700/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}>
+                    <div className="relative">
+                      <div className="relative h-48 overflow-hidden">
+                        <Image 
+                          src={plan.image} 
+                          alt={plan.name} 
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/70 to-transparent"></div>
                       </div>
-                    )}
+                    </div>
                     
-                    <Card 
-                      variant="gradient" 
-                      hover="lift"
-                      shadow={plan.popular ? 'glow' : 'lg'}
-                      className={`border border-gray-700 bg-dark-800`}
-                    >
-                      <CardHeader className="pt-8 pb-4">
-                        <div className="relative w-full h-48 mb-6 overflow-hidden rounded-lg image-zoom bg-dark-900">
-                          <Image 
-                            src={plan.image} 
-                            alt={plan.name} 
-                            fill
-                            className="object-cover"
-                          />
-                          <div className="absolute inset-0 bg-dark-900 opacity-50"></div>
-                        </div>
-                        <h3 className={`text-3xl font-bold text-center ${plan.color} mb-2`}>
-                          {plan.name}
-                        </h3>
-                      </CardHeader>
+                    <div className="p-6">
+                      <h3 className={`text-3xl font-bold text-center mb-4 bg-gradient-to-r ${
+                        plan.id === 'gold' ? 'from-yellow-400 to-yellow-600' :
+                        plan.id === 'diamond' ? 'from-blue-400 to-blue-600' :
+                        'from-purple-400 to-purple-600'
+                      } bg-clip-text text-transparent`}>
+                        {plan.name}
+                      </h3>
                       
-                      <CardContent className="pt-4 pb-6">
-                        <div className="text-center mb-8">
-                          <div className="flex items-center justify-center">
-                            <span className="text-gray-400 mr-1 text-xl">€</span>
-                            <span className={`text-5xl font-bold ${plan.color}`}>{plan.price}</span>
-                            <span className="text-gray-400 ml-1 text-xl">/{period === 'monthly' ? 'mes' : 'año'}</span>
-                          </div>
-                          
-                          {period === 'yearly' && (
-                            <div className="mt-3 text-sm text-gray-400">
-                              <span className="line-through">{(Number(plan.monthlyPrice) * 12).toFixed(2)}€</span>
-                              <span className="ml-2 text-green-400">20% descuento</span>
-                            </div>
-                          )}
+                      <div className="text-center mb-8">
+                        <div className="flex items-center justify-center">
+                          <span className="text-gray-400 mr-1 text-xl">€</span>
+                          <span className={`text-5xl font-bold text-white`}>{plan.price}</span>
+                          <span className="text-gray-400 ml-1 text-xl">/{period === 'monthly' ? 'mes' : 'año'}</span>
                         </div>
                         
-                        <ul className="space-y-4 mb-8">
-                          {plan.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-start gap-4 p-3 bg-dark-900 rounded-lg border border-gray-700 shadow-md">
-                              {feature.included ? (
-                                <FaCheck className={`mt-1 flex-shrink-0 ${plan.color}`} />
-                              ) : (
-                                <FaTimes className="mt-1 flex-shrink-0 text-gray-500" />
-                              )}
-                              <span className={feature.included ? 'text-gray-200' : 'text-gray-500'}>
-                                {feature.title}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
+                        {period === 'yearly' && (
+                          <div className="mt-3 text-sm">
+                            <span className="text-gray-500 line-through">{(Number(plan.monthlyPrice) * 12).toFixed(2)}€</span>
+                            <span className="ml-2 text-green-400">20% descuento</span>
+                          </div>
+                        )}
+                      </div>
                       
-                      <CardFooter className="pt-2 pb-8">
-                        <Button 
-                          href="https://www.patreon.com/gatitos2"
-                          external
-                          variant={plan.popular ? 'gradient' : 'outline'}
-                          rounded="default"
-                          animation="float"
-                          className="w-full py-3"
-                          leftIcon={<FaPatreon />}
-                        >
-                          Suscribirse
-                        </Button>
-                      </CardFooter>
-                    </Card>
+                      <ul className="space-y-3 mb-8">
+                        {plan.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg border border-gray-700/50">
+                            {feature.included ? (
+                              <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                                plan.id === 'gold' ? 'bg-yellow-500' :
+                                plan.id === 'diamond' ? 'bg-blue-500' :
+                                'bg-purple-500'
+                              }`}>
+                                <FaCheck className="text-white text-xs" />
+                              </div>
+                            ) : (
+                              <div className="w-5 h-5 rounded-full flex items-center justify-center bg-gray-700">
+                                <FaTimes className="text-gray-500 text-xs" />
+                              </div>
+                            )}
+                            <span className={feature.included ? 'text-gray-200' : 'text-gray-500'}>
+                              {feature.title}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <button 
+                        className={`w-full py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center ${
+                          plan.popular 
+                            ? `bg-gradient-to-r ${
+                              plan.id === 'gold' ? 'from-yellow-600 to-yellow-700' :
+                              plan.id === 'diamond' ? 'from-blue-600 to-blue-700' :
+                              'from-purple-600 to-purple-700'
+                            } text-white hover:shadow-lg`
+                            : 'bg-gray-800 border border-gray-700 text-white hover:bg-gray-700'
+                        }`}
+                      >
+                        <FaPatreon className="mr-2" /> Suscribirse
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </div>
-              
-              <div className="mt-20 text-center" data-aos="fade-up">
-                <p className="text-gray-300 mb-10 max-w-2xl mx-auto bg-dark-800 p-6 rounded-lg border border-gray-700 shadow-lg">
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-16 text-center" data-aos="fade-up">
+              <div className="bg-gradient-to-br from-gray-900/90 to-gray-950 backdrop-blur-sm rounded-xl p-8 border border-gray-700/50 shadow-lg max-w-3xl mx-auto">
+                <p className="text-gray-300 mb-4">
                   Todos los planes incluyen prioridad de voz en los canales de Discord, notificación de eventos exclusivos y acceso prioritario a los sorteos.
                 </p>
                 <Link 
                   href="/contact" 
-                  className="text-primary-400 hover:text-primary-300 inline-flex items-center bg-dark-800 p-4 rounded-lg border border-gray-700 shadow-md"
+                  className="text-primary-400 hover:text-primary-300 inline-flex items-center"
                 >
                   ¿Tienes más preguntas sobre Patreon? Contáctanos <FaArrowRight className="ml-2" />
                 </Link>
               </div>
             </div>
-          </section>
-        )}
-
-        {/* FAQ Section */}
-        {activeTab === 'faq' && (
-          <section className="pb-32 bg-dark-900">
-            <div className="container-custom">
-              <div className="max-w-3xl mx-auto space-y-8">
-                {faqs.map((faq, index) => (
-                  <Card 
-                    key={index} 
-                    variant="glass"
-                    hover="border"
-                    className="bg-dark-800 border border-gray-700 shadow-lg"
-                    data-aos="fade-up"
-                    data-aos-delay={index * 100}
-                  >
-                    <CardContent className="p-8">
-                      <div className="flex items-start gap-5">
-                        <div className="bg-primary-900 p-4 rounded-lg mt-1">
-                          <FaQuestionCircle className="text-primary-400 text-2xl" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold mb-4 text-white">{faq.question}</h3>
-                          <p className="text-gray-300 text-lg">{faq.answer}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-                
-                <div className="mt-16 text-center bg-dark-800 p-8 rounded-lg border border-gray-700 shadow-lg" data-aos="fade-up">
-                  <h3 className="text-2xl font-bold mb-4 text-white">¿No encuentras respuesta a tu pregunta?</h3>
-                  <p className="text-gray-300 mb-8 text-lg">
-                    Podemos ayudarte con cualquier duda que tengas sobre Patreon. No dudes en contactarnos.
-                  </p>
-                  <Button 
-                    href="/contact"
-                    variant="gradient"
-                    rounded="default"
-                    animation="float"
-                    className="py-3 px-6"
-                    size="lg"
-                  >
-                    Contactar al Soporte
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Testimonials Section */}
-        {activeTab === 'testimonials' && (
-          <section className="pb-32 bg-dark-900">
-            <div className="container-custom">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  {
-                    name: "Alex",
-                    role: "Patreon Diamond",
-                    time: "1 año",
-                    image: "/images/vip1.png",
-                    text: "Los canales exclusivos para Patreon son increíbles, el contenido exclusivo vale totalmente la pena. Recomiendo a cualquiera que quiera apoyar la comunidad.",
-                    rating: 5
-                  },
-                  {
-                    name: "Sara",
-                    role: "Patreon Platinum",
-                    time: "7 meses",
-                    image: "/images/vip2.png",
-                    text: "Mi canal privado como Patreon Platinum me permite conectar con mis amigos en un espacio exclusivo. Los sorteos exclusivos también son fantásticos.",
-                    rating: 5
-                  },
-                  {
-                    name: "Carlos",
-                    role: "Patreon Gold",
-                    time: "3 meses",
-                    image: "/images/vip3.png",
-                    text: "Por el precio, el plan Gold en Patreon ofrece un gran valor. Los permisos adicionales y el acceso a canales exclusivos hacen que la experiencia sea mucho mejor.",
-                    rating: 4
-                  },
-                  {
-                    name: "Laura",
-                    role: "Patreon Diamond",
-                    time: "5 meses",
-                    image: "/images/vip1.png",
-                    text: "Desde que me convertí en Patreon, he disfrutado mucho más de la comunidad. La inmunidad al slowmode y el rol personalizado son mis características favoritas.",
-                    rating: 5
-                  },
-                  {
-                    name: "Mateo",
-                    role: "Patreon Platinum",
-                    time: "1 año",
-                    image: "/images/vip2.png",
-                    text: "Vale cada céntimo. Apoyar a través de Patreon es una excelente manera de contribuir, y los beneficios son increíbles. Muy recomendable.",
-                    rating: 5
-                  },
-                  {
-                    name: "Elena",
-                    role: "Patreon Gold",
-                    time: "4 meses",
-                    image: "/images/vip3.png",
-                    text: "Al principio dudaba, pero después de probar el plan Gold en Patreon, estoy muy contenta. Es una gran forma de apoyar a la comunidad mientras obtienes beneficios útiles.",
-                    rating: 4
-                  }
-                ].map((testimonial, index) => (
-                  <Card 
-                    key={index} 
-                    variant="default"
-                    hover="glow"
-                    className="h-full bg-dark-800 border border-gray-700 shadow-lg"
-                    data-aos="fade-up"
-                    data-aos-delay={index * 100}
-                  >
-                    <CardContent className="p-8">
-                      <div className="flex items-center gap-5 mb-6">
-                        <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border-2 border-primary-500 shadow-md">
-                          <Image 
-                            src={testimonial.image} 
-                            alt={testimonial.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-white text-lg">{testimonial.name}</h3>
-                          <p className="text-primary-400">{testimonial.role} • {testimonial.time}</p>
-                          <div className="flex mt-2">
-                            {[...Array(5)].map((_, i) => (
-                              <FaStar 
-                                key={i} 
-                                className={i < testimonial.rating ? "text-yellow-400" : "text-gray-600"} 
-                                size={16}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-gray-300 text-lg leading-relaxed">{testimonial.text}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Final CTA */}
-        <section className="py-32 relative overflow-hidden">
-          {/* Fondo sólido para áreas invisibles */}
-          <div className="absolute inset-0 bg-dark-800"></div>
-          <div className="absolute inset-0 bg-gradient-custom"></div>
-          <div className="bg-dark-800 absolute top-0 left-0 right-0 h-16"></div>
-          <div className="bg-dark-800 absolute bottom-0 left-0 right-0 h-16"></div>
-          
-          <div className="max-w-4xl mx-auto px-6 text-center relative z-10" data-aos="fade-up">
-            <FaPatreon className="text-7xl text-[#F96854] mx-auto mb-8" />
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">
-              Apóyanos en Patreon
-            </h2>
-            <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto bg-dark-800/80 p-6 rounded-lg border border-gray-700 shadow-lg">
-              Conviértete en Patreon hoy y disfruta de los mejores beneficios mientras apoyas a nuestra comunidad.
-            </p>
-            <Button 
-              href="https://www.patreon.com/gatitos2"
-              external
-              variant="gradient"
-              size="lg"
-              rounded="full"
-              animation="float"
-              className="px-12 py-5 text-xl button-pulse shadow-lg"
-              leftIcon={<FaPatreon className="text-2xl" />}
-            >
-              Únete a Patreon
-            </Button>
           </div>
         </section>
-      </main>
+      )}
+
+      {/* FAQ Section - Modernized */}
+      {activeTab === 'faq' && (
+        <section className="relative pb-32">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute w-96 h-96 -top-24 -right-24 bg-gradient-to-br from-primary-600/20 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute w-96 h-96 -bottom-24 -left-24 bg-gradient-to-br from-primary-600/20 to-transparent rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="max-w-4xl mx-auto px-6 relative z-10">
+            <div className="space-y-6">
+              {faqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="bg-gradient-to-br from-gray-900/90 to-gray-950 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-700/50 transition-all duration-300 hover:border-blue-500/50 hover:shadow-blue-500/10"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                >
+                  <div className="p-6">
+                    <div className="flex items-start gap-5">
+                      <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-4 rounded-lg shadow-lg flex-shrink-0">
+                        <FaQuestionCircle className="text-white text-xl" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-3 text-white">{faq.question}</h3>
+                        <p className="text-gray-300">{faq.answer}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              
+              <div className="bg-gradient-to-br from-gray-900/90 to-gray-950 backdrop-blur-sm rounded-xl p-8 text-center border border-gray-700/50 shadow-lg mt-12" data-aos="fade-up">
+                <h3 className="text-2xl font-bold mb-4 text-white">¿No encuentras respuesta a tu pregunta?</h3>
+                <p className="text-gray-300 mb-6">
+                  Podemos ayudarte con cualquier duda que tengas sobre Patreon. No dudes en contactarnos.
+                </p>
+                <button 
+                  className="py-3 px-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg shadow-lg hover:from-blue-500 hover:to-blue-600 transition-all duration-300"
+                >
+                  Contactar al Soporte
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Testimonials Section - Modernized */}
+      {activeTab === 'testimonials' && (
+        <section className="relative pb-32">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute w-96 h-96 -top-24 -right-24 bg-gradient-to-br from-primary-600/20 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute w-96 h-96 -bottom-24 -left-24 bg-gradient-to-br from-primary-600/20 to-transparent rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  name: "Alex",
+                  role: "Patreon Diamond",
+                  time: "1 año",
+                  image: "/images/vip1.png",
+                  text: "Los canales exclusivos para Patreon son increíbles, el contenido exclusivo vale totalmente la pena. Recomiendo a cualquiera que quiera apoyar la comunidad.",
+                  rating: 5
+                },
+                {
+                  name: "Sara",
+                  role: "Patreon Platinum",
+                  time: "7 meses",
+                  image: "/images/vip2.png",
+                  text: "Mi canal privado como Patreon Platinum me permite conectar con mis amigos en un espacio exclusivo. Los sorteos exclusivos también son fantásticos.",
+                  rating: 5
+                },
+                {
+                  name: "Carlos",
+                  role: "Patreon Gold",
+                  time: "3 meses",
+                  image: "/images/vip3.png",
+                  text: "Por el precio, el plan Gold en Patreon ofrece un gran valor. Los permisos adicionales y el acceso a canales exclusivos hacen que la experiencia sea mucho mejor.",
+                  rating: 4
+                },
+                {
+                  name: "Laura",
+                  role: "Patreon Diamond",
+                  time: "5 meses",
+                  image: "/images/vip1.png",
+                  text: "Desde que me convertí en Patreon, he disfrutado mucho más de la comunidad. La inmunidad al slowmode y el rol personalizado son mis características favoritas.",
+                  rating: 5
+                },
+                {
+                  name: "Mateo",
+                  role: "Patreon Platinum",
+                  time: "1 año",
+                  image: "/images/vip2.png",
+                  text: "Vale cada céntimo. Apoyar a través de Patreon es una excelente manera de contribuir, y los beneficios son increíbles. Muy recomendable.",
+                  rating: 5
+                },
+                {
+                  name: "Elena",
+                  role: "Patreon Gold",
+                  time: "4 meses",
+                  image: "/images/vip3.png",
+                  text: "Al principio dudaba, pero después de probar el plan Gold en Patreon, estoy muy contenta. Es una gran forma de apoyar a la comunidad mientras obtienes beneficios útiles.",
+                  rating: 4
+                }
+              ].map((testimonial, index) => (
+                <div 
+                  key={index}
+                  className="bg-gradient-to-br from-gray-900/90 to-gray-950 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-700/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-blue-500/10 hover:border-blue-500/30"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                >
+                  <div className="p-6">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-500 shadow-md">
+                        <Image 
+                          src={testimonial.image} 
+                          alt={testimonial.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-white text-lg">{testimonial.name}</h3>
+                        <p className="text-blue-400">{testimonial.role} • {testimonial.time}</p>
+                        <div className="flex mt-1">
+                          {[...Array(5)].map((_, i) => (
+                            <FaStar 
+                              key={i} 
+                              className={i < testimonial.rating ? "text-yellow-400" : "text-gray-600"} 
+                              size={16}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-gray-300 leading-relaxed">{testimonial.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Final CTA - Modernized */}
+      <section className="py-24 relative overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+        
+        {/* Decorative orbs */}
+        <div className="absolute top-1/3 right-20 w-64 h-64 rounded-full bg-blue-900/10 blur-[100px]"></div>
+        <div className="absolute bottom-1/3 left-20 w-64 h-64 rounded-full bg-purple-900/10 blur-[100px]"></div>
+        
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10" data-aos="fade-up">
+          <div className="bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md rounded-xl overflow-hidden shadow-2xl border border-primary-500/20 p-8 md:p-12">
+            <div className="inline-flex items-center justify-center p-4 bg-gradient-to-r from-[#F96854]/20 to-[#F96854]/10 rounded-full mb-6 border border-[#F96854]/30">
+              <FaPatreon className="text-4xl text-[#F96854]" />
+            </div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+              <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Apóyanos en </span>
+              <span className="bg-gradient-to-r from-[#F96854] to-[#FF7863] bg-clip-text text-transparent">Patreon</span>
+            </h2>
+            
+            <p className="text-lg text-gray-300 mb-8 max-w-3xl mx-auto">
+              Conviértete en Patreon hoy y disfruta de los mejores beneficios mientras apoyas a nuestra comunidad.
+            </p>
+            
+            <button 
+              className="px-8 py-4 bg-gradient-to-r from-[#F96854] to-[#FF7863] text-white font-medium rounded-lg shadow-lg hover:from-[#FF7863] hover:to-[#F96854] transition-all duration-300 flex items-center justify-center mx-auto"
+            >
+              <FaPatreon className="mr-2" /> Únete a Patreon
+            </button>
+          </div>
+        </div>
+      </section>
+
       <Footer />
-    </>
+    </div>
   )
 } 
