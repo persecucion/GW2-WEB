@@ -191,19 +191,27 @@ export default function EventsPage() {
   // Helper functions for styling and UI
   const getCategoryColor = (category: string): string => {
     switch(category) {
-      case 'community': return 'text-blue-400 border-blue-400/30';
-      case 'competition': return 'text-red-400 border-red-400/30';
-      case 'special': return 'text-purple-400 border-purple-400/30';
-      default: return 'text-gray-400 border-gray-400/30';
+      case 'community': 
+        return 'from-blue-600 to-blue-800';
+      case 'competition': 
+        return 'from-red-600 to-rose-800';
+      case 'special': 
+        return 'from-purple-600 to-indigo-800';
+      default: 
+        return 'from-gray-600 to-gray-800';
     }
   };
 
   const getCategoryBgColor = (category: string): string => {
     switch(category) {
-      case 'community': return 'bg-blue-500/10 text-blue-400 border-blue-400/30';
-      case 'competition': return 'bg-red-500/10 text-red-400 border-red-400/30';
-      case 'special': return 'bg-purple-500/10 text-purple-400 border-purple-400/30';
-      default: return 'bg-gray-500/10 text-gray-400 border-gray-400/30';
+      case 'community': 
+        return 'bg-blue-500/10 border-blue-500/30 text-blue-400';
+      case 'competition': 
+        return 'bg-red-500/10 border-red-500/30 text-red-400';
+      case 'special': 
+        return 'bg-purple-500/10 border-purple-500/30 text-purple-400';
+      default: 
+        return 'bg-gray-500/10 border-gray-500/30 text-gray-400';
     }
   };
 
@@ -220,13 +228,26 @@ export default function EventsPage() {
     switch(platform) {
       case 'discord': return <FaDiscord className="text-indigo-400" />;
       case 'twitch': return <FaTwitch className="text-purple-400" />;
-      case 'discord-twitch': return (
-        <div className="flex">
-          <FaDiscord className="text-indigo-400" />
-          <FaTwitch className="text-purple-400 ml-1" />
-        </div>
-      );
+      case 'discord-twitch':
+      case 'both': 
+        return (
+          <div className="flex">
+            <FaDiscord className="text-indigo-400" />
+            <FaTwitch className="text-purple-400 ml-1" />
+          </div>
+        );
       default: return <FaDiscord className="text-indigo-400" />;
+    }
+  };
+
+  // Function to get platform name
+  const getPlatformName = (platform: string): string => {
+    switch(platform) {
+      case 'discord': return 'Discord';
+      case 'twitch': return 'Twitch';
+      case 'discord-twitch':
+      case 'both': return 'Discord y Twitch';
+      default: return 'Discord';
     }
   };
 
@@ -239,7 +260,7 @@ export default function EventsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white overflow-x-hidden">
       <Header />
 
       {/* Hero Section - Modernized */}
@@ -247,10 +268,10 @@ export default function EventsPage() {
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-dark-950 to-dark-900"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950 to-gray-900"></div>
           
           {/* Animated gradient overlay */}
-          <div className="absolute inset-0 opacity-60 bg-gradient-to-br from-blue-900/10 via-dark-900 to-purple-900/10"></div>
+          <div className="absolute inset-0 opacity-60 bg-gradient-to-br from-blue-900/10 via-gray-900 to-purple-900/10"></div>
           
           {/* Particle effect overlay */}
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
@@ -362,317 +383,286 @@ export default function EventsPage() {
       </section>
 
       {/* Contenido de eventos - Rediseñado */}
-      <section className="relative py-20 bg-black bg-opacity-90">
+      <section className="relative py-24 bg-gradient-to-b from-gray-950 to-black" id="eventos">
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
           <div className="absolute w-96 h-96 -top-24 -right-24 bg-gradient-to-br from-primary-600/20 to-transparent rounded-full blur-3xl"></div>
           <div className="absolute w-96 h-96 -bottom-24 -left-24 bg-gradient-to-br from-primary-600/20 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+          
+          {/* Decorative orbs */}
+          <div className="absolute bottom-40 right-10 w-96 h-96 rounded-full bg-blue-900/10 blur-[100px]"></div>
+          <div className="absolute top-40 left-10 w-96 h-96 rounded-full bg-purple-900/10 blur-[100px]"></div>
         </div>
         
-        <div className="container max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16" data-aos="fade-up">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Eventos de la Comunidad</h1>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-              Participa en eventos especiales organizados por la comunidad de Guild Wars 2.
-              Desde torneos competitivos hasta actividades sociales, ¡hay algo para todos!
+        <div className="container max-w-7xl mx-auto px-6 relative z-10">
+          {/* Heading */}
+          <div className="text-center mb-14" data-aos="fade-up">
+            <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-violet-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
+              <span className="text-primary-400 text-sm font-medium">CALENDARIO</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Encuentra el evento </span>
+              <span className="bg-gradient-to-r from-primary-400 to-violet-400 bg-clip-text text-transparent">perfecto para ti</span>
+            </h2>
+            <p className="text-lg text-blue-100/80 max-w-3xl mx-auto">
+              Utiliza los filtros para encontrar eventos que se ajusten a tus intereses
             </p>
           </div>
-
-          {/* Filters */}
-          <div className="mb-12 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-            <section className="py-20 relative overflow-hidden" id="eventos">
-              {/* Background elements */}
-              <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
-              <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
               
-              {/* Decorative orbs */}
-              <div className="absolute bottom-40 right-10 w-96 h-96 rounded-full bg-blue-900/10 blur-[100px]"></div>
-              <div className="absolute top-40 left-10 w-96 h-96 rounded-full bg-purple-900/10 blur-[100px]"></div>
-              
-              <div className="max-w-7xl mx-auto px-6 relative z-10">
-                {/* Heading */}
-                <div className="text-center mb-14" data-aos="fade-up">
-                  <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-violet-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
-                    <span className="text-primary-400 text-sm font-medium">CALENDARIO</span>
+          {/* Filters and Search - Modernized */}
+          <div className="mb-12 bg-gradient-to-r from-gray-900/80 to-gray-950/80 backdrop-blur-sm rounded-xl p-6 border border-primary-500/10 shadow-lg" data-aos="fade-up">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+              {/* Category Filters */}
+              <div className="w-full md:w-auto">
+                <div className="flex flex-wrap md:flex-nowrap items-center gap-3">
+                  <div className="px-3 py-1.5 bg-gray-900/60 backdrop-blur-sm rounded-lg flex items-center gap-2">
+                    <FaFilter className="text-primary-400 text-sm" />
+                    <span className="text-sm font-medium text-gray-300">Filtrar:</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                    <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Encuentra el evento </span>
-                    <span className="bg-gradient-to-r from-primary-400 to-violet-400 bg-clip-text text-transparent">perfecto para ti</span>
-                  </h2>
-                  <p className="text-lg text-blue-100/80 max-w-3xl mx-auto">
-                    Utiliza los filtros para encontrar eventos que se ajusten a tus intereses
-                  </p>
-                </div>
-              
-                {/* Filters and Search - Modernized */}
-                <div className="mb-12 bg-gradient-to-r from-dark-900/80 to-dark-950/80 backdrop-blur-sm rounded-xl p-6 border border-primary-500/10 shadow-lg" data-aos="fade-up">
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                    {/* Category Filters */}
-                    <div className="w-full md:w-auto">
-                      <div className="flex flex-wrap md:flex-nowrap items-center gap-3">
-                        <div className="px-3 py-1.5 bg-dark-900/60 backdrop-blur-sm rounded-lg flex items-center gap-2">
-                          <FaFilter className="text-primary-400 text-sm" />
-                          <span className="text-sm font-medium text-gray-300">Filtrar:</span>
-                        </div>
-                        
-                        <div className="flex flex-wrap gap-2">
-                          <button
-                            onClick={() => setActiveCategory("all")}
-                            className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${
-                              activeCategory === "all"
-                                ? "bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-md shadow-primary-500/20"
-                                : "bg-dark-900/60 text-gray-300 hover:bg-dark-800/80"
-                            }`}
-                          >
-                            Todos
-                          </button>
-                          
-                          {["community", "competition", "special"].map((category) => (
-                            <button
-                              key={category}
-                              onClick={() => setActiveCategory(category)}
-                              className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${
-                                activeCategory === category
-                                  ? `bg-gradient-to-r ${getCategoryColor(category)} text-white shadow-md`
-                                  : "bg-dark-900/60 text-gray-300 hover:bg-dark-800/80"
-                              }`}
-                            >
-                              {getCategoryName(category)}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Search */}
-                    <div className="w-full md:w-64">
-                      <div className="relative">
-                        <input
-                          type="text"
-                          placeholder="Buscar eventos..."
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                          className="w-full py-2 pl-10 pr-4 rounded-lg bg-dark-900/60 backdrop-blur-sm text-white border border-primary-500/20 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all duration-300"
-                        />
-                        <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-400" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Featured Events */}
-                {featuredEvents.length > 0 && (
-                  <div className="mb-16" data-aos="fade-up">
-                    <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                      <FaStar className="text-yellow-400" />
-                      <span className="bg-gradient-to-r from-white to-yellow-100 bg-clip-text text-transparent">Eventos Destacados</span>
-                    </h3>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {featuredEvents.map((event) => (
-                        <div 
-                          key={event.id} 
-                          className="group relative bg-gradient-to-br from-dark-900/80 to-dark-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-primary-500/20 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                          data-aos="fade-up"
-                        >
-                          {/* Glass layer with shimmer effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-violet-500/5 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                          
-                          <div className="relative">
-                            <div className="relative h-56 overflow-hidden">
-                              <Image
-                                src={event.image || "/placeholder.svg"}
-                                alt={event.title}
-                                fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/70 to-transparent"></div>
-                              
-                              {/* Category Badge */}
-                              <div className={`absolute top-4 right-4 bg-gradient-to-r ${getCategoryColor(event.category)} text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border backdrop-blur-sm`}>
-                                {getCategoryName(event.category)}
-                              </div>
-                              
-                              {/* Featured Badge */}
-                              <div className="absolute top-4 left-4 bg-gradient-to-r from-yellow-500 to-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-yellow-400/30 backdrop-blur-sm flex items-center gap-1">
-                                <FaStar className="text-white" />
-                                <span>Destacado</span>
-                              </div>
-                              
-                              <div className="absolute bottom-4 left-4 right-4">
-                                <div className="flex items-center gap-2 text-sm font-medium text-white bg-dark-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
-                                  <FaCalendarAlt className="text-primary-400" />
-                                  <span>{event.date}</span>
-                                  <span className="mx-2 text-primary-400/50">•</span>
-                                  <span>{event.time}</span>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            <div className="p-6 relative">
-                              <h3 className="text-xl lg:text-2xl font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
-                              <p className="text-gray-300 mb-6">{event.description}</p>
-
-                              <div className="flex items-center justify-between mb-6">
-                                <div className="flex items-center gap-2">
-                                  <div className="w-8 h-8 rounded-full bg-dark-800 flex items-center justify-center">
-                                    <FaMapMarkerAlt className="text-primary-400" />
-                                  </div>
-                                  <span className="text-gray-300">{event.location}</span>
-                                </div>
-                                
-                                <div className="flex items-center gap-2">
-                                  <div className="w-8 h-8 rounded-full bg-dark-800 flex items-center justify-center">
-                                    {getPlatformIcon(event.platform)}
-                                  </div>
-                                  <span className="text-gray-300">
-                                    {event.platform === "discord"
-                                      ? "Discord"
-                                      : event.platform === "twitch"
-                                        ? "Twitch"
-                                        : "Discord y Twitch"}
-                                  </span>
-                                </div>
-                              </div>
-
-                              <Button 
-                                href="#"
-                                variant={event.registrationOpen ? "gradient" : "outline"}
-                                disabled={!event.registrationOpen}
-                                rounded="lg"
-                                className={`relative z-10 w-full justify-center ${
-                                  event.registrationOpen 
-                                    ? `bg-gradient-to-r ${getCategoryColor(event.category)} hover:brightness-110` 
-                                    : 'bg-dark-900/50 border-gray-600/50 backdrop-blur-sm'
-                                }`}
-                              >
-                                {event.registrationOpen ? "Inscribirme" : "Inscripciones Cerradas"}
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* All Events - Modern Grid */}
-                <div data-aos="fade-up">
-                  <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                    <FaCalendarAlt className="text-primary-400" />
-                    <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Todos los Eventos</span>
-                  </h3>
                   
-                  {filteredEvents.length === 0 ? (
-                    <div className="bg-gradient-to-br from-dark-900/80 to-dark-950/80 backdrop-blur-sm rounded-xl p-8 text-center border border-primary-500/20 shadow-lg">
-                      <Image
-                        src="/images/empty.svg"
-                        alt="No hay eventos"
-                        width={150}
-                        height={150}
-                        className="mx-auto mb-4 opacity-50"
-                      />
-                      <p className="text-gray-300">No se encontraron eventos que coincidan con tus criterios.</p>
-                      <Button
-                        onClick={() => {
-                          setActiveCategory("all")
-                          setSearchTerm("")
-                        }}
-                        variant="gradient"
-                        className="mt-4 bg-gradient-to-r from-primary-600 to-violet-600 border border-primary-500/20"
-                        size="sm"
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => setActiveCategory("all")}
+                      className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${
+                        activeCategory === "all"
+                          ? "bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-md shadow-primary-500/20"
+                          : "bg-gray-900/60 text-gray-300 hover:bg-gray-800/80"
+                      }`}
+                    >
+                      Todos
+                    </button>
+                    
+                    {["community", "competition", "special"].map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => setActiveCategory(category)}
+                        className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${
+                          activeCategory === category
+                            ? `bg-gradient-to-r ${getCategoryColor(category)} text-white shadow-md`
+                            : "bg-gray-900/60 text-gray-300 hover:bg-gray-800/80"
+                        }`}
                       >
-                        Mostrar todos los eventos
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {filteredEvents.map((event) => (
-                        <div 
-                          key={event.id} 
-                          className="group bg-gradient-to-br from-dark-900/80 to-dark-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-700/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl flex flex-col h-full"
-                          data-aos="fade-up"
-                        >
-                          <div className="relative">
-                            <div className="relative h-48 overflow-hidden">
-                              <Image
-                                src={event.image || "/placeholder.svg"}
-                                alt={event.title}
-                                fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/70 to-transparent"></div>
-                              
-                              {/* Category Badge */}
-                              <div className={`absolute top-4 right-4 bg-gradient-to-r ${getCategoryColor(event.category)} text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border backdrop-blur-sm`}>
-                                {getCategoryName(event.category)}
-                              </div>
-                              
-                              <div className="absolute bottom-4 left-4">
-                                <div className="flex items-center gap-2 text-sm font-medium text-white bg-dark-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
-                                  <FaCalendarAlt className="text-primary-400" />
-                                  <span>{event.date}</span>
-                                </div>
-                              </div>
-                              
-                              <div className="absolute bottom-4 right-4">
-                                <div className="flex items-center gap-2 text-sm font-medium text-white bg-dark-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
-                                  <FaClock className="text-primary-400" />
-                                  <span>{event.time}</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                            
-                          <div className="p-6 flex-1 flex flex-col">
-                            <h3 className="text-lg font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
-                            <p className="text-gray-300 text-sm mb-5 flex-grow">{event.description}</p>
-
-                            <div className="flex justify-between mb-6">
-                              <div className="flex items-center gap-2">
-                                <div className="w-7 h-7 rounded-full bg-dark-800 flex items-center justify-center">
-                                  <FaMapMarkerAlt className="text-primary-400 text-xs" />
-                                </div>
-                                <span className="text-gray-300 text-xs">{event.location}</span>
-                              </div>
-                              
-                              <div className="flex items-center gap-2">
-                                <div className="w-7 h-7 rounded-full bg-dark-800 flex items-center justify-center">
-                                  {getPlatformIcon(event.platform)}
-                                </div>
-                                <span className="text-gray-300 text-xs">
-                                  {event.platform === "discord"
-                                    ? "Discord"
-                                    : event.platform === "twitch"
-                                      ? "Twitch"
-                                      : "Ambos"}
-                                </span>
-                              </div>
-                            </div>
-
-                            <Button 
-                              href="#"
-                              variant={event.registrationOpen ? "gradient" : "outline"}
-                              disabled={!event.registrationOpen}
-                              rounded="lg"
-                              size="sm"
-                              className={`relative z-10 w-full justify-center ${
-                                event.registrationOpen 
-                                  ? `bg-gradient-to-r ${getCategoryColor(event.category)} hover:brightness-110` 
-                                  : 'bg-dark-900/50 border-gray-600/50 backdrop-blur-sm'
-                              }`}
-                            >
-                              {event.registrationOpen ? "Inscribirme" : "Inscripciones Cerradas"}
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                        {getCategoryName(category)}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </section>
+
+              {/* Search */}
+              <div className="w-full md:w-64">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Buscar eventos..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full py-2 pl-10 pr-4 rounded-lg bg-gray-900/60 backdrop-blur-sm text-white border border-primary-500/20 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all duration-300"
+                  />
+                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-400" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Featured Events */}
+          {featuredEvents.length > 0 && (
+            <div className="mb-16" data-aos="fade-up">
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
+                <FaStar className="text-yellow-400" />
+                <span className="bg-gradient-to-r from-white to-yellow-100 bg-clip-text text-transparent">Eventos Destacados</span>
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {featuredEvents.map((event) => (
+                  <div 
+                    key={event.id} 
+                    className="group relative bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-primary-500/20 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                    data-aos="fade-up"
+                  >
+                    {/* Glass layer with shimmer effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-violet-500/5 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div className="relative">
+                      <div className="relative h-56 overflow-hidden">
+                        <Image
+                          src={event.image || "/placeholder.svg"}
+                          alt={event.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/70 to-transparent"></div>
+                        
+                        {/* Category Badge */}
+                        <div className={`absolute top-4 right-4 bg-gradient-to-r ${getCategoryColor(event.category)} text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-white/10 backdrop-blur-sm`}>
+                          {getCategoryName(event.category)}
+                        </div>
+                        
+                        {/* Featured Badge */}
+                        <div className="absolute top-4 left-4 bg-gradient-to-r from-yellow-500 to-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-yellow-400/30 backdrop-blur-sm flex items-center gap-1">
+                          <FaStar className="text-white" />
+                          <span>Destacado</span>
+                        </div>
+                        
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="flex items-center gap-2 text-sm font-medium text-white bg-gray-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
+                            <FaCalendarAlt className="text-primary-400" />
+                            <span>{event.date}</span>
+                            <span className="mx-2 text-primary-400/50">•</span>
+                            <span>{event.time}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="p-6 relative">
+                        <h3 className="text-xl lg:text-2xl font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
+                        <p className="text-gray-300 mb-6">{event.description}</p>
+
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+                              <FaMapMarkerAlt className="text-primary-400" />
+                            </div>
+                            <span className="text-gray-300">{event.location}</span>
+                          </div>
+                          
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+                              {getPlatformIcon(event.platform)}
+                            </div>
+                            <span className="text-gray-300">
+                              {getPlatformName(event.platform)}
+                            </span>
+                          </div>
+                        </div>
+
+                        <Button 
+                          href="#"
+                          variant={event.registrationOpen ? "gradient" : "outline"}
+                          disabled={!event.registrationOpen}
+                          rounded="lg"
+                          className={`relative z-10 w-full justify-center ${
+                            event.registrationOpen 
+                              ? `bg-gradient-to-r ${getCategoryColor(event.category)} hover:brightness-110` 
+                              : 'bg-gray-900/50 border-gray-600/50 backdrop-blur-sm'
+                          }`}
+                        >
+                          {event.registrationOpen ? "Inscribirme" : "Inscripciones Cerradas"}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* All Events - Modern Grid */}
+          <div data-aos="fade-up">
+            <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
+              <FaCalendarAlt className="text-primary-400" />
+              <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Todos los Eventos</span>
+            </h3>
+            
+            {filteredEvents.length === 0 ? (
+              <div className="bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-sm rounded-xl p-8 text-center border border-primary-500/20 shadow-lg">
+                <FaCalendarTimes className="text-6xl text-gray-600 mx-auto mb-4" />
+                <p className="text-xl font-semibold text-gray-300 mb-2">No se encontraron eventos</p>
+                <p className="text-gray-400 mb-5">No hay eventos que coincidan con tu búsqueda. Intenta cambiar los filtros.</p>
+                <Button
+                  onClick={() => {
+                    setActiveCategory("all")
+                    setSearchTerm("")
+                  }}
+                  variant="gradient"
+                  className="mt-4 bg-gradient-to-r from-primary-600 to-violet-600 border border-primary-500/20"
+                  size="sm"
+                >
+                  Mostrar todos los eventos
+                </Button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {sortedEvents.map((event) => (
+                  <div 
+                    key={event.id} 
+                    className="group bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-700/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl flex flex-col h-full"
+                    data-aos="fade-up"
+                  >
+                    <div className="relative">
+                      <div className="relative h-48 overflow-hidden">
+                        <Image
+                          src={event.image || "/placeholder.svg"}
+                          alt={event.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/70 to-transparent"></div>
+                        
+                        {/* Category Badge */}
+                        <div className={`absolute top-4 right-4 bg-gradient-to-r ${getCategoryColor(event.category)} text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-white/10 backdrop-blur-sm`}>
+                          {getCategoryName(event.category)}
+                        </div>
+                        
+                        <div className="absolute bottom-4 left-4">
+                          <div className="flex items-center gap-2 text-sm font-medium text-white bg-gray-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
+                            <FaCalendarAlt className="text-primary-400" />
+                            <span>{event.date}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="absolute bottom-4 right-4">
+                          <div className="flex items-center gap-2 text-sm font-medium text-white bg-gray-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
+                            <FaClock className="text-primary-400" />
+                            <span>{event.time}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-lg font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
+                      <p className="text-gray-300 text-sm mb-5 flex-grow">{event.description}</p>
+
+                      <div className="flex justify-between mb-6">
+                        <div className="flex items-center gap-2">
+                          <div className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center">
+                            <FaMapMarkerAlt className="text-primary-400 text-xs" />
+                          </div>
+                          <span className="text-gray-300 text-xs">{event.location}</span>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <div className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center">
+                            {getPlatformIcon(event.platform)}
+                          </div>
+                          <span className="text-gray-300 text-xs">
+                            {getPlatformName(event.platform)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <Button 
+                        href="#"
+                        variant={event.registrationOpen ? "gradient" : "outline"}
+                        disabled={!event.registrationOpen}
+                        rounded="lg"
+                        size="sm"
+                        className={`relative z-10 w-full justify-center ${
+                          event.registrationOpen 
+                            ? `bg-gradient-to-r ${getCategoryColor(event.category)} hover:brightness-110` 
+                            : 'bg-gray-900/50 border-gray-600/50 backdrop-blur-sm'
+                        }`}
+                      >
+                        {event.registrationOpen ? "Inscribirme" : "Inscripciones Cerradas"}
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -680,7 +670,7 @@ export default function EventsPage() {
       {/* CTA Section - Modernized */}
       <section className="py-24 relative overflow-hidden">
         {/* Background elements */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950"></div>
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
         
@@ -689,7 +679,7 @@ export default function EventsPage() {
         <div className="absolute bottom-1/3 left-20 w-64 h-64 rounded-full bg-purple-900/10 blur-[100px]"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="bg-gradient-to-br from-dark-900/80 to-dark-950/80 backdrop-blur-md rounded-xl overflow-hidden shadow-2xl border border-primary-500/20" data-aos="fade-up">
+          <div className="bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md rounded-xl overflow-hidden shadow-2xl border border-primary-500/20" data-aos="fade-up">
             <div className="p-8 md:p-12">
               <div className="md:flex md:items-center md:justify-between gap-12">
                 <div className="mb-8 md:mb-0 md:max-w-2xl">
