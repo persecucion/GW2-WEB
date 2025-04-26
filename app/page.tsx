@@ -344,7 +344,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section - Redesigned with better spacing */}
-      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pt-32 pb-20 md:pt-28 md:pb-28 lg:py-0 lg:h-screen">
+      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pt-40 pb-0 md:pt-36 md:pb-0 lg:h-screen lg:justify-between">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
@@ -361,117 +361,108 @@ export default function HomePage() {
           <div className="absolute bottom-1/4 right-1/5 w-96 h-96 rounded-full bg-secondary-900/20 blur-[120px]"></div>
         </div>
 
-        <div className="container relative z-10 px-6 mx-auto text-center flex-1 flex flex-col justify-center max-w-screen-xl">
-          <div className="flex flex-col h-full justify-between">
-            {/* Text Content - adjusted size and spacing */}
-            <div className="max-w-2xl mx-auto mb-10 md:mb-14 lg:mb-16 pt-6 md:pt-10 lg:pt-6">
-              <div className="hero-title">
-                <div className="inline-block mb-3">
-                  <div className="px-3 py-1 bg-gradient-to-r from-primary-900/60 to-secondary-900/60 backdrop-blur-md rounded-full border border-blue-500/20 text-blue-300 text-xs font-medium">
-                    <span className="text-xs mr-1">⚡</span> COMUNIDAD GW2
-                  </div>
+        <div className="container relative z-10 px-6 mx-auto text-center flex flex-col justify-start max-w-screen-xl flex-1">
+          {/* Text Content - increased spacing from top */}
+          <div className="max-w-2xl mx-auto mb-12 md:mb-16 lg:mb-20">
+            <div className="hero-title">
+              <div className="inline-block mb-3">
+                <div className="px-3 py-1 bg-gradient-to-r from-primary-900/60 to-secondary-900/60 backdrop-blur-md rounded-full border border-blue-500/20 text-blue-300 text-xs font-medium">
+                  <span className="text-xs mr-1">⚡</span> COMUNIDAD GW2
                 </div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 leading-tight">
-                  Bienvenido a <span className="relative inline-block">GW2<div className="shimmer-effect"></div></span>
-                </h1>
               </div>
-              
-              <div className="hero-subtitle mb-6 md:mb-8">
-                <p className="text-base sm:text-lg md:text-xl text-blue-100/80">
-                  Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
-                </p>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center hero-buttons">
-                <Button 
-                  href="https://discord.gg/gatitos2"
-                  external
-                  variant="gradient"
-                  size="lg"
-                  rounded="full"
-                  leftIcon={<FaDiscord className="text-lg" />}
-                  rightIcon={<FaArrowRight className="text-sm" />}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 border border-blue-500/30 shadow-lg shadow-blue-500/20 text-white hover:shadow-blue-500/40 transition-all duration-300 text-sm sm:text-base px-4 sm:px-6 py-2.5 sm:py-3 hover:translate-y-[-2px]"
-                >
-                  Únete a la Aventura
-                </Button>
-                
-                <Button 
-                  href="#features"
-                  variant="outline"
-                  size="lg"
-                  rounded="full"
-                  className="bg-dark-800/30 backdrop-blur-sm border-blue-500/20 hover:border-blue-500/40 shadow-lg text-white hover:shadow-blue-500/10 transition-all duration-300 text-sm sm:text-base px-4 sm:px-6 py-2.5 sm:py-3 hover:translate-y-[-2px]"
-                >
-                  Descubre más
-                </Button>
-              </div>
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight">
+                Bienvenido a <span className="relative inline-block">GW2<div className="shimmer-effect"></div></span>
+              </h1>
             </div>
-          
-            {/* Main hero image - kept as is */}
-            <div className="relative z-10 w-full max-w-5xl mx-auto px-4 mt-6 mb-8 hero-image-container">
-              <div className="hero-image-glow absolute -inset-0 bg-blue-500/10 rounded-xl blur-2xl"></div>
+            
+            <div className="hero-subtitle mb-6 md:mb-8">
+              <p className="text-base sm:text-lg md:text-xl text-blue-100/80">
+                Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center hero-buttons">
+              <Button 
+                href="https://discord.gg/gatitos2"
+                external
+                variant="gradient"
+                size="lg"
+                rounded="full"
+                leftIcon={<FaDiscord className="text-lg" />}
+                rightIcon={<FaArrowRight className="text-sm" />}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 border border-blue-500/30 shadow-lg shadow-blue-500/20 text-white hover:shadow-blue-500/40 transition-all duration-300 text-sm sm:text-base px-4 sm:px-6 py-2.5 sm:py-3 hover:translate-y-[-2px]"
+              >
+                Únete a la Aventura
+              </Button>
               
-              <div className="img-border rounded-xl overflow-hidden">
-                <div className="relative w-full h-0" style={{ paddingBottom: "42%" }}>
-                  <Image 
-                    src="/images/server.png" 
-                    alt="GW2 Server" 
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
-                    priority
-                    quality={95}
-                  />
-                  
-                  {/* Modern gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/80 to-transparent pointer-events-none"></div>
-                  
-                  {/* Decorative elements */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-30 mix-blend-overlay"></div>
-                  
-                  {/* Shimmer effect */}
-                  <div className="shimmer-effect"></div>
-                </div>
-              </div>
-              
-              {/* Decorative elements */}
-              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-2xl"></div>
-              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full blur-2xl"></div>
-              
-              {/* Floating badges */}
-              <div className="hidden md:block absolute -left-8 top-1/4 transform -translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-blue-500/20 shadow-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300">
-                    <FaUsers className="text-xl" />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-sm text-blue-300">Comunidad</div>
-                    <div className="text-lg font-bold text-white">+1000 miembros</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="hidden md:block absolute -right-8 bottom-1/4 transform translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-purple-500/20 shadow-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300">
-                    <FaGamepad className="text-xl" />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-sm text-purple-300">Experiencia</div>
-                    <div className="text-lg font-bold text-white">Eventos exclusivos</div>
-                  </div>
-                </div>
-              </div>
+              <Button 
+                href="#features"
+                variant="outline"
+                size="lg"
+                rounded="full"
+                className="bg-dark-800/30 backdrop-blur-sm border-blue-500/20 hover:border-blue-500/40 shadow-lg text-white hover:shadow-blue-500/10 transition-all duration-300 text-sm sm:text-base px-4 sm:px-6 py-2.5 sm:py-3 hover:translate-y-[-2px]"
+              >
+                Descubre más
+              </Button>
             </div>
           </div>
         </div>
-        
-        {/* Arrow down indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
-          <a href="#features" className="text-white/50 hover:text-white transition-colors">
-            <FaChevronDown className="text-2xl" />
-          </a>
+
+        {/* Main hero image positioned at bottom for continuity illusion */}
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 mt-auto hero-image-container">
+          <div className="hero-image-glow absolute -inset-0 bg-blue-500/10 rounded-xl blur-2xl"></div>
+          
+          <div className="img-border rounded-xl overflow-hidden">
+            <div className="relative w-full h-0" style={{ paddingBottom: "42%" }}>
+              <Image 
+                src="/images/server.png" 
+                alt="GW2 Server" 
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
+                priority
+                quality={95}
+              />
+              
+              {/* Modern gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/80 to-transparent pointer-events-none"></div>
+              
+              {/* Decorative elements */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-30 mix-blend-overlay"></div>
+              
+              {/* Shimmer effect */}
+              <div className="shimmer-effect"></div>
+            </div>
+          </div>
+          
+          {/* Decorative elements */}
+          <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-2xl"></div>
+          <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full blur-2xl"></div>
+          
+          {/* Floating badges */}
+          <div className="hidden md:block absolute -left-8 top-1/4 transform -translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-blue-500/20 shadow-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300">
+                <FaUsers className="text-xl" />
+              </div>
+              <div className="text-left">
+                <div className="text-sm text-blue-300">Comunidad</div>
+                <div className="text-lg font-bold text-white">+1000 miembros</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="hidden md:block absolute -right-8 bottom-1/4 transform translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-purple-500/20 shadow-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300">
+                <FaGamepad className="text-xl" />
+              </div>
+              <div className="text-left">
+                <div className="text-sm text-purple-300">Experiencia</div>
+                <div className="text-lg font-bold text-white">Eventos exclusivos</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
