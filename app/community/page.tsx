@@ -224,7 +224,7 @@ export default function CommunityPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="text-center max-w-3xl mx-auto" data-aos="fade-up">
               <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-secondary-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
-                <span className="text-primary-400 text-sm font-medium">NUESTRA COMUNIDAD</span>
+                <span className="text-primary-400 text-sm font-medium">✨ NUESTRA COMUNIDAD</span>
               </div>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
                 Conoce a <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">GW2</span>
@@ -291,7 +291,7 @@ export default function CommunityPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="text-center mb-16" data-aos="fade-up">
               <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-secondary-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
-                <span className="text-primary-400 text-sm font-medium">NUESTRO STAFF</span>
+                <span className="text-primary-400 text-sm font-medium">👥 NUESTRO STAFF</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
                 El <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">equipo</span> detrás de GW2
@@ -321,7 +321,7 @@ export default function CommunityPage() {
                 },
                 {
                   name: "Sara",
-                  role: "Moderadora",
+                  role: "Coordinación",
                   image: "/images/vip2.png",
                   badge: "pink",
                   bio: "Especialista en organización de torneos y eventos especiales.",
@@ -329,7 +329,7 @@ export default function CommunityPage() {
                 },
                 {
                   name: "Carlos",
-                  role: "Moderador",
+                  role: "Developer",
                   image: "/images/vip3.png",
                   badge: "teal",
                   bio: "Experto en tecnología y resolución de problemas técnicos.",
@@ -341,8 +341,6 @@ export default function CommunityPage() {
                   className="group relative bg-gradient-to-br from-dark-800/90 to-dark-900/90 rounded-2xl overflow-hidden shadow-xl"
                   data-aos="fade-up"
                   data-aos-delay={index * 100}
-                  whileHover={{ y: -10 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark-900/90 z-10"></div>
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-b from-primary-500/20 to-secondary-500/20 transition-opacity duration-300"></div>
