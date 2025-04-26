@@ -372,6 +372,140 @@ export default function CommunityPage() {
           </div>
         </section>
 
+        {/* Staff Team Section - Modern Design */}
+        <section className="py-20 relative overflow-hidden">
+          {/* Background elements */}
+          <div className="absolute inset-0 bg-gradient-to-b from-dark-800 via-dark-900 to-dark-900/90"></div>
+          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-600/5 blur-[120px]"></div>
+          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-secondary-600/5 blur-[120px]"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div className="text-center mb-16" data-aos="fade-up">
+              <div className="inline-block px-3 py-1 bg-primary-900/30 rounded-full text-primary-400 text-sm font-semibold mb-3 border border-primary-500/20">
+                Nuestro Staff
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                El <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">equipo</span> detrás de GW2
+              </h2>
+              <p className="text-gray-400 max-w-2xl mx-auto">
+                Conoce a las personas dedicadas que trabajan día a día para hacer de nuestra comunidad un lugar especial para todos.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              {[
+                {
+                  name: "Mystic",
+                  role: "Fundador",
+                  image: "/Mystic.jpg",
+                  badge: "primary",
+                  bio: "Creador de la comunidad GW2 y entusiasta de los videojuegos.",
+                  discord: "Mystic#1234",
+                  twitter: true,
+                  twitch: true
+                },
+                {
+                  name: "Alex",
+                  role: "Admin Principal",
+                  image: "/images/vip1.png",
+                  badge: "secondary",
+                  bio: "Coordinador de eventos y moderador. Responsable del buen ambiente.",
+                  discord: "Alex#5678",
+                  twitter: true,
+                  instagram: true
+                },
+                {
+                  name: "Sara",
+                  role: "Moderadora",
+                  image: "/images/vip2.png",
+                  badge: "pink",
+                  bio: "Especialista en organización de torneos y eventos especiales.",
+                  discord: "Sara#9101",
+                  twitch: true,
+                  youtube: true
+                },
+                {
+                  name: "Carlos",
+                  role: "Moderador",
+                  image: "/images/vip3.png",
+                  badge: "teal",
+                  bio: "Experto en tecnología y resolución de problemas técnicos.",
+                  discord: "Carlos#1122",
+                  twitter: true,
+                  instagram: true
+                }
+              ].map((member, index) => (
+                <motion.div
+                  key={index}
+                  className="group relative bg-gradient-to-br from-dark-800/90 to-dark-900/90 rounded-2xl overflow-hidden shadow-xl"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                  whileHover={{ y: -10 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark-900/90 z-10"></div>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-b from-primary-500/20 to-secondary-500/20 transition-opacity duration-300"></div>
+                  
+                  <div className="relative h-72 overflow-hidden">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  </div>
+                  
+                  <div className="relative p-6 pt-0 -mt-12 z-20">
+                    <div className="flex flex-col items-center">
+                      <span className={`inline-block px-3 py-1 rounded-full text-white text-xs font-medium mb-2 ${
+                        member.badge === 'primary' 
+                          ? 'bg-primary-500' 
+                          : member.badge === 'secondary' 
+                            ? 'bg-secondary-500' 
+                            : member.badge === 'pink'
+                              ? 'bg-pink-500'
+                              : 'bg-teal-500'
+                      }`}>
+                        {member.role}
+                      </span>
+                      <h3 className="text-xl font-bold text-white mb-2">{member.name}</h3>
+                      <p className="text-gray-400 text-sm text-center mb-4">{member.bio}</p>
+                      
+                      <div className="flex space-x-3 mt-2">
+                        <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 hover:bg-dark-600 transition-colors">
+                          <FaDiscord size={18} />
+                        </a>
+                        {member.twitter && (
+                          <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-dark-600 transition-colors">
+                            <FaTwitter size={18} />
+                          </a>
+                        )}
+                        {member.twitch && (
+                          <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-purple-400 hover:bg-dark-600 transition-colors">
+                            <FaTwitch size={18} />
+                          </a>
+                        )}
+                        {member.instagram && (
+                          <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-pink-400 hover:bg-dark-600 transition-colors">
+                            <FaInstagram size={18} />
+                          </a>
+                        )}
+                        {member.youtube && (
+                          <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-dark-600 transition-colors">
+                            <FaYoutube size={18} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Join Community CTA */}
         <section className="py-16 bg-gradient-to-br from-primary-900/20 via-dark-800 to-secondary-900/20">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center" data-aos="fade-up">
