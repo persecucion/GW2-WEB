@@ -71,6 +71,11 @@ const heroAnimations = `
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
+
+  @keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+  }
   
   .hero-title {
     animation: floatUp 1.5s ease-out forwards;
@@ -95,6 +100,16 @@ const heroAnimations = `
     animation: floatUp 1.5s ease-out 0.6s forwards;
     opacity: 0;
     animation-fill-mode: forwards;
+  }
+  
+  .hero-image-container {
+    animation: floatUp 1.5s ease-out 0.9s forwards;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+  
+  .hero-image-glow {
+    animation: pulse 4s ease-in-out infinite;
   }
   
   .hero-gradient-bg {
@@ -137,6 +152,28 @@ const heroAnimations = `
     z-index: -1;
   }
   
+  .shimmer-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 3s ease-out infinite;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(90deg, #60a5fa, #ffffff, #818cf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: titleGradient 5s ease infinite;
+  }
+  
   .footer-divider {
     position: absolute;
     top: 0;
@@ -176,16 +213,6 @@ const heroAnimations = `
     border-radius: 30px;
     background: rgba(0, 4, 40, 0.9);
     z-index: -1;
-  }
-  
-  .hero-image-container {
-    animation: floatUp 1.5s ease-out 0.9s forwards;
-    opacity: 0;
-    animation-fill-mode: forwards;
-  }
-  
-  .hero-image-glow {
-    animation: pulse 4s ease-in-out infinite;
   }
 `;
 
@@ -316,8 +343,8 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900 text-white overflow-x-hidden">
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen md:h-screen flex flex-col items-center justify-between overflow-hidden py-10 md:py-0">
+      {/* Hero Section - Redesigned */}
+      <section className="relative min-h-screen md:h-screen flex flex-col items-center overflow-hidden py-10 md:py-0">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
@@ -326,20 +353,29 @@ export default function HomePage() {
           {/* Animated gradient overlay */}
           <div className="absolute inset-0 opacity-60 hero-gradient-bg"></div>
           
-          {/* Decorative grid */}
+          {/* Particle effect overlay */}
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+
+          {/* Decorative orbs */}
+          <div className="absolute top-1/4 left-1/5 w-64 h-64 rounded-full bg-primary-900/20 blur-[100px]"></div>
+          <div className="absolute bottom-1/4 right-1/5 w-96 h-96 rounded-full bg-secondary-900/20 blur-[120px]"></div>
         </div>
 
-        <div className="container relative z-10 px-4 mx-auto text-center pt-16 md:pt-36 flex-1 flex flex-col justify-center mb-8 md:mb-0">
+        <div className="container relative z-10 px-6 mx-auto text-center pt-24 md:pt-40 flex-1 flex flex-col justify-center mb-8 md:mb-0">
           <div className="max-w-3xl mx-auto">
             <div className="hero-title">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
-                Bienvenido a GW2
+              <div className="inline-block mb-2">
+                <div className="px-4 py-1 bg-gradient-to-r from-primary-900/60 to-secondary-900/60 backdrop-blur-md rounded-full border border-blue-500/20 text-blue-300 text-sm font-medium mb-4">
+                  <span className="text-xs mr-2">⚡</span> COMUNIDAD GW2
+                </div>
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight">
+                Bienvenido a <span className="relative inline-block">GW2<div className="shimmer-effect"></div></span>
               </h1>
             </div>
             
             <div className="hero-subtitle mb-8 md:mb-10">
-              <p className="text-lg sm:text-xl md:text-2xl text-gray-300">
+              <p className="text-lg sm:text-xl md:text-2xl text-blue-100/80">
                 Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
               </p>
             </div>
@@ -353,7 +389,7 @@ export default function HomePage() {
                 rounded="full"
                 leftIcon={<FaDiscord className="text-xl" />}
                 rightIcon={<FaArrowRight />}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 border border-blue-500/50 shadow-lg text-white hover:shadow-blue-500/40 transition-all duration-300 text-base sm:text-lg px-5 sm:px-7 py-3 sm:py-4"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 border border-blue-500/30 shadow-lg shadow-blue-500/20 text-white hover:shadow-blue-500/40 transition-all duration-300 text-base sm:text-lg px-5 sm:px-7 py-3 sm:py-4 hover:translate-y-[-2px]"
               >
                 Únete a la Aventura
               </Button>
@@ -363,7 +399,7 @@ export default function HomePage() {
                 variant="outline"
                 size="lg"
                 rounded="full"
-                className="bg-dark-800/50 backdrop-blur-sm border-blue-500/30 hover:border-blue-500/60 shadow-lg text-white hover:shadow-blue-500/20 transition-all duration-300 text-base sm:text-lg px-5 sm:px-7 py-3 sm:py-4"
+                className="bg-dark-800/30 backdrop-blur-sm border-blue-500/20 hover:border-blue-500/40 shadow-lg text-white hover:shadow-blue-500/10 transition-all duration-300 text-base sm:text-lg px-5 sm:px-7 py-3 sm:py-4 hover:translate-y-[-2px]"
               >
                 Descubre más
               </Button>
@@ -371,9 +407,10 @@ export default function HomePage() {
           </div>
         </div>
         
-        {/* Main hero image with border effect - redesigned for perfect responsiveness */}
-        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 mb-8 md:mb-16 hero-image-container">
-          <div className="hero-image-glow absolute -inset-0 bg-blue-500/20 rounded-xl blur-xl"></div>
+        {/* Main hero image with enhanced effects */}
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 mb-8 md:mb-16 hero-image-container">
+          <div className="hero-image-glow absolute -inset-0 bg-blue-500/10 rounded-xl blur-2xl"></div>
+          
           <div className="img-border rounded-xl overflow-hidden">
             <div className="relative w-full h-0" style={{ paddingBottom: "42%" }}>
               <Image 
@@ -383,33 +420,81 @@ export default function HomePage() {
                 className="object-cover"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                 priority
-                quality={90}
+                quality={95}
               />
               
-              {/* Enhanced bottom gradient overlay */}
+              {/* Modern gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/80 to-transparent pointer-events-none"></div>
+              
+              {/* Decorative elements */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-30 mix-blend-overlay"></div>
+              
+              {/* Shimmer effect */}
+              <div className="shimmer-effect"></div>
             </div>
           </div>
           
-          {/* Optional decorative elements */}
-          <div className="absolute -bottom-3 -left-3 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
-          <div className="absolute -top-3 -right-3 w-24 h-24 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full blur-xl"></div>
+          {/* Decorative elements */}
+          <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-2xl"></div>
+          <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full blur-2xl"></div>
+          
+          {/* Floating badges */}
+          <div className="hidden md:block absolute -left-8 top-1/4 transform -translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-blue-500/20 shadow-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300">
+                <FaUsers className="text-xl" />
+              </div>
+              <div className="text-left">
+                <div className="text-sm text-blue-300">Comunidad</div>
+                <div className="text-lg font-bold text-white">+1000 miembros</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="hidden md:block absolute -right-8 bottom-1/4 transform translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-purple-500/20 shadow-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300">
+                <FaGamepad className="text-xl" />
+              </div>
+              <div className="text-left">
+                <div className="text-sm text-purple-300">Experiencia</div>
+                <div className="text-lg font-bold text-white">Eventos exclusivos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Arrow down indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
+          <a href="#features" className="text-white/50 hover:text-white transition-colors">
+            <FaChevronDown className="text-2xl" />
+          </a>
         </div>
       </section>
 
-      {/* Sección de Características */}
-      <section id="features" className="py-24 bg-gradient-to-br from-dark-800 to-dark-900 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/10 via-dark-900 to-secondary-900/10"></div>
+      {/* Features Section - Redesigned */}
+      <section id="features" className="py-28 relative overflow-hidden">
+        {/* Background gradients and effects */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+        
+        {/* Decorative orbs */}
+        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16" data-aos="fade-up">
-            <span className="bg-gradient-to-r from-primary-500 to-primary-600 text-white text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 shadow-md">
-              SOBRE NOSOTROS
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              ¿Qué nos hace <span className="bg-gradient-to-r from-primary-300 to-secondary-300 bg-clip-text text-transparent">especiales</span>?
+          <div className="text-center mb-20" data-aos="fade-up">
+            <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-secondary-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
+              <span className="text-primary-400 text-sm font-medium">CARACTERÍSTICAS</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">¿Qué nos hace </span>
+              <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">especiales</span>
+              <span className="bg-gradient-to-r from-blue-100 to-white bg-clip-text text-transparent">?</span>
             </h2>
-            <p className="text-lg text-gray-200 max-w-4xl mx-auto">
+            <p className="text-lg text-blue-100/80 max-w-4xl mx-auto">
               Somos más que un servidor de Discord - somos una familia global unida por la pasión por los videojuegos y
               la amistad sincera.
             </p>
@@ -423,8 +508,10 @@ export default function HomePage() {
                 image: "/images/evento.png",
                 icon: <FaGamepad className="text-4xl text-primary-300" />,
                 delay: 100,
-                bgColor: "bg-gradient-to-b from-primary-900/20 via-dark-800 to-dark-800",
-                borderColor: "border-primary-500/20"
+                gradient: "from-primary-500/10 to-primary-500/5",
+                borderColor: "border-primary-500/20",
+                hoverGlow: "group-hover:shadow-primary-500/20",
+                iconGradient: "from-primary-600 to-primary-900"
               },
               {
                 title: "Sorteos Exclusivos",
@@ -432,8 +519,10 @@ export default function HomePage() {
                 image: "/images/sorteo.png",
                 icon: <FaGift className="text-4xl text-secondary-300" />,
                 delay: 200,
-                bgColor: "bg-gradient-to-b from-secondary-900/20 via-dark-800 to-dark-800",
-                borderColor: "border-secondary-500/20"
+                gradient: "from-secondary-500/10 to-secondary-500/5",
+                borderColor: "border-secondary-500/20",
+                hoverGlow: "group-hover:shadow-secondary-500/20",
+                iconGradient: "from-secondary-600 to-secondary-900"
               },
               {
                 title: "Comunidad Global",
@@ -441,56 +530,94 @@ export default function HomePage() {
                 image: "/images/server.png",
                 icon: <FaUsers className="text-4xl text-purple-300" />,
                 delay: 300,
-                bgColor: "bg-gradient-to-b from-purple-900/20 via-dark-800 to-dark-800",
-                borderColor: "border-purple-500/20"
+                gradient: "from-purple-500/10 to-purple-500/5",
+                borderColor: "border-purple-500/20",
+                hoverGlow: "group-hover:shadow-purple-500/20",
+                iconGradient: "from-purple-600 to-purple-900"
               },
             ].map((feature, index) => (
               <div 
                 key={index}
-                className={`${feature.bgColor} rounded-xl overflow-hidden shadow-xl border ${feature.borderColor} transform transition-all duration-300 hover:-translate-y-2`}
+                className={`group bg-gradient-to-br ${feature.gradient} backdrop-blur-md rounded-xl overflow-hidden shadow-xl border ${feature.borderColor} transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${feature.hoverGlow}`}
                 data-aos="fade-up"
                 data-aos-delay={feature.delay}
               >
-                <div className="relative h-48 bg-dark-900">
+                <div className="relative h-48 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-950 to-transparent z-10"></div>
                   <Image
                     src={feature.image}
                     alt={feature.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/80 to-transparent"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="p-4 bg-dark-800/90 backdrop-blur-sm rounded-full border border-white/10">
+                  <div className="absolute top-4 left-4 z-20">
+                    <div className={`p-3 bg-gradient-to-br ${feature.iconGradient} rounded-lg backdrop-blur-md shadow-lg border border-white/10`}>
                       {feature.icon}
                     </div>
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3 text-white">{feature.title}</h3>
+                <div className="p-6 relative z-20">
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{feature.title}</h3>
                   <p className="text-gray-300">{feature.description}</p>
                 </div>
               </div>
             ))}
           </div>
+          
+          {/* Additional features in card format */}
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8" data-aos="fade-up">
+            <div className="bg-gradient-to-br from-dark-900/50 to-dark-800/50 backdrop-blur-md rounded-xl p-6 border border-primary-500/10 shadow-lg hover:shadow-primary-500/5 transition-all duration-300">
+              <div className="flex items-start gap-5">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center shrink-0">
+                  <FaStar className="text-xl text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2 text-white">Experiencia Única</h3>
+                  <p className="text-gray-300">Disfruta de una experiencia única en nuestro servidor con canales temáticos, bots personalizados y roles especiales.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-dark-900/50 to-dark-800/50 backdrop-blur-md rounded-xl p-6 border border-secondary-500/10 shadow-lg hover:shadow-secondary-500/5 transition-all duration-300">
+              <div className="flex items-start gap-5">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-secondary-600 to-secondary-800 flex items-center justify-center shrink-0">
+                  <FaHeart className="text-xl text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2 text-white">Ambiente Amigable</h3>
+                  <p className="text-gray-300">Un espacio libre de toxicidad donde todos son bienvenidos y pueden sentirse como en casa.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Sección de Estadísticas */}
+      {/* Statistics Section - Redesigned */}
       <section 
         ref={statsRef} 
-        className="py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative"
+        className="py-28 relative overflow-hidden"
       >
-        <div className="absolute inset-0 bg-dark-800"></div>
+        {/* Background elements */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
+        
+        {/* Decorative orbs */}
+        <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
+        <div className="absolute bottom-1/4 left-0 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16" data-aos="fade-up">
-            <span className="bg-gradient-to-r from-secondary-500 to-secondary-600 text-white text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 shadow-md">
-              ESTADÍSTICAS
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Nuestra Comunidad <span className="bg-gradient-to-r from-secondary-300 to-primary-300 bg-clip-text text-transparent">en Números</span>
+          <div className="text-center mb-20" data-aos="fade-up">
+            <div className="inline-block rounded-full bg-gradient-to-r from-secondary-900/40 to-primary-900/40 backdrop-blur-sm px-4 py-1.5 border border-secondary-500/20 mb-4">
+              <span className="text-secondary-400 text-sm font-medium">ESTADÍSTICAS</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-white to-secondary-100 bg-clip-text text-transparent">Nuestra Comunidad en </span>
+              <span className="bg-gradient-to-r from-secondary-400 to-primary-400 bg-clip-text text-transparent">Números</span>
             </h2>
-            <p className="text-lg text-gray-200 max-w-4xl mx-auto">
+            <p className="text-lg text-secondary-100/80 max-w-4xl mx-auto">
               Somos una comunidad en constante crecimiento, unida por la pasión y el compromiso.
             </p>
           </div>
@@ -498,51 +625,53 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <FaUsers className="text-4xl text-primary-300" />,
+                icon: <FaUsers className="text-3xl text-primary-300" />,
                 count: members,
                 label: "Miembros",
                 suffix: "+",
                 delay: 100,
-                bgGradient: "bg-primary-900/90",
-                borderColor: "border-primary-500",
-                iconBg: "bg-dark-800",
-                textColor: "text-white"
+                gradient: "from-primary-900/10 to-primary-900/5",
+                border: "border-primary-500/20",
+                textGradient: "from-white to-primary-200",
+                iconGradient: "from-primary-600 to-primary-700"
               },
               {
-                icon: <FaUserShield className="text-4xl text-secondary-300" />,
+                icon: <FaUserShield className="text-3xl text-secondary-300" />,
                 count: staff,
                 label: "Staff",
                 suffix: "+",
                 delay: 200,
-                bgGradient: "bg-secondary-900/90",
-                borderColor: "border-secondary-500",
-                iconBg: "bg-dark-800",
-                textColor: "text-white"
+                gradient: "from-secondary-900/10 to-secondary-900/5",
+                border: "border-secondary-500/20",
+                textGradient: "from-white to-secondary-200",
+                iconGradient: "from-secondary-600 to-secondary-700"
               },
               {
-                icon: <FaComments className="text-4xl text-purple-300" />,
+                icon: <FaComments className="text-3xl text-purple-300" />,
                 count: messages,
                 label: "Mensajes Diarios",
                 suffix: "+",
                 delay: 300,
-                bgGradient: "bg-purple-900/90",
-                borderColor: "border-purple-500",
-                iconBg: "bg-dark-800",
-                textColor: "text-white"
+                gradient: "from-purple-900/10 to-purple-900/5",
+                border: "border-purple-500/20",
+                textGradient: "from-white to-purple-200",
+                iconGradient: "from-purple-600 to-purple-700"
               },
             ].map((stat, index) => (
               <div 
                 key={index}
-                className={`${stat.bgGradient} rounded-xl p-8 text-center border ${stat.borderColor} shadow-xl transform transition-all duration-300 hover:-translate-y-2`}
+                className={`group backdrop-blur-sm bg-gradient-to-br ${stat.gradient} rounded-xl p-8 text-center border ${stat.border} shadow-xl transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}
                 data-aos="fade-up"
                 data-aos-delay={stat.delay}
               >
-                <div className="flex justify-center mb-6">
-                  <div className={`p-4 ${stat.iconBg} rounded-full border border-gray-700`}>
+                <div className="flex justify-center mb-6 relative">
+                  <div className={`p-5 bg-gradient-to-br ${stat.iconGradient} rounded-xl shadow-lg border border-white/10 group-hover:scale-110 transition-transform duration-300`}>
                     {stat.icon}
                   </div>
+                  <div className="absolute -inset-4 bg-white/5 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                <div className={`text-4xl font-bold ${stat.textColor} mb-2`}>
+                
+                <div className={`text-4xl font-bold bg-gradient-to-r ${stat.textGradient} bg-clip-text text-transparent mb-3`}>
                   {statsVisible && (
                     <CountUp
                       end={stat.count}
@@ -552,26 +681,64 @@ export default function HomePage() {
                     />
                   )}
                 </div>
-                <p className="text-lg text-gray-300">{stat.label}</p>
+                
+                <p className="text-lg text-gray-300 group-hover:text-white transition-colors duration-300">{stat.label}</p>
               </div>
             ))}
+          </div>
+          
+          {/* Additional stats */}
+          <div className="mt-16" data-aos="fade-up">
+            <div className="bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-md border border-white/5 rounded-xl p-8 shadow-lg">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
+                <div className="text-center p-4">
+                  <div className="text-purple-400 mb-2"><FaCrown className="text-3xl mx-auto" /></div>
+                  <div className="text-2xl font-bold text-white mb-1">Desde {currentYear-2}</div>
+                  <div className="text-gray-400 text-sm">Años en línea</div>
+                </div>
+                <div className="text-center p-4">
+                  <div className="text-blue-400 mb-2"><FaStar className="text-3xl mx-auto" /></div>
+                  <div className="text-2xl font-bold text-white mb-1">+40</div>
+                  <div className="text-gray-400 text-sm">Canales de chat</div>
+                </div>
+                <div className="text-center p-4">
+                  <div className="text-green-400 mb-2"><FaCalendarAlt className="text-3xl mx-auto" /></div>
+                  <div className="text-2xl font-bold text-white mb-1">+15</div>
+                  <div className="text-gray-400 text-sm">Eventos mensuales</div>
+                </div>
+                <div className="text-center p-4">
+                  <div className="text-red-400 mb-2"><FaHeart className="text-3xl mx-auto" /></div>
+                  <div className="text-2xl font-bold text-white mb-1">100%</div>
+                  <div className="text-gray-400 text-sm">Satisfacción</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Sección de Eventos */}
-      <section className="py-24 bg-gradient-to-b from-dark-800 to-dark-900 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/10 via-dark-900 to-secondary-900/10"></div>
+      {/* Events Section - Redesigned */}
+      <section className="py-28 relative overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+        
+        {/* Decorative orbs */}
+        <div className="absolute bottom-40 right-10 w-96 h-96 rounded-full bg-blue-900/10 blur-[100px]"></div>
+        <div className="absolute top-40 left-10 w-96 h-96 rounded-full bg-violet-900/10 blur-[100px]"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16" data-aos="fade-up">
-            <span className="bg-gradient-to-r from-primary-500 to-primary-600 text-white text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 shadow-md">
-              EVENTOS
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Próximos <span className="bg-gradient-to-r from-primary-300 to-secondary-300 bg-clip-text text-transparent">Eventos</span>
+          <div className="text-center mb-20" data-aos="fade-up">
+            <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-violet-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
+              <span className="text-primary-400 text-sm font-medium">EVENTOS</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Próximos </span>
+              <span className="bg-gradient-to-r from-primary-400 to-violet-400 bg-clip-text text-transparent">Eventos</span>
             </h2>
-            <p className="text-lg text-gray-200 max-w-4xl mx-auto">
+            <p className="text-lg text-blue-100/80 max-w-4xl mx-auto">
               No te pierdas nuestros eventos exclusivos y diviértete con toda la comunidad.
             </p>
           </div>
@@ -580,51 +747,74 @@ export default function HomePage() {
             {upcomingEvents.map((event, index) => (
               <div 
                 key={event.id}
-                className={`bg-gradient-to-b from-dark-800 to-dark-900 rounded-xl overflow-hidden shadow-xl border border-${event.featured ? 'primary' : 'gray'}-500/20 ${event.featured ? 'ring-2 ring-primary-500/50' : ''} transform transition-all duration-300 hover:-translate-y-2`}
+                className={`group relative bg-gradient-to-br from-dark-900/80 to-dark-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border ${
+                  event.featured ? 'border-primary-500/30' : 'border-gray-700/30'
+                } transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${
+                  event.featured ? 'md:scale-105 z-10 hover:shadow-primary-500/10' : 'hover:shadow-purple-500/10'
+                }`}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
-                <div className="relative h-48 bg-dark-900">
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${event.image})` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/80 to-transparent"></div>
-                  
-                  {event.featured && (
-                    <div className="absolute top-4 right-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-xs font-medium px-2.5 py-1 rounded-full shadow-lg">
-                      Destacado
-                    </div>
-                  )}
-                  
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-2 text-sm font-medium text-white bg-dark-900/80 backdrop-blur-sm p-2 rounded-lg border border-gray-700 inline-block">
-                      <FaCalendarAlt className="text-primary-300" />
-                      <span>{event.date}</span>
-                      <span className="mx-2">•</span>
-                      <span>{event.time}</span>
-                    </div>
-                  </div>
-                </div>
+                {/* Glass layer with shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-violet-500/5 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="shimmer-effect opacity-0 group-hover:opacity-100"></div>
                 
-                <div className="p-6">
-                  <div className="mb-4">
-                    <span className="inline-block bg-gradient-to-r from-primary-500 to-primary-600 text-white text-xs px-3 py-1 rounded-full shadow-md">
-                      {event.category}
-                    </span>
+                <div className="relative">
+                  <div className="relative h-56 overflow-hidden">
+                    <Image 
+                      src={event.image}
+                      alt={event.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/70 to-transparent"></div>
+                    
+                    {event.featured && (
+                      <div className="absolute top-4 right-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-primary-400/30 backdrop-blur-sm">
+                        Destacado
+                      </div>
+                    )}
+                    
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="flex items-center gap-2 text-sm font-medium text-white bg-dark-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
+                        <FaCalendarAlt className="text-primary-400" />
+                        <span>{event.date}</span>
+                        <span className="mx-2 text-primary-400/50">•</span>
+                        <span>{event.time}</span>
+                      </div>
+                    </div>
                   </div>
                   
-                  <h3 className="text-xl font-bold mb-3 text-white">{event.title}</h3>
-                  <p className="text-gray-300 mb-6">{event.description}</p>
-                  
-                  <Button 
-                    href="/events"
-                    variant={event.featured ? 'gradient' : 'outline'}
-                    rounded="lg"
-                    className={`w-full ${!event.featured ? 'bg-dark-900 border-gray-700 hover:border-primary-500/50' : 'bg-gradient-to-r from-primary-600 to-primary-700 border border-primary-500'}`}
-                  >
-                    Más información
-                  </Button>
+                  <div className="p-6 relative">
+                    <div className="mb-4 flex justify-between items-center">
+                      <span className="inline-block bg-gradient-to-r from-primary-600/90 to-violet-600/90 text-white text-xs px-3 py-1.5 rounded-full shadow-md">
+                        {event.category}
+                      </span>
+                      {event.featured && (
+                        <div className="flex items-center gap-1 text-yellow-400 text-sm">
+                          <FaStar />
+                          <FaStar />
+                          <FaStar />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <h3 className="text-xl lg:text-2xl font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
+                    <p className="text-gray-300 mb-6">{event.description}</p>
+                    
+                    <Button 
+                      href="/events"
+                      variant={event.featured ? 'gradient' : 'outline'}
+                      rounded="lg"
+                      className={`relative z-10 w-full ${
+                        !event.featured 
+                          ? 'bg-dark-900/50 border-gray-600/50 hover:border-primary-500/50 backdrop-blur-sm' 
+                          : 'bg-gradient-to-r from-primary-600 to-violet-600 border border-primary-500/50 hover:from-primary-500 hover:to-violet-500'
+                      }`}
+                    >
+                      Más información
+                    </Button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -636,7 +826,7 @@ export default function HomePage() {
               variant="outline"
               rounded="full"
               rightIcon={<FaArrowRight />}
-              className="bg-dark-800 border-gray-600 hover:border-primary-500/50 transition-all duration-300"
+              className="bg-dark-900/50 backdrop-blur-sm border-gray-600/50 hover:border-primary-500/50 px-8 py-3 shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               Ver todos los eventos
             </Button>
