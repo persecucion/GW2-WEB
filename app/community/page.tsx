@@ -304,36 +304,36 @@ export default function CommunityPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {[
                 {
-                  name: "Mystic",
+                  name: "Karma",
                   role: "Fundador",
                   image: "/Mystic.jpg",
                   badge: "primary",
                   bio: "Creador de la comunidad GW2 y entusiasta de los videojuegos.",
-                  discord: "Mystic#1234"
+                  discord: "triangulandote"
                 },
                 {
-                  name: "Alex",
+                  name: "Nyx",
                   role: "Admin Principal",
                   image: "/images/vip1.png",
                   badge: "secondary",
                   bio: "Coordinador de eventos y moderador. Responsable del buen ambiente.",
-                  discord: "Alex#5678"
+                  discord: "love.nyx"
                 },
                 {
-                  name: "Sara",
+                  name: "Satan",
                   role: "Coordinación",
                   image: "/images/vip2.png",
                   badge: "pink",
                   bio: "Especialista en organización de torneos y eventos especiales.",
-                  discord: "Sara#9101"
+                  discord: "satan_09"
                 },
                 {
-                  name: "Carlos",
+                  name: "Junsred",
                   role: "Developer",
                   image: "/images/vip3.png",
                   badge: "teal",
                   bio: "Experto en tecnología y resolución de problemas técnicos.",
-                  discord: "Carlos#1122"
+                  discord: "love.jun"
                 }
               ].map((member, index) => (
                 <motion.div
