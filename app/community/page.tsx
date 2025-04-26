@@ -223,9 +223,9 @@ export default function CommunityPage() {
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="text-center max-w-3xl mx-auto" data-aos="fade-up">
-              <span className="inline-block px-3 py-1 bg-primary-900/30 text-primary-400 text-sm font-medium rounded-full mb-4 border border-primary-500/20 shadow-lg shadow-primary-900/10">
-                Nuestra Comunidad
-              </span>
+              <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-secondary-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
+                <span className="text-primary-400 text-sm font-medium">NUESTRA COMUNIDAD</span>
+              </div>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
                 Conoce a <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">GW2</span>
               </h1>
@@ -278,117 +278,25 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* Community Tabs - Modernized */}
-        <section className="py-20 relative">
-          {/* Background elements */}
-          <div className="absolute inset-0 bg-gradient-to-b from-dark-900 via-dark-900/95 to-dark-800/80"></div>
-          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-            <div className="max-w-3xl mx-auto text-center mb-12" data-aos="fade-up">
-              <span className="inline-block px-3 py-1 bg-secondary-900/30 text-secondary-400 text-sm font-medium rounded-full mb-4 border border-secondary-500/20">
-                Descubre
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                Nuestros <span className="bg-gradient-to-r from-secondary-400 to-purple-400 bg-clip-text text-transparent">valores</span>
-              </h2>
-              <p className="text-gray-300">
-                Conoce lo que nos define como comunidad y hace de GW2 un lugar especial.
-              </p>
-            </div>
-
-            {/* Tabs Navigation */}
-            <div className="flex justify-center mb-8" data-aos="fade-up" data-aos-delay="100">
-              <div className="inline-flex p-1.5 bg-dark-800/80 backdrop-blur-sm rounded-xl border border-dark-700/50 shadow-xl">
-                {tabs.map((tab, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveTab(index)}
-                    className={`flex items-center px-5 py-2.5 rounded-lg text-sm font-medium transition duration-200 ${
-                      activeTab === index
-                        ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-lg'
-                        : 'text-gray-400 hover:text-white hover:bg-dark-700/50'
-                    }`}
-                  >
-                    <span className="mr-2">{tab.icon}</span>
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Tab Content */}
-            <div className="bg-gradient-to-br from-dark-800/70 to-dark-900/70 backdrop-blur-sm border border-dark-700/50 rounded-2xl p-6 md:p-8 shadow-2xl" data-aos="fade-up" data-aos-delay="200">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                {/* Left column - Content */}
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white">
-                    {tabs[activeTab].title}
-                  </h3>
-                  <p className="text-gray-300 mb-6">
-                    {tabs[activeTab].description}
-                  </p>
-                  
-                  {/* Features grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                    {tabs[activeTab].features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start p-3 rounded-lg bg-dark-800/50 border border-dark-700/50">
-                        <div className="flex-shrink-0 p-2 bg-gradient-to-br from-primary-600/20 to-secondary-600/20 rounded-lg mr-3">
-                          {feature.icon}
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-white text-sm mb-1">{feature.title}</h4>
-                          <p className="text-xs text-gray-400">{feature.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* CTA Button */}
-                  <Button
-                    variant="gradient"
-                    size="default"
-                    leftIcon={tabs[activeTab].cta.icon}
-                    className="mt-2"
-                  >
-                    {tabs[activeTab].cta.label}
-                  </Button>
-                </div>
-                
-                {/* Right column - Image */}
-                <div className="relative h-64 md:h-80 rounded-xl overflow-hidden order-first md:order-last">
-                  <Image
-                    src={tabs[activeTab].image}
-                    alt={tabs[activeTab].title}
-                    fill
-                    className="object-cover"
-                    placeholder="blur"
-                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEDQIHXi2unAAAAABJRU5ErkJggg=="
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 to-transparent"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Staff Team Section - Modern Design */}
-        <section className="py-20 relative overflow-hidden">
+        <section className="py-28 relative overflow-hidden">
           {/* Background elements */}
           <div className="absolute inset-0 bg-gradient-to-b from-dark-800 via-dark-900 to-dark-900/90"></div>
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
-          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-600/5 blur-[120px]"></div>
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-secondary-600/5 blur-[120px]"></div>
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
+          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="text-center mb-16" data-aos="fade-up">
-              <div className="inline-block px-3 py-1 bg-primary-900/30 rounded-full text-primary-400 text-sm font-semibold mb-3 border border-primary-500/20">
-                Nuestro Staff
+              <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-secondary-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
+                <span className="text-primary-400 text-sm font-medium">NUESTRO STAFF</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
                 El <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">equipo</span> detrás de GW2
               </h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">
+              <p className="text-lg text-blue-100/80 max-w-4xl mx-auto">
                 Conoce a las personas dedicadas que trabajan día a día para hacer de nuestra comunidad un lugar especial para todos.
               </p>
             </div>
