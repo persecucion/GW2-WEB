@@ -144,6 +144,11 @@ export default function MinecraftPage() {
         
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-16" data-aos="fade-up">
+            <div className="inline-block mb-4">
+              <div className="px-3 py-1 bg-gradient-to-r from-primary-900/60 to-secondary-900/60 backdrop-blur-md rounded-full border border-primary-500/20">
+                <span className="text-primary-400 text-sm font-medium">⚙️ CARACTERÍSTICAS</span>
+              </div>
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-primary-200">
               INFORMACIÓN DEL SERVIDOR
             </h2>
@@ -221,6 +226,221 @@ export default function MinecraftPage() {
           </div>
         </div>
       </section>
+
+      {/* Galería del Servidor - Nueva sección */}
+      <section className="py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-900 via-dark-850 to-dark-900"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+        
+        {/* Elementos decorativos */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-16" data-aos="fade-up">
+            <div className="inline-block mb-4">
+              <div className="px-3 py-1 bg-gradient-to-r from-primary-900/60 to-secondary-900/60 backdrop-blur-md rounded-full border border-primary-500/20">
+                <span className="text-primary-400 text-sm font-medium">📸 IMÁGENES</span>
+              </div>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-primary-200">
+              GALERÍA DEL SERVIDOR
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Echa un vistazo a nuestro mundo y las creaciones de nuestra comunidad
+            </p>
+          </div>
+          
+          {/* Grid de imágenes */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            {/* Imagen 1 */}
+            <div className="rounded-2xl overflow-hidden aspect-video relative group transition-all duration-300 hover:scale-[1.02] shadow-xl shadow-dark-900/80" data-aos="fade-up" data-aos-delay="0">
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity z-10"></div>
+              <Image 
+                src="/images/minecraft/gallery-1.jpg" 
+                alt="Spawn del servidor" 
+                width={600} 
+                height={338}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+              />
+              <div className="absolute bottom-0 left-0 p-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+                <h3 className="text-white font-bold text-xl">Spawn Principal</h3>
+              </div>
+            </div>
+            
+            {/* Imagen 2 */}
+            <div className="rounded-2xl overflow-hidden aspect-video relative group transition-all duration-300 hover:scale-[1.02] shadow-xl shadow-dark-900/80" data-aos="fade-up" data-aos-delay="100">
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity z-10"></div>
+              <Image 
+                src="/images/minecraft/gallery-2.jpg" 
+                alt="Ciudad de jugadores" 
+                width={600} 
+                height={338}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+              />
+              <div className="absolute bottom-0 left-0 p-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+                <h3 className="text-white font-bold text-xl">Ciudad de Jugadores</h3>
+              </div>
+            </div>
+            
+            {/* Imagen 3 */}
+            <div className="rounded-2xl overflow-hidden aspect-video relative group transition-all duration-300 hover:scale-[1.02] shadow-xl shadow-dark-900/80" data-aos="fade-up" data-aos-delay="200">
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity z-10"></div>
+              <Image 
+                src="/images/minecraft/gallery-3.jpg" 
+                alt="Eventos especiales" 
+                width={600} 
+                height={338}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+              />
+              <div className="absolute bottom-0 left-0 p-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+                <h3 className="text-white font-bold text-xl">Eventos Especiales</h3>
+              </div>
+            </div>
+          </div>
+          
+          {/* CTA para más imágenes */}
+          <div className="text-center" data-aos="fade-up">
+            <a 
+              href="https://discord.gg/gatitos2" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600/30 to-primary-700/30 hover:from-primary-600/40 hover:to-primary-700/40 text-primary-300 font-medium rounded-xl transition-all"
+            >
+              Ver más imágenes en Discord <FaChevronDown className="text-sm" />
+            </a>
+          </div>
+        </div>
+      </section>
+      
+      {/* Changelogs - Nueva sección */}
+      <section className="py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-900 via-dark-850 to-dark-900"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+        
+        {/* Elementos decorativos */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-16" data-aos="fade-up">
+            <div className="inline-block mb-4">
+              <div className="px-3 py-1 bg-gradient-to-r from-primary-900/60 to-secondary-900/60 backdrop-blur-md rounded-full border border-primary-500/20">
+                <span className="text-primary-400 text-sm font-medium">📝 ACTUALIZACIONES</span>
+              </div>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-primary-200">
+              CHANGELOG
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Mantente al día con las novedades y cambios en nuestro servidor
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            {/* Timeline de cambios */}
+            <div className="relative border-l-2 border-primary-800/50 pl-10 ml-6 space-y-12">
+              {/* Punto destacado - Próxima apertura */}
+              <div className="relative" data-aos="fade-up">
+                <div className="absolute -left-[42px] top-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary-600 to-secondary-600 border-4 border-dark-950 flex items-center justify-center pulse-animation">
+                  <div className="w-2 h-2 rounded-full bg-white"></div>
+                </div>
+                <div className="bg-gradient-to-br from-dark-800 to-dark-900 rounded-2xl p-6 border border-primary-600/30 shadow-xl shadow-primary-900/5">
+                  <div className="bg-gradient-to-r from-yellow-500 to-amber-500 text-amber-900 font-bold text-sm px-3 py-1 rounded-full inline-block mb-3">¡PRÓXIMAMENTE!</div>
+                  <h3 className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">
+                    Gran Apertura - 28 de Abril 2024
+                  </h3>
+                  <p className="text-gray-400 mb-4">
+                    ¡Estamos preparando todo para el lanzamiento oficial del servidor! Únete a nosotros en esta nueva aventura con muchas sorpresas.
+                  </p>
+                  <ul className="space-y-1 text-gray-400">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Mundo completamente nuevo con biomas espectaculares</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Sistema económico mejorado con tiendas</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Plugins exclusivos para mejorar la experiencia</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Evento de inauguración con premios especiales</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              {/* Update 1 - Preparación */}
+              <div className="relative" data-aos="fade-up" data-aos-delay="100">
+                <div className="absolute -left-[42px] top-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary-800 to-primary-900 border-4 border-dark-950 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-primary-400"></div>
+                </div>
+                <div className="bg-gradient-to-br from-dark-800 to-dark-900 rounded-2xl p-6 border border-primary-900/40 shadow-xl shadow-primary-900/5">
+                  <div className="text-gray-500 text-sm mb-3">15 de Abril, 2024</div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-200">
+                    Fase de Preparación
+                  </h3>
+                  <p className="text-gray-400 mb-2">
+                    Hemos comenzado a configurar los sistemas básicos del servidor y realizar pruebas de rendimiento.
+                  </p>
+                  <ul className="space-y-1 text-gray-400">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Instalación de los plugins esenciales</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Configuración del spawn principal</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Pruebas de optimización para minimizar lag</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              {/* Update 2 - Planificación */}
+              <div className="relative" data-aos="fade-up" data-aos-delay="200">
+                <div className="absolute -left-[42px] top-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary-800 to-primary-900 border-4 border-dark-950 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-primary-400"></div>
+                </div>
+                <div className="bg-gradient-to-br from-dark-800 to-dark-900 rounded-2xl p-6 border border-primary-900/40 shadow-xl shadow-primary-900/5">
+                  <div className="text-gray-500 text-sm mb-3">1 de Abril, 2024</div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-200">
+                    Planificación Inicial
+                  </h3>
+                  <p className="text-gray-400 mb-2">
+                    Inicio del proyecto GatitosCraft con la selección de características y planificación.
+                  </p>
+                  <ul className="space-y-1 text-gray-400">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Selección de plugins y características principales</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Definición de reglas y sistema de moderación</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary-400 mt-1">•</span>
+                      <span>Creación de canales de Discord para la comunidad</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* Call to Action - Modern Design */}
       <section className="py-24 relative">
@@ -235,6 +455,11 @@ export default function MinecraftPage() {
           <div className="max-w-5xl mx-auto bg-gradient-to-br from-dark-800 to-dark-900 p-8 md:p-12 rounded-3xl border border-primary-500/20 shadow-2xl shadow-primary-900/10" data-aos="fade-up">
             <div className="flex flex-col md:flex-row items-center">
               <div className="flex-1 mb-8 md:mb-0 md:mr-8">
+                <div className="inline-block mb-4">
+                  <div className="px-3 py-1 bg-gradient-to-r from-primary-900/60 to-secondary-900/60 backdrop-blur-md rounded-full border border-primary-500/20">
+                    <span className="text-primary-400 text-sm font-medium">🚀 ÚNETE AHORA</span>
+                  </div>
+                </div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-primary-200">
                   ¿Listo para unirte a la aventura?
                 </h2>
@@ -284,8 +509,26 @@ export default function MinecraftPage() {
           </div>
         </div>
       </section>
+
+      {/* Añadimos estilos globales para animaciones */}
+      <style jsx global>{`
+        @keyframes pulse {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.1);
+            opacity: 0.8;
+          }
+        }
+        
+        .pulse-animation {
+          animation: pulse 2s infinite;
+        }
+      `}</style>
       
       <Footer />
     </div>
   );
-} 
+}
