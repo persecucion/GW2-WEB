@@ -223,7 +223,7 @@ export default function CommunityPage() {
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="text-center max-w-3xl mx-auto" data-aos="fade-up">
-              <span className="bg-primary-900/30 text-primary-400 text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 border border-primary-500/20 shadow-lg shadow-primary-900/10">
+              <span className="inline-block px-3 py-1 bg-primary-900/30 text-primary-400 text-sm font-medium rounded-full mb-4 border border-primary-500/20 shadow-lg shadow-primary-900/10">
                 Nuestra Comunidad
               </span>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
@@ -286,14 +286,14 @@ export default function CommunityPage() {
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="max-w-3xl mx-auto text-center mb-12" data-aos="fade-up">
-              <span className="bg-secondary-900/30 text-secondary-400 text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 border border-secondary-500/20">
+              <span className="inline-block px-3 py-1 bg-secondary-900/30 text-secondary-400 text-sm font-medium rounded-full mb-4 border border-secondary-500/20">
                 Descubre
               </span>
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                Nuestra comunidad <span className="bg-gradient-to-r from-secondary-400 to-purple-400 bg-clip-text text-transparent">en detalle</span>
+                Nuestros <span className="bg-gradient-to-r from-secondary-400 to-purple-400 bg-clip-text text-transparent">valores</span>
               </h2>
               <p className="text-gray-300">
-                Conoce todos los aspectos que hacen de GW2 un lugar especial para todos los amantes de Guild Wars 2.
+                Conoce lo que nos define como comunidad y hace de GW2 un lugar especial.
               </p>
             </div>
 
@@ -401,9 +401,7 @@ export default function CommunityPage() {
                   image: "/Mystic.jpg",
                   badge: "primary",
                   bio: "Creador de la comunidad GW2 y entusiasta de los videojuegos.",
-                  discord: "Mystic#1234",
-                  twitter: true,
-                  twitch: true
+                  discord: "Mystic#1234"
                 },
                 {
                   name: "Alex",
@@ -411,9 +409,7 @@ export default function CommunityPage() {
                   image: "/images/vip1.png",
                   badge: "secondary",
                   bio: "Coordinador de eventos y moderador. Responsable del buen ambiente.",
-                  discord: "Alex#5678",
-                  twitter: true,
-                  instagram: true
+                  discord: "Alex#5678"
                 },
                 {
                   name: "Sara",
@@ -421,9 +417,7 @@ export default function CommunityPage() {
                   image: "/images/vip2.png",
                   badge: "pink",
                   bio: "Especialista en organización de torneos y eventos especiales.",
-                  discord: "Sara#9101",
-                  twitch: true,
-                  youtube: true
+                  discord: "Sara#9101"
                 },
                 {
                   name: "Carlos",
@@ -431,9 +425,7 @@ export default function CommunityPage() {
                   image: "/images/vip3.png",
                   badge: "teal",
                   bio: "Experto en tecnología y resolución de problemas técnicos.",
-                  discord: "Carlos#1122",
-                  twitter: true,
-                  instagram: true
+                  discord: "Carlos#1122"
                 }
               ].map((member, index) => (
                 <motion.div
@@ -473,31 +465,13 @@ export default function CommunityPage() {
                       <h3 className="text-xl font-bold text-white mb-2">{member.name}</h3>
                       <p className="text-gray-400 text-sm text-center mb-4">{member.bio}</p>
                       
-                      <div className="flex space-x-3 mt-2">
-                        <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 hover:bg-dark-600 transition-colors">
-                          <FaDiscord size={18} />
-                        </a>
-                        {member.twitter && (
-                          <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-dark-600 transition-colors">
-                            <FaTwitter size={18} />
-                          </a>
-                        )}
-                        {member.twitch && (
-                          <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-purple-400 hover:bg-dark-600 transition-colors">
-                            <FaTwitch size={18} />
-                          </a>
-                        )}
-                        {member.instagram && (
-                          <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-pink-400 hover:bg-dark-600 transition-colors">
-                            <FaInstagram size={18} />
-                          </a>
-                        )}
-                        {member.youtube && (
-                          <a href="#" className="h-9 w-9 rounded-full bg-dark-700 flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-dark-600 transition-colors">
-                            <FaYoutube size={18} />
-                          </a>
-                        )}
-                      </div>
+                      <button 
+                        onClick={() => navigator.clipboard.writeText(member.discord)}
+                        className="flex items-center space-x-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium hover:from-indigo-500 hover:to-purple-500 focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-dark-900 transition-all duration-200 shadow-lg shadow-purple-700/20"
+                      >
+                        <FaDiscord className="text-lg" />
+                        <span>{member.discord}</span>
+                      </button>
                     </div>
                   </div>
                 </motion.div>
