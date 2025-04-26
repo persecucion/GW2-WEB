@@ -6,14 +6,15 @@ import Image from 'next/image';
 import { FaServer, FaDiscord, FaMapMarkedAlt, FaCube, FaUsers, FaCalendarAlt, FaCode, FaTrophy, FaGamepad, FaShieldAlt, FaGem, FaCrown, FaChevronDown } from 'react-icons/fa';
 import Header from '../Header';
 import Footer from '../Footer';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 // Configuración del servidor
 const SERVER_IP = "mc.gw2.xyz:25592";
 const SERVER_VERSION = "1.21.4";
 
-// Estilos optimizados
+// Estilos optimizados - Reducidos para mejor rendimiento
 const optimizedStyles = `
-  /* Animaciones básicas optimizadas */
   @keyframes pulse {
     0%, 100% { opacity: 0.6; }
     50% { opacity: 1; }
@@ -27,57 +28,6 @@ const optimizedStyles = `
   @keyframes shimmer {
     to { background-position: 200% center; }
   }
-
-  .pulse-animation {
-    animation: pulse 4s ease-in-out infinite;
-  }
-
-  .float-animation {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  /* Elementos visuales optimizados */
-  .minecraft-glass {
-    background: rgba(17, 24, 39, 0.7);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  }
-
-  .premium-badge {
-    background: linear-gradient(135deg, #ffd700 0%, #ffbb00 100%);
-    color: #333;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-
-  .non-premium-badge {
-    background: linear-gradient(135deg, #64748b 0%, #475569 100%);
-    color: white;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
-  }
-
-  .shimmer-text {
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
-    background-size: 200% auto;
-    animation: shimmer 3s infinite;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .glow-effect:before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: inherit;
-    background: linear-gradient(45deg, #3b82f6, #9333ea);
-    opacity: 0.4;
-    filter: blur(8px);
-    z-index: -1;
-  }
 `;
 
 export default function MinecraftPage() {
@@ -87,12 +37,13 @@ export default function MinecraftPage() {
   
   useEffect(() => {
     setIsLoaded(true);
-    // Cargar componentes principales primero
-    const timer = setTimeout(() => {
-      // Cargar componentes secundarios después
-    }, 100);
-    
-    return () => clearTimeout(timer);
+    // Inicializar AOS para animaciones al cargar
+    if (typeof window !== 'undefined') {
+      AOS.init({
+        duration: 800,
+        once: true,
+      });
+    }
   }, []);
   
   const copyToClipboard = () => {
@@ -102,11 +53,11 @@ export default function MinecraftPage() {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen bg-dark-950">
       <style jsx global>{optimizedStyles}</style>
       <Header />
-      <main className="bg-dark-950 text-white min-h-screen">
-        <div className="min-h-screen pt-16">
+      <main className="flex-grow text-white">
+        <div className="pt-16">
           {/* Hero Section - Modernizado y optimizado */}
           <section className="relative h-[90vh] min-h-[700px] flex items-center justify-center overflow-hidden">
             {/* Fondo optimizado */}
@@ -683,7 +634,9 @@ export default function MinecraftPage() {
           </section>
         </div>
       </main>
-      <Footer />
-    </>
+      <div className="w-full">
+        <Footer />
+      </div>
+    </div>
   );
 }
