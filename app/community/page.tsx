@@ -306,7 +306,7 @@ export default function CommunityPage() {
                 {
                   name: "Karma",
                   role: "Fundador",
-                  image: "/Mystic.jpg",
+                  image: "/images/karma.png",
                   badge: "primary",
                   bio: "Creador de la comunidad GW2 y entusiasta de los videojuegos.",
                   discord: "triangulandote"
@@ -314,7 +314,7 @@ export default function CommunityPage() {
                 {
                   name: "Nyx",
                   role: "Admin Principal",
-                  image: "/images/vip1.png",
+                  image: "/images/nyx.png",
                   badge: "secondary",
                   bio: "Coordinador de eventos y moderador. Responsable del buen ambiente.",
                   discord: "love.nyx"
@@ -322,7 +322,7 @@ export default function CommunityPage() {
                 {
                   name: "Satan",
                   role: "Coordinación",
-                  image: "/images/vip2.png",
+                  image: "/images/satan.png",
                   badge: "pink",
                   bio: "Especialista en organización de torneos y eventos especiales.",
                   discord: "satan_09"
@@ -330,7 +330,7 @@ export default function CommunityPage() {
                 {
                   name: "Junsred",
                   role: "Developer",
-                  image: "/images/vip3.png",
+                  image: "/images/jun.gif",
                   badge: "teal",
                   bio: "Experto en tecnología y resolución de problemas técnicos.",
                   discord: "love.jun"
