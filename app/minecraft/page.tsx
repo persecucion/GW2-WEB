@@ -14,7 +14,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 // Definimos constantes para información del servidor
-const SERVER_IP = "play.gatewaymc.net";
+const SERVER_IP = "mc.gw2.xyz:25575";
 const SERVER_VERSION = "1.21.4";
 
 export default function MinecraftPage() {
@@ -352,7 +352,7 @@ export default function MinecraftPage() {
                 <div className="bg-gradient-to-br from-dark-800 to-dark-900 rounded-2xl p-6 border border-primary-600/30 shadow-xl shadow-primary-900/5">
                   <div className="bg-gradient-to-r from-yellow-500 to-amber-500 text-amber-900 font-bold text-sm px-3 py-1 rounded-full inline-block mb-3">¡PRÓXIMAMENTE!</div>
                   <h3 className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">
-                    Gran Apertura - 28 de Abril 2024
+                    Gran Apertura - 28 de Abril 2025
                   </h3>
                   <p className="text-gray-400 mb-4">
                     ¡Estamos preparando todo para el lanzamiento oficial del servidor! Únete a nosotros en esta nueva aventura con muchas sorpresas.
@@ -384,7 +384,7 @@ export default function MinecraftPage() {
                   <div className="w-2 h-2 rounded-full bg-primary-400"></div>
                 </div>
                 <div className="bg-gradient-to-br from-dark-800 to-dark-900 rounded-2xl p-6 border border-primary-900/40 shadow-xl shadow-primary-900/5">
-                  <div className="text-gray-500 text-sm mb-3">15 de Abril, 2024</div>
+                  <div className="text-gray-500 text-sm mb-3">15 de Abril, 2025</div>
                   <h3 className="text-xl font-bold mb-2 text-gray-200">
                     Fase de Preparación
                   </h3>
@@ -414,7 +414,7 @@ export default function MinecraftPage() {
                   <div className="w-2 h-2 rounded-full bg-primary-400"></div>
                 </div>
                 <div className="bg-gradient-to-br from-dark-800 to-dark-900 rounded-2xl p-6 border border-primary-900/40 shadow-xl shadow-primary-900/5">
-                  <div className="text-gray-500 text-sm mb-3">1 de Abril, 2024</div>
+                  <div className="text-gray-500 text-sm mb-3">1 de Abril, 2025</div>
                   <h3 className="text-xl font-bold mb-2 text-gray-200">
                     Planificación Inicial
                   </h3>
