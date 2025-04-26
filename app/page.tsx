@@ -44,6 +44,12 @@ import Footer from "./Footer"
 
 // Definimos animaciones para el hero
 const heroAnimations = `
+  @keyframes pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+  }
+  
   @keyframes floatUp {
     0% { transform: translateY(20px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
@@ -101,35 +107,34 @@ const heroAnimations = `
     position: relative;
     z-index: 0;
     border-radius: 12px;
-    overflow: visible;
+    overflow: hidden;
     box-shadow: 0 0 70px rgba(0, 102, 255, 0.25);
   }
   
   .img-border::before {
     content: '';
     position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border-radius: 16px;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 14px;
     background: linear-gradient(90deg, #1e40af, #3b82f6, #8b5cf6, #3b82f6, #1e40af);
     background-size: 300% 100%;
     animation: moveGradient 3s linear infinite;
     z-index: -1;
-    opacity: 1;
   }
   
   .img-border::after {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 14px;
-    box-shadow: 0 0 20px rgba(79, 70, 229, 0.6);
-    z-index: -2;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: 13px;
+    background: rgba(0, 4, 40, 0.9);
+    z-index: -1;
   }
   
   .footer-divider {
@@ -171,6 +176,16 @@ const heroAnimations = `
     border-radius: 30px;
     background: rgba(0, 4, 40, 0.9);
     z-index: -1;
+  }
+  
+  .hero-image-container {
+    animation: floatUp 1.5s ease-out 0.9s forwards;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+  
+  .hero-image-glow {
+    animation: pulse 4s ease-in-out infinite;
   }
 `;
 
@@ -356,23 +371,29 @@ export default function HomePage() {
           </div>
         </div>
         
-        {/* Main hero image with border effect - with exact dimensions, responsive */}
-        <div className="container relative z-10 px-4 mx-auto mb-8 md:mb-16 flex justify-center">
-          <div className="img-border w-full" style={{ maxWidth: "1200px" }}>
-            <div className="relative w-full aspect-[16/9] md:aspect-[21/9]">
+        {/* Main hero image with border effect - redesigned for perfect responsiveness */}
+        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 mb-8 md:mb-16 hero-image-container">
+          <div className="hero-image-glow absolute -inset-0 bg-blue-500/20 rounded-xl blur-xl"></div>
+          <div className="img-border rounded-xl overflow-hidden">
+            <div className="relative w-full h-0" style={{ paddingBottom: "42%" }}>
               <Image 
                 src="/images/server.png" 
                 alt="GW2 Server" 
                 fill
-                className="object-cover rounded-xl"
-                sizes="(max-width: 768px) 100vw, 1200px"
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                 priority
+                quality={90}
               />
               
               {/* Enhanced bottom gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/80 to-transparent pointer-events-none rounded-xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/80 to-transparent pointer-events-none"></div>
             </div>
           </div>
+          
+          {/* Optional decorative elements */}
+          <div className="absolute -bottom-3 -left-3 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
+          <div className="absolute -top-3 -right-3 w-24 h-24 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full blur-xl"></div>
         </div>
       </section>
 
