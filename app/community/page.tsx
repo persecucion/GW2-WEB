@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { FaDiscord, FaTwitter, FaTwitch, FaInstagram, FaYoutube, FaUsers, FaComments, FaGamepad, FaHeart } from 'react-icons/fa'
+import { FaDiscord, FaTwitter, FaTwitch, FaInstagram, FaYoutube, FaUsers, FaComments, FaGamepad, FaHeart, FaCalendarAlt, FaUserShield } from 'react-icons/fa'
+import { MdRuleFolder, MdGroups, MdOutlineEmojiEvents, MdOutlineMessage, MdFormatListNumbered } from 'react-icons/md'
+import { HiOutlineUserGroup, HiOutlineHeart } from 'react-icons/hi'
 import Header from '../Header'
 import Footer from '../Footer'
 import { Button } from '../components/Button'
@@ -93,7 +95,110 @@ const communityValues = [
 ]
 
 export default function CommunityPage() {
-  const [activeTab, setActiveTab] = useState('team')
+  const [activeTab, setActiveTab] = useState(0)
+
+  // Define the tabs data structure
+  const tabs = [
+    {
+      label: "Equipo",
+      icon: <HiOutlineUserGroup className="h-5 w-5" />,
+      title: "Nuestro Equipo",
+      description: "Conoce a las personas que hacen posible esta comunidad. Nuestro dedicado equipo trabaja diariamente para crear la mejor experiencia para todos.",
+      image: "/images/team.jpg",
+      features: [
+        {
+          icon: <MdGroups className="h-5 w-5" />,
+          title: "Liderazgo",
+          description: "Un equipo apasionado por Guild Wars 2"
+        },
+        {
+          icon: <MdOutlineEmojiEvents className="h-5 w-5" />,
+          title: "Organizadores",
+          description: "Creadores de eventos y actividades"
+        },
+        {
+          icon: <MdOutlineMessage className="h-5 w-5" />,
+          title: "Moderadores",
+          description: "Mantienen la comunidad segura y amigable"
+        },
+        {
+          icon: <FaDiscord className="h-5 w-5" />,
+          title: "Discord Mods",
+          description: "Supervisores de nuestro servidor Discord"
+        }
+      ],
+      cta: {
+        label: "Conoce al equipo",
+        icon: <HiOutlineUserGroup className="h-5 w-5" />
+      }
+    },
+    {
+      label: "Valores",
+      icon: <HiOutlineHeart className="h-5 w-5" />,
+      title: "Nuestros Valores",
+      description: "Estos son los principios que nos guían y definen nuestra comunidad. Valores que compartimos y promovemos entre todos.",
+      image: "/images/values.jpg",
+      features: [
+        {
+          icon: <HiOutlineHeart className="h-5 w-5" />,
+          title: "Inclusividad",
+          description: "Todos son bienvenidos sin importar su experiencia"
+        },
+        {
+          icon: <HiOutlineHeart className="h-5 w-5" />,
+          title: "Respeto",
+          description: "Valoramos las opiniones y diferencias de cada uno"
+        },
+        {
+          icon: <HiOutlineHeart className="h-5 w-5" />,
+          title: "Diversión",
+          description: "Priorizamos la experiencia positiva de juego"
+        },
+        {
+          icon: <HiOutlineHeart className="h-5 w-5" />,
+          title: "Colaboración",
+          description: "Trabajamos juntos para lograr objetivos comunes"
+        }
+      ],
+      cta: {
+        label: "Leer más",
+        icon: <HiOutlineHeart className="h-5 w-5" />
+      }
+    },
+    {
+      label: "Reglas",
+      icon: <MdRuleFolder className="h-5 w-5" />,
+      title: "Reglas de la Comunidad",
+      description: "Para mantener un ambiente positivo y seguro, todos los miembros deben seguir estas reglas básicas.",
+      image: "/images/rules.jpg",
+      features: [
+        {
+          icon: <MdFormatListNumbered className="h-5 w-5" />,
+          title: "Respeto Mutuo",
+          description: "Trata a todos con respeto y dignidad"
+        },
+        {
+          icon: <MdFormatListNumbered className="h-5 w-5" />,
+          title: "No Spam",
+          description: "Evita mensajes repetitivos o no deseados"
+        },
+        {
+          icon: <MdFormatListNumbered className="h-5 w-5" />,
+          title: "Contenido Apropiado",
+          description: "Comparte solo contenido apto para todos"
+        },
+        {
+          icon: <MdFormatListNumbered className="h-5 w-5" />,
+          title: "Privacidad",
+          description: "Respeta la información personal de otros"
+        }
+      ],
+      cta: {
+        label: "Ver reglas completas",
+        icon: <MdRuleFolder className="h-5 w-5" />
+      }
+    }
+  ]
 
   useEffect(() => {
     AOS.init({
@@ -106,18 +211,25 @@ export default function CommunityPage() {
     <>
       <Header />
       <main className="min-h-screen bg-dark-900">
-        {/* Hero Section */}
+        {/* Hero Section - Modernized */}
         <section className="pt-28 pb-16 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary-900/20 to-dark-900"></div>
+          {/* Background elements */}
+          <div className="absolute inset-0 bg-gradient-to-b from-primary-900/20 via-dark-900/80 to-dark-900"></div>
+          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+          
+          {/* Animated background orbs */}
+          <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-blue-600/10 blur-[100px] animate-pulse"></div>
+          <div className="absolute bottom-10 left-20 w-72 h-72 rounded-full bg-purple-600/10 blur-[100px] animate-pulse"></div>
+          
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="text-center max-w-3xl mx-auto" data-aos="fade-up">
-              <span className="bg-primary-900/30 text-primary-400 text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4">
+              <span className="bg-primary-900/30 text-primary-400 text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 border border-primary-500/20 shadow-lg shadow-primary-900/10">
                 Nuestra Comunidad
               </span>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
                 Conoce a <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">GW2</span>
               </h1>
-              <p className="text-lg text-gray-300 mb-8">
+              <p className="text-lg text-gray-300 mb-8 leading-relaxed">
                 Somos una comunidad vibrante y acogedora de jugadores apasionados, unidos por el amor a los videojuegos y la amistad.
               </p>
               <Button 
@@ -127,7 +239,8 @@ export default function CommunityPage() {
                 size="lg"
                 rounded="full"
                 animation="float"
-                leftIcon={<FaDiscord />}
+                leftIcon={<FaDiscord className="text-xl" />}
+                className="bg-gradient-to-r from-primary-600 to-secondary-600 shadow-xl shadow-primary-900/20 border border-primary-500/30"
               >
                 Únete a nosotros
               </Button>
@@ -135,222 +248,127 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* Community Stats */}
-        <section className="py-16 bg-dark-800 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {communityStats.map((stat, index) => (
+        {/* Community Stats - Updated Design */}
+        <section className="py-12 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-dark-900 via-dark-900/95 to-primary-900/5"></div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+              {[
+                { value: '5+', label: 'Años', icon: <FaCalendarAlt className="text-primary-400 text-xl md:text-2xl" /> },
+                { value: '100+', label: 'Miembros', icon: <FaUsers className="text-primary-400 text-xl md:text-2xl" /> },
+                { value: '200+', label: 'Eventos', icon: <FaGamepad className="text-primary-400 text-xl md:text-2xl" /> },
+                { value: '15+', label: 'Moderadores', icon: <FaUserShield className="text-primary-400 text-xl md:text-2xl" /> },
+              ].map((stat, i) => (
                 <div 
-                  key={stat.id}
-                  className="bg-dark-700 rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition-all duration-300"
+                  key={i} 
+                  className="flex flex-col items-center bg-dark-800/80 backdrop-blur-sm rounded-2xl p-6 border border-primary-500/10 shadow-lg hover:shadow-primary-500/5 transition-all duration-300 hover:translate-y-[-4px]"
                   data-aos="fade-up"
-                  data-aos-delay={index * 100}
+                  data-aos-delay={100 * i}
                 >
-                  <div className="flex items-center justify-center mb-4">
+                  <div className="p-3 bg-primary-900/30 rounded-full mb-4">
                     {stat.icon}
                   </div>
-                  <div className="text-center">
-                    <span className="block text-3xl font-bold text-white mb-1">
-                      {stat.value.toLocaleString()}+
-                    </span>
-                    <span className="text-gray-400">{stat.label}</span>
-                  </div>
+                  <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent mb-1">
+                    {stat.value}
+                  </h3>
+                  <p className="text-gray-400 font-medium">{stat.label}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Tab Navigation */}
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              <Button 
-                variant={activeTab === 'team' ? 'gradient' : 'outline'}
-                rounded="full"
-                onClick={() => setActiveTab('team')}
-              >
-                Nuestro Equipo
-              </Button>
-              <Button 
-                variant={activeTab === 'values' ? 'gradient' : 'outline'}
-                rounded="full"
-                onClick={() => setActiveTab('values')}
-              >
-                Nuestros Valores
-              </Button>
-              <Button 
-                variant={activeTab === 'rules' ? 'gradient' : 'outline'}
-                rounded="full"
-                onClick={() => setActiveTab('rules')}
-              >
-                Reglas
-              </Button>
+        {/* Community Tabs - Modernized */}
+        <section className="py-20 relative">
+          {/* Background elements */}
+          <div className="absolute inset-0 bg-gradient-to-b from-dark-900 via-dark-900/95 to-dark-800/80"></div>
+          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div className="max-w-3xl mx-auto text-center mb-12" data-aos="fade-up">
+              <span className="bg-secondary-900/30 text-secondary-400 text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 border border-secondary-500/20">
+                Descubre
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+                Nuestra comunidad <span className="bg-gradient-to-r from-secondary-400 to-purple-400 bg-clip-text text-transparent">en detalle</span>
+              </h2>
+              <p className="text-gray-300">
+                Conoce todos los aspectos que hacen de GW2 un lugar especial para todos los amantes de Guild Wars 2.
+              </p>
             </div>
 
-            {/* Team Members */}
-            {activeTab === 'team' && (
-              <div>
-                <div className="text-center mb-12" data-aos="fade-up">
-                  <h2 className="text-3xl font-bold mb-4 text-white">Equipo de GW2</h2>
-                  <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                    Conoce a las personas que hacen posible esta comunidad. Nuestro dedicado equipo trabaja diariamente para crear la mejor experiencia para todos.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                  {teamMembers.map((member, index) => (
-                    <motion.div
-                      key={member.id}
-                      className="bg-dark-700 rounded-xl overflow-hidden shadow-lg"
-                      data-aos="fade-up"
-                      data-aos-delay={index * 100}
-                      whileHover={{ y: -10 }}
-                      transition={{ type: 'spring', stiffness: 300 }}
-                    >
-                      <div className="relative h-72 overflow-hidden">
-                        <Image 
-                          src={member.image} 
-                          alt={member.name}
-                          fill
-                          className="object-cover transition-transform duration-500 hover:scale-110"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent"></div>
-                        <div className="absolute bottom-0 left-0 right-0 p-4">
-                          <h3 className="text-xl font-bold text-white">{member.name}</h3>
-                          <span className="inline-block bg-primary-600/80 text-white text-xs font-medium px-2.5 py-1 rounded-full mt-1">
-                            {member.role}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="p-4">
-                        <p className="text-gray-300 text-sm mb-4">{member.bio}</p>
-                        <div className="flex space-x-3">
-                          {member.socialLinks.discord && (
-                            <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
-                              <FaDiscord size={20} />
-                            </a>
-                          )}
-                          {member.socialLinks.twitter && (
-                            <a href={member.socialLinks.twitter} className="text-gray-400 hover:text-blue-400 transition-colors">
-                              <FaTwitter size={20} />
-                            </a>
-                          )}
-                          {member.socialLinks.twitch && (
-                            <a href={member.socialLinks.twitch} className="text-gray-400 hover:text-purple-400 transition-colors">
-                              <FaTwitch size={20} />
-                            </a>
-                          )}
-                          {member.socialLinks.instagram && (
-                            <a href={member.socialLinks.instagram} className="text-gray-400 hover:text-pink-400 transition-colors">
-                              <FaInstagram size={20} />
-                            </a>
-                          )}
-                          {member.socialLinks.youtube && (
-                            <a href={member.socialLinks.youtube} className="text-gray-400 hover:text-red-400 transition-colors">
-                              <FaYoutube size={20} />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+            {/* Tabs Navigation */}
+            <div className="flex justify-center mb-8" data-aos="fade-up" data-aos-delay="100">
+              <div className="inline-flex p-1.5 bg-dark-800/80 backdrop-blur-sm rounded-xl border border-dark-700/50 shadow-xl">
+                {tabs.map((tab, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveTab(index)}
+                    className={`flex items-center px-5 py-2.5 rounded-lg text-sm font-medium transition duration-200 ${
+                      activeTab === index
+                        ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-lg'
+                        : 'text-gray-400 hover:text-white hover:bg-dark-700/50'
+                    }`}
+                  >
+                    <span className="mr-2">{tab.icon}</span>
+                    {tab.label}
+                  </button>
+                ))}
               </div>
-            )}
+            </div>
 
-            {/* Community Values */}
-            {activeTab === 'values' && (
-              <div>
-                <div className="text-center mb-12" data-aos="fade-up">
-                  <h2 className="text-3xl font-bold mb-4 text-white">Nuestros Valores</h2>
-                  <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                    Estos son los principios que nos guían y definen nuestra comunidad. Valores que compartimos y promovemos entre todos.
+            {/* Tab Content */}
+            <div className="bg-gradient-to-br from-dark-800/70 to-dark-900/70 backdrop-blur-sm border border-dark-700/50 rounded-2xl p-6 md:p-8 shadow-2xl" data-aos="fade-up" data-aos-delay="200">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                {/* Left column - Content */}
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white">
+                    {tabs[activeTab].title}
+                  </h3>
+                  <p className="text-gray-300 mb-6">
+                    {tabs[activeTab].description}
                   </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {communityValues.map((value, index) => (
-                    <div
-                      key={index}
-                      className={`bg-dark-700 p-6 rounded-xl shadow-lg border-l-4 ${
-                        value.color === 'blue' 
-                          ? 'border-primary-500' 
-                          : value.color === 'purple' 
-                            ? 'border-secondary-500' 
-                            : value.color === 'pink' 
-                              ? 'border-pink-500' 
-                              : 'border-teal-500'
-                      }`}
-                      data-aos="fade-up"
-                      data-aos-delay={index * 100}
-                    >
-                      <h3 className="text-xl font-bold mb-3 text-white">{value.title}</h3>
-                      <p className="text-gray-300">{value.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Community Rules */}
-            {activeTab === 'rules' && (
-              <div>
-                <div className="text-center mb-12" data-aos="fade-up">
-                  <h2 className="text-3xl font-bold mb-4 text-white">Reglas de la Comunidad</h2>
-                  <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                    Para mantener un ambiente positivo y seguro, todos los miembros deben seguir estas reglas básicas.
-                  </p>
-                </div>
-
-                <div className="bg-dark-700 rounded-xl p-8 shadow-lg" data-aos="fade-up">
-                  <ol className="space-y-6">
-                    {[
-                      {
-                        title: 'Respeto Mutuo',
-                        description: 'Trata a todos los miembros con respeto. No se tolerará el acoso, insultos o comportamiento tóxico.',
-                      },
-                      {
-                        title: 'No Spam',
-                        description: 'Evita enviar mensajes repetitivos, promocionar servidores o contenido sin autorización.',
-                      },
-                      {
-                        title: 'Contenido Apropiado',
-                        description: 'No compartas contenido NSFW, violento, político o religioso que pueda ofender a otros miembros.',
-                      },
-                      {
-                        title: 'Canales Adecuados',
-                        description: 'Utiliza los canales apropiados para cada tema o discusión.',
-                      },
-                      {
-                        title: 'Privacidad',
-                        description: 'Respeta la privacidad de los demás. No compartas información personal de otros sin su consentimiento.',
-                      },
-                      {
-                        title: 'Sigue las Instrucciones del Staff',
-                        description: 'Obedece las indicaciones de los moderadores y administradores del servidor.',
-                      },
-                    ].map((rule, index) => (
-                      <li key={index} className="flex">
-                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white font-bold mr-4">
-                          {index + 1}
-                        </span>
+                  
+                  {/* Features grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    {tabs[activeTab].features.map((feature, idx) => (
+                      <div key={idx} className="flex items-start p-3 rounded-lg bg-dark-800/50 border border-dark-700/50">
+                        <div className="flex-shrink-0 p-2 bg-gradient-to-br from-primary-600/20 to-secondary-600/20 rounded-lg mr-3">
+                          {feature.icon}
+                        </div>
                         <div>
-                          <h4 className="font-semibold text-white text-lg mb-1">{rule.title}</h4>
-                          <p className="text-gray-300">{rule.description}</p>
+                          <h4 className="font-medium text-white text-sm mb-1">{feature.title}</h4>
+                          <p className="text-xs text-gray-400">{feature.description}</p>
                         </div>
-                      </li>
+                      </div>
                     ))}
-                  </ol>
-                  <div className="mt-8 p-4 bg-primary-900/20 rounded-lg border border-primary-800/40">
-                    <p className="text-gray-300">
-                      El incumplimiento de estas reglas puede resultar en advertencias, suspensiones temporales o expulsión permanente de la comunidad, según la gravedad de la infracción y a discreción del equipo de moderación.
-                    </p>
                   </div>
+                  
+                  {/* CTA Button */}
+                  <Button
+                    variant="gradient"
+                    size="default"
+                    leftIcon={tabs[activeTab].cta.icon}
+                    className="mt-2"
+                  >
+                    {tabs[activeTab].cta.label}
+                  </Button>
+                </div>
+                
+                {/* Right column - Image */}
+                <div className="relative h-64 md:h-80 rounded-xl overflow-hidden order-first md:order-last">
+                  <Image
+                    src={tabs[activeTab].image}
+                    alt={tabs[activeTab].title}
+                    fill
+                    className="object-cover"
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEDQIHXi2unAAAAABJRU5ErkJggg=="
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 to-transparent"></div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </section>
 
