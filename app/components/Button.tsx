@@ -1,50 +1,51 @@
 // app/components/Button.tsx
-import React, { ButtonHTMLAttributes } from 'react'
+"use client"
+
+import React, { ButtonHTMLAttributes, useState } from 'react'
 import Link from 'next/link'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none',
+  'inline-flex items-center justify-center font-semibold transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none relative overflow-hidden group touch-target',
   {
     variants: {
       variant: {
-        default: 'bg-primary-600 text-white hover:bg-primary-700',
-        secondary: 'bg-secondary-600 text-white hover:bg-secondary-700',
-        outline: 'border border-primary-500 text-primary-500 hover:bg-primary-500/10',
-        ghost: 'text-primary-500 hover:bg-primary-500/10',
-        gradient: 'bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-500 hover:to-secondary-500 text-white',
-        destructive: 'bg-red-600 text-white hover:bg-red-700',
-        link: 'text-primary-500 underline-offset-4 hover:underline',
-        glow: 'relative overflow-hidden shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#4338ca,0_0_15px_#4338ca,0_0_30px_#4338ca] hover:shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#6d28d9,0_0_15px_#6d28d9,0_0_30px_#6d28d9] bg-dark-800 border border-primary-600 text-white',
+        default: 'bg-primary-600 text-white hover:bg-primary-700 shadow-md hover:shadow-lg',
+        secondary: 'bg-secondary-600 text-white hover:bg-secondary-700 shadow-md hover:shadow-lg',
+        outline: 'border-2 border-primary-500/50 text-white hover:bg-primary-500/10 hover:border-primary-400',
+        ghost: 'text-primary-400 hover:bg-primary-500/10',
+        gradient: 'bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-500 hover:to-secondary-500 text-white shadow-lg hover:shadow-xl hover:shadow-primary-500/30',
+        destructive: 'bg-red-600 text-white hover:bg-red-700 shadow-md hover:shadow-lg',
+        link: 'text-primary-400 underline-offset-4 hover:underline',
+        glow: 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-glow hover:shadow-glow-lg border border-primary-500/30',
       },
       size: {
-        default: 'h-10 py-2 px-4',
+        default: 'h-10 py-2 px-4 text-sm',
         sm: 'h-8 py-1 px-3 text-xs',
         lg: 'h-12 py-3 px-6 text-base',
         xl: 'h-14 py-4 px-8 text-lg',
-        icon: 'h-9 w-9 p-0',
+        icon: 'h-10 w-10 p-0',
       },
       rounded: {
-        default: 'rounded-md',
+        default: 'rounded-lg',
         full: 'rounded-full',
         none: 'rounded-none',
-        lg: 'rounded-lg',
-        sm: 'rounded-sm', 
+        xl: 'rounded-xl',
+        sm: 'rounded-md',
       },
       animation: {
         none: '',
-        float: 'hover:translate-y-[-4px] transition-transform duration-300',
-        scale: 'hover:scale-105 transition-transform duration-300',
-        pulse: 'hover:animate-pulse',
-        shimmer: 'shimmer',
+        float: 'hover:-translate-y-1 active:translate-y-0',
+        scale: 'hover:scale-105 active:scale-95',
+        pulse: 'hover:animate-pulse-glow',
       },
     },
     defaultVariants: {
       variant: 'default',
       size: 'default',
       rounded: 'default',
-      animation: 'none',
+      animation: 'float',
     },
   }
 )
@@ -54,29 +55,71 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, Va
   external?: boolean
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
+  ripple?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, rounded, animation, children, href, external, leftIcon, rightIcon, ...props }, ref) => {
+  ({ className, variant, size, rounded, animation, children, href, external, leftIcon, rightIcon, ripple = true, onClick, ...props }, ref) => {
+    const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([])
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (ripple && variant !== 'link') {
+        const button = e.currentTarget
+        const rect = button.getBoundingClientRect()
+        const x = e.clientX - rect.left
+        const y = e.clientY - rect.top
+        const id = Date.now()
+
+        setRipples(prev => [...prev, { x, y, id }])
+        setTimeout(() => {
+          setRipples(prev => prev.filter(r => r.id !== id))
+        }, 600)
+      }
+
+      if (onClick) onClick(e)
+    }
+
     const classNames = cn(buttonVariants({ variant, size, rounded, animation, className }))
+
+    const content = (
+      <>
+        {ripple && variant !== 'link' && ripples.map(ripple => (
+          <span
+            key={ripple.id}
+            className="absolute bg-white/30 rounded-full animate-ping"
+            style={{
+              left: ripple.x,
+              top: ripple.y,
+              width: 10,
+              height: 10,
+              transform: 'translate(-50%, -50%)',
+            }}
+          />
+        ))}
+        {variant === 'gradient' || variant === 'glow' ? (
+          <span className="absolute inset-0 bg-gradient-to-r from-primary-400/0 via-white/20 to-primary-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+        ) : null}
+        <span className="relative z-10 flex items-center justify-center">
+          {leftIcon && <span className="mr-2 flex-shrink-0">{leftIcon}</span>}
+          {children}
+          {rightIcon && <span className="ml-2 flex-shrink-0">{rightIcon}</span>}
+        </span>
+      </>
+    )
 
     if (href) {
       const linkProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {}
-      
+
       return (
         <Link href={href} className={classNames} {...linkProps}>
-          {leftIcon && <span className="mr-2">{leftIcon}</span>}
-          {children}
-          {rightIcon && <span className="ml-2">{rightIcon}</span>}
+          {content}
         </Link>
       )
     }
 
     return (
-      <button className={classNames} ref={ref} {...props}>
-        {leftIcon && <span className="mr-2">{leftIcon}</span>}
-        {children}
-        {rightIcon && <span className="ml-2">{rightIcon}</span>}
+      <button className={classNames} ref={ref} onClick={handleClick} {...props}>
+        {content}
       </button>
     )
   }
