@@ -172,7 +172,7 @@ export default function FAQPage() {
     const matchesCategory = activeCategory ? faq.category === activeCategory : true
     const matchesSearch = searchTerm
       ? faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
+      faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
       : true
     return matchesCategory && matchesSearch
   })
@@ -211,11 +211,10 @@ export default function FAQPage() {
                   {uniqueCategories.map((category) => (
                     <button
                       key={category}
-                      className={`px-4 py-2 rounded-full whitespace-nowrap ${
-                        activeCategory === category
+                      className={`px-4 py-2 rounded-full whitespace-nowrap ${activeCategory === category
                           ? `${getCategoryColor(category)} text-white`
                           : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                      }`}
+                        }`}
                       onClick={() => filterFaqsByCategory(category)}
                     >
                       {getCategoryName(category)}
@@ -223,7 +222,7 @@ export default function FAQPage() {
                   ))}
                 </div>
               </div>
-              
+
               {/* FAQ List */}
               {filteredFaqs.length > 0 ? (
                 <div className="space-y-4">
@@ -262,14 +261,14 @@ export default function FAQPage() {
                     onClick={resetFilters}
                     variant="secondary"
                     size="sm"
-                    rounded="lg"
+                    rounded="default"
                   >
                     Restablecer filtros
                   </Button>
                 </div>
               )}
             </div>
-            
+
             {/* Still have questions */}
             <div className="mt-24 text-center bg-gray-900 py-12" data-aos="fade-up">
               <h2 className="text-3xl font-bold mb-4 text-white">¿Aún tienes preguntas?</h2>
@@ -294,4 +293,4 @@ export default function FAQPage() {
       <Footer />
     </>
   )
-} 
+}
