@@ -272,14 +272,13 @@ export default function ReviewsPage() {
           <div
             className={`
               rounded-lg shadow-lg border p-4 flex items-start transform transition-all duration-300
-              ${
-                notification.type === "success"
-                  ? "bg-green-900/90 border-green-500"
-                  : notification.type === "error"
-                    ? "bg-red-900/90 border-red-500"
-                    : notification.type === "warning"
-                      ? "bg-yellow-900/90 border-yellow-500"
-                      : "bg-blue-900/90 border-blue-500"
+              ${notification.type === "success"
+                ? "bg-green-900/90 border-green-500"
+                : notification.type === "error"
+                  ? "bg-red-900/90 border-red-500"
+                  : notification.type === "warning"
+                    ? "bg-yellow-900/90 border-yellow-500"
+                    : "bg-blue-900/90 border-blue-500"
               }
             `}
           >
@@ -421,7 +420,7 @@ export default function ReviewsPage() {
                     setSortOrder(sortOrder === "recent" ? "highest" : sortOrder === "highest" ? "lowest" : "recent")
                   }
                   variant="outline"
-                  rounded="lg"
+                  rounded="default"
                   className="bg-dark-700 border-gray-600 flex-1 md:flex-none"
                   leftIcon={
                     sortOrder === "recent" ? (
@@ -445,7 +444,7 @@ export default function ReviewsPage() {
                 <Button
                   onClick={() => setIsFiltersVisible(!isFiltersVisible)}
                   variant={isFiltersVisible ? "gradient" : "outline"}
-                  rounded="lg"
+                  rounded="default"
                   className={isFiltersVisible ? "bg-primary-500" : "bg-dark-700 border-gray-600"}
                   leftIcon={<FaFilter />}
                 >
@@ -510,14 +509,14 @@ export default function ReviewsPage() {
                           setSortOrder("recent")
                         }}
                         variant="outline"
-                        rounded="lg"
+                        rounded="default"
                         className="bg-dark-700 border-gray-600"
                         size="sm"
                       >
                         Limpiar
                       </Button>
 
-                      <Button onClick={() => setIsFiltersVisible(false)} variant="gradient" rounded="lg" size="sm">
+                      <Button onClick={() => setIsFiltersVisible(false)} variant="gradient" rounded="default" size="sm">
                         Aplicar
                       </Button>
                     </div>
