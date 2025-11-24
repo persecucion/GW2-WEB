@@ -21,6 +21,7 @@ import {
   FaTrophy,
   FaCrown,
   FaCalendarAlt,
+  FaClock,
   FaCheck,
   FaPatreon,
   FaQuoteRight,
@@ -345,220 +346,139 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900 text-white overflow-x-hidden">
       <Header />
 
-      {/* Hero Section - Premium Redesign */}
-      <section className="relative min-h-screen flex flex-col items-center overflow-hidden pt-40 pb-0 md:pt-36 md:pb-0 lg:h-screen lg:justify-between">
-        {/* ParticleBackground Component */}
-        <div className="absolute inset-0">
-          <ParticleBackground />
+      {/* Hero Section - Professional & Robust */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-32">
+
+        {/* Background - Solid & Clean */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-slate-950"></div>
+          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/90 to-slate-950"></div>
+
+          {/* Subtle Accent Glow (Professional Blue) */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-blue-900/20 blur-[120px] rounded-full opacity-50"></div>
         </div>
 
-        {/* Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Base gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"></div>
+        <div className="container relative z-10 px-6 mx-auto">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 
-          {/* Animated gradient overlay */}
-          <div className="absolute inset-0 opacity-40 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 animate-gradient-xy"></div>
+            {/* Text Content - Left Aligned for Professional Look */}
+            <div className="flex-1 text-center lg:text-left max-w-3xl">
 
-          {/* Radial gradient for depth */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent"></div>
+              {/* Community Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-blue-900/30 border border-blue-500/30 backdrop-blur-sm" data-aos="fade-down">
+                <span className="flex h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
+                <span className="text-sm font-medium text-blue-100 tracking-wide uppercase">Comunidad #1 de Guild Wars 2</span>
+              </div>
 
-          {/* Decorative orbs with enhanced glow */}
-          <div className="absolute top-1/4 left-1/5 w-96 h-96 rounded-full bg-blue-500/10 blur-[120px] animate-pulse-slow"></div>
-          <div className="absolute bottom-1/4 right-1/5 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[140px] animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-pink-500/5 blur-[160px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
-        </div>
+              {/* Main Title */}
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 tracking-tight" data-aos="fade-up" data-aos-delay="100">
+                Tu Aventura <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-200">
+                  Comienza Aquí
+                </span>
+              </h1>
 
-        <div className="container relative z-10 px-6 mx-auto text-center flex flex-col justify-start max-w-screen-xl flex-1">
-          {/* Text Content */}
-          <div className="max-w-4xl mx-auto mb-12 md:mb-16 lg:mb-20">
-            <div className="hero-title">
-              {/* Premium Badge with Glassmorphism */}
-              <div className="inline-block mb-6" data-aos="fade-down">
-                <div className="group relative px-6 py-2.5 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-full border border-blue-400/20 hover:border-blue-400/40 transition-all duration-300 shadow-lg shadow-blue-500/10">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-                  <div className="relative flex items-center gap-2 text-sm font-semibold">
-                    <span className="text-xl">⚡</span>
-                    <span className="bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
-                      COMUNIDAD PREMIUM GW2
-                    </span>
-                    <span className="inline-flex items-center justify-center w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              {/* Subtitle */}
+              <p className="text-lg sm:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light" data-aos="fade-up" data-aos-delay="200">
+                Únete a una comunidad establecida, activa y profesional. Eventos diarios, guías expertas y compañeros de juego listos para explorar Tyria contigo.
+              </p>
+
+              {/* CTA Buttons - Solid & Clear */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" data-aos="fade-up" data-aos-delay="300">
+                <Button
+                  href="https://discord.gg/gatitos2"
+                  external
+                  size="lg"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg shadow-blue-900/20 transition-all hover:translate-y-[-2px] flex items-center justify-center gap-3"
+                >
+                  <FaDiscord className="text-xl" />
+                  Unirse al Discord
+                </Button>
+
+                <Button
+                  href="#features"
+                  variant="outline"
+                  size="lg"
+                  className="border-slate-600 text-slate-200 hover:bg-slate-800 hover:text-white font-medium px-8 py-4 rounded-lg transition-all flex items-center justify-center gap-2"
+                >
+                  Saber Más
+                  <FaArrowRight className="text-sm" />
+                </Button>
+              </div>
+
+              {/* Social Proof - Clean Row */}
+              <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-8 text-slate-400 text-sm font-medium" data-aos="fade-up" data-aos-delay="400">
+                <div className="flex items-center gap-2">
+                  <FaUsers className="text-blue-400 text-lg" />
+                  <span>+1000 Miembros</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FaStar className="text-yellow-500 text-lg" />
+                  <span>4.9/5 Valoración</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FaCheck className="text-green-400 text-lg" />
+                  <span>Verificado</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Hero Image - Structured & Framed */}
+            <div className="flex-1 w-full max-w-xl lg:max-w-none relative" data-aos="fade-left" data-aos-delay="200">
+              <div className="relative rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-slate-800">
+                <div className="aspect-video relative">
+                  <Image
+                    src="/images/server.png"
+                    alt="GW2 Community Server"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  {/* Professional Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
+                </div>
+
+                {/* Floating Info Card - Clean */}
+                <div className="absolute bottom-6 left-6 right-6 bg-slate-900/90 backdrop-blur-md p-4 rounded-xl border border-slate-700 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white">
+                      <FaGamepad />
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Próximo Evento</p>
+                      <p className="text-sm font-bold text-white">Torneo PvP - Sábado 20:00</p>
+                    </div>
+                  </div>
+                  <div className="h-8 w-px bg-slate-700"></div>
+                  <div className="text-right">
+                    <p className="text-xs text-green-400 font-bold">En línea</p>
+                    <p className="text-sm text-slate-300">124 miembros</p>
                   </div>
                 </div>
               </div>
 
-              {/* Main Title with Enhanced Gradient */}
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight" data-aos="fade-up" data-aos-delay="100">
-                <span className="inline-block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x">
-                  Bienvenido a
-                </span>
-                <br />
-                <span className="relative inline-block mt-2">
-                  <span className="relative z-10 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                    GW2
-                  </span>
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 blur-3xl opacity-30 animate-pulse-slow"></div>
-                </span>
-              </h1>
+              {/* Decorative Elements - Subtle */}
+              <div className="absolute -z-10 top-[-20px] right-[-20px] w-full h-full border border-slate-700 rounded-2xl opacity-50"></div>
             </div>
 
-            {/* Subtitle with better typography */}
-            <div className="hero-subtitle mb-8 md:mb-10" data-aos="fade-up" data-aos-delay="200">
-              <p className="text-lg sm:text-xl md:text-2xl text-blue-100/90 font-light leading-relaxed max-w-3xl mx-auto">
-                Descubre una <span className="text-white font-semibold">comunidad única</span> donde cada momento se convierte en una{' '}
-                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-semibold">
-                  experiencia inolvidable
-                </span>
-              </p>
-            </div>
-
-            {/* Enhanced CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center hero-buttons" data-aos="fade-up" data-aos-delay="300">
-              <Button
-                href="https://discord.gg/gatitos2"
-                external
-                variant="gradient"
-                size="lg"
-                rounded="full"
-                leftIcon={<FaDiscord className="text-xl" />}
-                rightIcon={<FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform" />}
-                className="group relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 border-none shadow-2xl shadow-blue-500/30 text-white hover:shadow-blue-500/50 transition-all duration-300 text-base sm:text-lg px-8 py-4 hover:scale-105 hover:-translate-y-1 font-semibold"
-              >
-                <span className="relative z-10">Únete a la Aventura</span>
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-              </Button>
-
-              <Button
-                href="#features"
-                variant="outline"
-                size="lg"
-                rounded="full"
-                className="group relative bg-slate-800/40 backdrop-blur-xl border-blue-400/30 hover:border-blue-400/60 shadow-xl text-white hover:shadow-blue-500/20 transition-all duration-300 text-base sm:text-lg px-8 py-4 hover:scale-105 hover:-translate-y-1 font-semibold"
-              >
-                Descubre más
-                <FaChevronDown className="inline-block ml-2 group-hover:translate-y-1 transition-transform" />
-              </Button>
-            </div>
-
-            {/* Social Proof Stats */}
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm" data-aos="fade-up" data-aos-delay="400">
-              <div className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 backdrop-blur-xl rounded-full border border-blue-400/20">
-                <FaUsers className="text-blue-400" />
-                <span className="text-blue-100">
-                  <span className="font-bold text-white">1000+</span> Miembros Activos
-                </span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 backdrop-blur-xl rounded-full border border-purple-400/20">
-                <FaStar className="text-yellow-400" />
-                <span className="text-purple-100">
-                  <span className="font-bold text-white">4.9/5</span> Valoración
-                </span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 backdrop-blur-xl rounded-full border border-pink-400/20">
-                <FaGamepad className="text-pink-400" />
-                <span className="text-pink-100">
-                  <span className="font-bold text-white">50+</span> Eventos Mensuales
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main hero image with enhanced effects */}
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 mt-auto hero-image-container" data-aos="fade-up" data-aos-delay="500">
-          {/* Enhanced glow effect */}
-          <div className="absolute -inset-4 bg-gradient-to-t from-blue-500/20 via-purple-500/10 to-transparent rounded-2xl blur-3xl"></div>
-
-          <div className="relative rounded-2xl overflow-hidden border border-blue-400/20 shadow-2xl shadow-blue-500/20">
-            <div className="relative w-full h-0" style={{ paddingBottom: "42%" }}>
-              <Image
-                src="/images/server.png"
-                alt="GW2 Server"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1400px"
-                priority
-                quality={95}
-              />
-
-              {/* Modern gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent pointer-events-none"></div>
-
-              {/* Decorative gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-40 mix-blend-overlay"></div>
-            </div>
-          </div>
-
-          {/* Floating decorative elements */}
-          <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
-          <div className="absolute -top-8 -right-8 w-40 h-40 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
-
-          {/* Enhanced floating badges */}
-          <div className="hidden lg:block absolute -left-12 top-1/4 transform -translate-y-1/2" data-aos="fade-right" data-aos-delay="600">
-            <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl p-4 rounded-2xl border border-blue-400/30 shadow-2xl shadow-blue-500/20 hover:scale-110 transition-transform duration-300">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                  <FaUsers className="text-2xl text-blue-400" />
-                </div>
-                <div className="text-left">
-                  <div className="text-xs text-blue-300 font-medium">Comunidad</div>
-                  <div className="text-xl font-bold bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">+1000</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="hidden lg:block absolute -right-12 top-2/3 transform -translate-y-1/2" data-aos="fade-left" data-aos-delay="700">
-            <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl p-4 rounded-2xl border border-purple-400/30 shadow-2xl shadow-purple-500/20 hover:scale-110 transition-transform duration-300">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
-                  <FaTrophy className="text-2xl text-purple-400" />
-                </div>
-                <div className="text-left">
-                  <div className="text-xs text-purple-300 font-medium">Eventos</div>
-                  <div className="text-xl font-bold bg-gradient-to-r from-white to-purple-100 bg-clip-text text-transparent">50+/mes</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce" data-aos="fade-up" data-aos-delay="800">
-          <div className="flex flex-col items-center gap-2 text-blue-300/60">
-            <span className="text-xs font-medium">Descubre más</span>
-            <FaChevronDown className="text-xl" />
           </div>
         </div>
       </section>
 
-      {/* Features Section - Redesigned */}
-      <section id="features" className="py-28 relative overflow-hidden">
-        {/* Background gradients and effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+      {/* Features Section - Professional & Robust */}
+      <section id="features" className="py-24 relative overflow-hidden bg-slate-950">
+        {/* Background - Clean Grid */}
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
-
-        {/* Decorative orbs */}
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-20" data-aos="fade-up">
-            <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-secondary-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
-              <span className="text-primary-400 text-sm font-medium">CARACTERÍSTICAS</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">¿Qué nos hace </span>
-              <span className="bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">especiales</span>
-              <span className="bg-gradient-to-r from-blue-100 to-white bg-clip-text text-transparent">?</span>
+          <div className="text-center mb-16" data-aos="fade-up">
+            <span className="text-blue-500 font-semibold tracking-wider uppercase text-sm mb-2 block">Características</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              ¿Por qué elegir nuestra comunidad?
             </h2>
-            <p className="text-lg text-blue-100/80 max-w-4xl mx-auto">
-              Somos más que un servidor de Discord - somos una familia global unida por la pasión por los videojuegos y
-              la amistad sincera.
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+              Construimos un espacio seguro, activo y profesional para todos los jugadores de Guild Wars 2.
             </p>
           </div>
 
@@ -566,174 +486,132 @@ export default function HomePage() {
             {[
               {
                 title: "Eventos en Vivo",
-                description: "Participa en eventos exclusivos y transmisiones en vivo con nuestra comunidad.",
+                description: "Participa en torneos, raids y eventos de mundo organizados profesionalmente.",
                 image: "/images/evento.png",
-                icon: <FaGamepad className="text-4xl text-primary-300" />,
-                delay: 100,
-                gradient: "from-primary-500/10 to-primary-500/5",
-                borderColor: "border-primary-500/20",
-                hoverGlow: "group-hover:shadow-primary-500/20",
-                iconGradient: "from-primary-600 to-primary-900"
+                icon: <FaGamepad className="text-2xl text-white" />,
+                color: "bg-blue-600"
               },
               {
                 title: "Sorteos Exclusivos",
-                description: "Accede a sorteos y contenido exclusivo creado especialmente para ti.",
+                description: "Premios mensuales, gemas y contenido exclusivo para miembros activos.",
                 image: "/images/sorteo.png",
-                icon: <FaGift className="text-4xl text-secondary-300" />,
-                delay: 200,
-                gradient: "from-secondary-500/10 to-secondary-500/5",
-                borderColor: "border-secondary-500/20",
-                hoverGlow: "group-hover:shadow-secondary-500/20",
-                iconGradient: "from-secondary-600 to-secondary-900"
+                icon: <FaGift className="text-2xl text-white" />,
+                color: "bg-purple-600"
               },
               {
                 title: "Comunidad Global",
-                description: "Conecta con personas de todo el mundo que comparten tus mismas pasiones.",
+                description: "Conecta con jugadores de todo el mundo hispanohablante en un ambiente respetuoso.",
                 image: "/images/server.png",
-                icon: <FaUsers className="text-4xl text-purple-300" />,
-                delay: 300,
-                gradient: "from-purple-500/10 to-purple-500/5",
-                borderColor: "border-purple-500/20",
-                hoverGlow: "group-hover:shadow-purple-500/20",
-                iconGradient: "from-purple-600 to-purple-900"
+                icon: <FaUsers className="text-2xl text-white" />,
+                color: "bg-indigo-600"
               },
             ].map((feature, index) => (
               <div
                 key={index}
-                className={`group bg-gradient-to-br ${feature.gradient} backdrop-blur-md rounded-xl overflow-hidden shadow-xl border ${feature.borderColor} transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${feature.hoverGlow}`}
+                className="group bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-slate-600 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
                 data-aos="fade-up"
-                data-aos-delay={feature.delay}
+                data-aos-delay={index * 100}
               >
                 <div className="relative h-48 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark-950 to-transparent z-10"></div>
                   <Image
                     src={feature.image}
                     alt={feature.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute top-4 left-4 z-20">
-                    <div className={`p-3 bg-gradient-to-br ${feature.iconGradient} rounded-lg backdrop-blur-md shadow-lg border border-white/10`}>
+                  <div className="absolute inset-0 bg-slate-900/60 group-hover:bg-slate-900/40 transition-colors duration-300"></div>
+                  <div className="absolute top-4 left-4">
+                    <div className={`p-3 rounded-lg shadow-lg ${feature.color}`}>
                       {feature.icon}
                     </div>
                   </div>
                 </div>
-                <div className="p-6 relative z-20">
-                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{feature.title}</h3>
-                  <p className="text-gray-300">{feature.description}</p>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-blue-400 transition-colors">{feature.title}</h3>
+                  <p className="text-slate-400 leading-relaxed">{feature.description}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Additional features in card format */}
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8" data-aos="fade-up">
-            <div className="bg-gradient-to-br from-dark-900/50 to-dark-800/50 backdrop-blur-md rounded-xl p-6 border border-primary-500/10 shadow-lg hover:shadow-primary-500/5 transition-all duration-300">
-              <div className="flex items-start gap-5">
-                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center shrink-0">
-                  <FaStar className="text-xl text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 text-white">Experiencia Única</h3>
-                  <p className="text-gray-300">Disfruta de una experiencia única en nuestro servidor con canales temáticos, bots personalizados y roles especiales.</p>
-                </div>
+          {/* Additional features - Clean Cards */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6" data-aos="fade-up">
+            <div className="bg-slate-900 rounded-xl p-6 border border-slate-800 flex items-start gap-4 hover:border-slate-700 transition-colors">
+              <div className="p-3 bg-slate-800 rounded-lg text-yellow-500 shrink-0">
+                <FaStar className="text-xl" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white mb-2">Experiencia Premium</h3>
+                <p className="text-slate-400 text-sm">Canales de voz de alta calidad, bots personalizados y roles exclusivos.</p>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-dark-900/50 to-dark-800/50 backdrop-blur-md rounded-xl p-6 border border-secondary-500/10 shadow-lg hover:shadow-secondary-500/5 transition-all duration-300">
-              <div className="flex items-start gap-5">
-                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-secondary-600 to-secondary-800 flex items-center justify-center shrink-0">
-                  <FaHeart className="text-xl text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 text-white">Ambiente Amigable</h3>
-                  <p className="text-gray-300">Un espacio libre de toxicidad donde todos son bienvenidos y pueden sentirse como en casa.</p>
-                </div>
+            <div className="bg-slate-900 rounded-xl p-6 border border-slate-800 flex items-start gap-4 hover:border-slate-700 transition-colors">
+              <div className="p-3 bg-slate-800 rounded-lg text-red-500 shrink-0">
+                <FaHeart className="text-xl" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white mb-2">Ambiente Seguro</h3>
+                <p className="text-slate-400 text-sm">Moderación activa 24/7 para garantizar un espacio libre de toxicidad.</p>
               </div>
             </div>
           </div>
         </div>
-      </section >
+      </section>
 
-      {/* Statistics Section - Redesigned */}
-      < section
+      {/* Statistics Section - Professional & Robust */}
+      <section
         ref={statsRef}
-        className="py-28 relative overflow-hidden"
+        className="py-24 relative overflow-hidden bg-slate-950 border-t border-slate-900"
       >
-        {/* Background elements */}
-        < div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
-        <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
-
-        {/* Decorative orbs */}
-        <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
-        <div className="absolute bottom-1/4 left-0 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
-
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-20" data-aos="fade-up">
-            <div className="inline-block rounded-full bg-gradient-to-r from-secondary-900/40 to-primary-900/40 backdrop-blur-sm px-4 py-1.5 border border-secondary-500/20 mb-4">
-              <span className="text-secondary-400 text-sm font-medium">ESTADÍSTICAS</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-white to-secondary-100 bg-clip-text text-transparent">Nuestra Comunidad en </span>
-              <span className="bg-gradient-to-r from-secondary-400 to-primary-400 bg-clip-text text-transparent">Números</span>
+          <div className="text-center mb-16" data-aos="fade-up">
+            <span className="text-blue-500 font-semibold tracking-wider uppercase text-sm mb-2 block">Estadísticas</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Nuestra Comunidad en Números
             </h2>
-            <p className="text-lg text-secondary-100/80 max-w-4xl mx-auto">
-              Somos una comunidad en constante crecimiento, unida por la pasión y el compromiso.
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+              Crecimiento constante impulsado por jugadores apasionados.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <FaUsers className="text-3xl text-primary-300" />,
+                icon: <FaUsers className="text-3xl text-blue-400" />,
                 count: members,
-                label: "Miembros",
+                label: "Miembros Activos",
                 suffix: "+",
                 delay: 100,
-                gradient: "from-primary-900/10 to-primary-900/5",
-                border: "border-primary-500/20",
-                textGradient: "from-white to-primary-200",
-                iconGradient: "from-primary-600 to-primary-700"
               },
               {
-                icon: <FaUserShield className="text-3xl text-secondary-300" />,
+                icon: <FaUserShield className="text-3xl text-purple-400" />,
                 count: staff,
-                label: "Staff",
+                label: "Staff Dedicado",
                 suffix: "+",
                 delay: 200,
-                gradient: "from-secondary-900/10 to-secondary-900/5",
-                border: "border-secondary-500/20",
-                textGradient: "from-white to-secondary-200",
-                iconGradient: "from-secondary-600 to-secondary-700"
               },
               {
-                icon: <FaComments className="text-3xl text-purple-300" />,
+                icon: <FaComments className="text-3xl text-indigo-400" />,
                 count: messages,
                 label: "Mensajes Diarios",
                 suffix: "+",
                 delay: 300,
-                gradient: "from-purple-900/10 to-purple-900/5",
-                border: "border-purple-500/20",
-                textGradient: "from-white to-purple-200",
-                iconGradient: "from-purple-600 to-purple-700"
               },
             ].map((stat, index) => (
               <div
                 key={index}
-                className={`group backdrop-blur-sm bg-gradient-to-br ${stat.gradient} rounded-xl p-8 text-center border ${stat.border} shadow-xl transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}
+                className="bg-slate-900 rounded-xl p-8 text-center border border-slate-800 hover:border-slate-700 transition-all duration-300 shadow-lg"
                 data-aos="fade-up"
                 data-aos-delay={stat.delay}
               >
-                <div className="flex justify-center mb-6 relative">
-                  <div className={`p-5 bg-gradient-to-br ${stat.iconGradient} rounded-xl shadow-lg border border-white/10 group-hover:scale-110 transition-transform duration-300`}>
+                <div className="flex justify-center mb-6">
+                  <div className="p-4 bg-slate-800 rounded-xl shadow-inner">
                     {stat.icon}
                   </div>
-                  <div className="absolute -inset-4 bg-white/5 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
 
-                <div className={`text-4xl font-bold bg-gradient-to-r ${stat.textGradient} bg-clip-text text-transparent mb-3`}>
+                <div className="text-4xl font-bold text-white mb-2">
                   {statsVisible && (
                     <CountUp
                       end={stat.count}
@@ -744,136 +622,131 @@ export default function HomePage() {
                   )}
                 </div>
 
-                <p className="text-lg text-gray-300 group-hover:text-white transition-colors duration-300">{stat.label}</p>
+                <p className="text-slate-400 font-medium">{stat.label}</p>
               </div>
             ))}
           </div>
 
-          {/* Additional stats */}
-          <div className="mt-16" data-aos="fade-up">
-            <div className="bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-md border border-white/5 rounded-xl p-8 shadow-lg">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
-                <div className="text-center p-4">
-                  <div className="text-purple-400 mb-2"><FaCrown className="text-3xl mx-auto" /></div>
-                  <div className="text-2xl font-bold text-white mb-1">Desde {currentYear - 2}</div>
-                  <div className="text-gray-400 text-sm">Años en línea</div>
+          {/* Additional stats - Clean Grid */}
+          <div className="mt-12" data-aos="fade-up">
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-8">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-y md:divide-y-0 md:divide-x divide-slate-800">
+                <div className="text-center pt-4 md:pt-0">
+                  <div className="text-2xl font-bold text-white mb-1">2+</div>
+                  <div className="text-slate-500 text-sm uppercase tracking-wide font-semibold">Años Online</div>
                 </div>
-                <div className="text-center p-4">
-                  <div className="text-blue-400 mb-2"><FaStar className="text-3xl mx-auto" /></div>
-                  <div className="text-2xl font-bold text-white mb-1">+40</div>
-                  <div className="text-gray-400 text-sm">Canales de chat</div>
+                <div className="text-center pt-4 md:pt-0">
+                  <div className="text-2xl font-bold text-white mb-1">40+</div>
+                  <div className="text-slate-500 text-sm uppercase tracking-wide font-semibold">Canales</div>
                 </div>
-                <div className="text-center p-4">
-                  <div className="text-green-400 mb-2"><FaCalendarAlt className="text-3xl mx-auto" /></div>
-                  <div className="text-2xl font-bold text-white mb-1">+15</div>
-                  <div className="text-gray-400 text-sm">Eventos mensuales</div>
+                <div className="text-center pt-4 md:pt-0">
+                  <div className="text-2xl font-bold text-white mb-1">15+</div>
+                  <div className="text-slate-500 text-sm uppercase tracking-wide font-semibold">Eventos/Mes</div>
                 </div>
-                <div className="text-center p-4">
-                  <div className="text-red-400 mb-2"><FaHeart className="text-3xl mx-auto" /></div>
+                <div className="text-center pt-4 md:pt-0">
                   <div className="text-2xl font-bold text-white mb-1">100%</div>
-                  <div className="text-gray-400 text-sm">Satisfacción</div>
+                  <div className="text-slate-500 text-sm uppercase tracking-wide font-semibold">Actividad</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section >
+      </section>
 
-      {/* Events Section - Redesigned */}
-      < section className="py-28 relative overflow-hidden" >
-        {/* Background elements */}
-        < div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
+      {/* Events Section - Professional & Robust */}
+      <section className="py-24 relative overflow-hidden bg-slate-950 border-t border-slate-900">
+        {/* Background - Clean Grid */}
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
-
-        {/* Decorative orbs */}
-        <div className="absolute bottom-40 right-10 w-96 h-96 rounded-full bg-blue-900/10 blur-[100px]"></div>
-        <div className="absolute top-40 left-10 w-96 h-96 rounded-full bg-violet-900/10 blur-[100px]"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-20" data-aos="fade-up">
-            <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-violet-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
-              <span className="text-primary-400 text-sm font-medium">EVENTOS</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Próximos </span>
-              <span className="bg-gradient-to-r from-primary-400 to-violet-400 bg-clip-text text-transparent">Eventos</span>
+          <div className="text-center mb-16" data-aos="fade-up">
+            <span className="text-blue-500 font-semibold tracking-wider uppercase text-sm mb-2 block">Calendario</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Próximos Eventos
             </h2>
-            <p className="text-lg text-blue-100/80 max-w-4xl mx-auto">
-              No te pierdas nuestros eventos exclusivos y diviértete con toda la comunidad.
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+              No te pierdas ninguna de nuestras actividades programadas.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {upcomingEvents.map((event, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Torneo PvP Mensual",
+                description: "Demuestra tu habilidad y gana premios en oro y gemas.",
+                date: "Sábado 15",
+                time: "20:00 CET",
+                image: "/images/evento.png",
+                category: "Competitivo",
+                featured: true
+              },
+              {
+                title: "Raid de Entrenamiento",
+                description: "Aprende las mecánicas de las raids con nuestros comandantes expertos.",
+                date: "Domingo 16",
+                time: "18:00 CET",
+                image: "/images/raid.png",
+                category: "PvE",
+                featured: false
+              },
+              {
+                title: "Meta-Evento de Mapa",
+                description: "Organización masiva para completar metas de mapas difíciles.",
+                date: "Viernes 21",
+                time: "21:00 CET",
+                image: "/images/meta.png",
+                category: "Mundo Abierto",
+                featured: false
+              }
+            ].map((event, index) => (
               <div
-                key={event.id}
-                className={`group relative bg-gradient-to-br from-dark-900/80 to-dark-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border ${event.featured ? 'border-primary-500/30' : 'border-gray-700/30'
-                  } transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${event.featured ? 'md:scale-105 z-10 hover:shadow-primary-500/10' : 'hover:shadow-purple-500/10'
-                  }`}
+                key={index}
+                className="group bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-slate-600 transition-all duration-300 shadow-lg hover:-translate-y-1"
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
-                {/* Glass layer with shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-violet-500/5 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="shimmer-effect opacity-0 group-hover:opacity-100"></div>
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
 
-                <div className="relative">
-                  <div className="relative h-56 overflow-hidden">
-                    <Image
-                      src={event.image}
-                      alt={event.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/70 to-transparent"></div>
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                      {event.category}
+                    </span>
+                  </div>
+                </div>
 
-                    {event.featured && (
-                      <div className="absolute top-4 right-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-primary-400/30 backdrop-blur-sm">
-                        Destacado
-                      </div>
-                    )}
-
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <div className="flex items-center gap-2 text-sm font-medium text-white bg-dark-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
-                        <FaCalendarAlt className="text-primary-400" />
-                        <span>{event.date}</span>
-                        <span className="mx-2 text-primary-400/50">•</span>
-                        <span>{event.time}</span>
-                      </div>
+                <div className="p-6">
+                  <div className="flex items-center gap-4 text-sm text-slate-400 mb-4">
+                    <div className="flex items-center gap-2">
+                      <FaCalendarAlt className="text-blue-500" />
+                      <span>{event.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <FaClock className="text-blue-500" />
+                      <span>{event.time}</span>
                     </div>
                   </div>
 
-                  <div className="p-6 relative">
-                    <div className="mb-4 flex justify-between items-center">
-                      <span className="inline-block bg-gradient-to-r from-primary-600/90 to-violet-600/90 text-white text-xs px-3 py-1.5 rounded-full shadow-md">
-                        {event.category}
-                      </span>
-                      {event.featured && (
-                        <div className="flex items-center gap-1 text-yellow-400 text-sm">
-                          <FaStar />
-                          <FaStar />
-                          <FaStar />
-                        </div>
-                      )}
-                    </div>
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                    {event.title}
+                  </h3>
+                  <p className="text-slate-400 mb-6 text-sm leading-relaxed">
+                    {event.description}
+                  </p>
 
-                    <h3 className="text-xl lg:text-2xl font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
-                    <p className="text-gray-300 mb-6">{event.description}</p>
-
-                    <Button
-                      href="/events"
-                      variant={event.featured ? 'gradient' : 'outline'}
-                      rounded="default"
-                      className={`relative z-10 w-full ${!event.featured
-                        ? 'bg-dark-900/50 border-gray-600/50 hover:border-primary-500/50 backdrop-blur-sm'
-                        : 'bg-gradient-to-r from-primary-600 to-violet-600 border border-primary-500/50 hover:from-primary-500 hover:to-violet-500'
-                        }`}
-                    >
-                      Más información
-                    </Button>
-                  </div>
+                  <Button
+                    href="/events"
+                    variant="outline"
+                    className="w-full border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white hover:border-slate-600"
+                  >
+                    Ver Detalles
+                  </Button>
                 </div>
               </div>
             ))}
@@ -883,30 +756,27 @@ export default function HomePage() {
             <Button
               href="/events"
               variant="outline"
-              rounded="full"
-              rightIcon={<FaArrowRight />}
-              className="bg-dark-900/50 backdrop-blur-sm border-gray-600/50 hover:border-primary-500/50 px-8 py-3 shadow-lg transition-all duration-300 hover:-translate-y-1"
+              size="lg"
+              className="border-slate-600 text-slate-200 hover:bg-slate-800 hover:text-white px-8"
             >
-              Ver todos los eventos
+              Ver Calendario Completo
             </Button>
           </div>
         </div>
-      </section >
+      </section>
 
-      {/* Sección de Patreon */}
-      < section className="py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative" >
-        <div className="absolute inset-0 bg-dark-800"></div>
+      {/* Patreon Section - Professional & Robust */}
+      <section className="py-24 bg-slate-950 border-t border-slate-900 relative">
+        <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16" data-aos="fade-up">
-            <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 shadow-md">
-              PATREON
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Apoya Nuestra <span className="bg-gradient-to-r from-purple-300 to-primary-300 bg-clip-text text-transparent">Comunidad</span>
+            <span className="text-blue-500 font-semibold tracking-wider uppercase text-sm mb-2 block">Membresía</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Apoya a la Comunidad
             </h2>
-            <p className="text-lg text-gray-200 max-w-4xl mx-auto">
-              Conviértete en un VIP y desbloquea acceso a características exclusivas que harán que tu experiencia sea única.
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+              Obtén beneficios exclusivos y ayuda a mantener el servidor activo.
             </p>
           </div>
 
@@ -918,9 +788,7 @@ export default function HomePage() {
                 price: '3.99',
                 image: '/images/vip1.png',
                 color: 'text-yellow-400',
-                gradient: 'from-yellow-900/90 to-dark-900',
-                borderColor: 'border-yellow-500',
-                buttonColor: 'bg-yellow-900 border-yellow-500',
+                borderColor: 'border-yellow-500/50',
                 features: [
                   'Rango exclusivo Gold',
                   'Permisos de imagen en general',
@@ -935,9 +803,7 @@ export default function HomePage() {
                 popular: true,
                 image: '/images/vip2.png',
                 color: 'text-blue-400',
-                gradient: 'from-blue-900/90 to-dark-900',
                 borderColor: 'border-blue-500',
-                buttonColor: 'bg-blue-900 border-blue-500',
                 features: [
                   'Todas las ventajas de Gold',
                   'Soundboard habilitado',
@@ -951,9 +817,7 @@ export default function HomePage() {
                 price: '9.99',
                 image: '/images/vip3.png',
                 color: 'text-purple-400',
-                gradient: 'from-purple-900/90 to-dark-900',
-                borderColor: 'border-purple-500',
-                buttonColor: 'bg-purple-900 border-purple-500',
+                borderColor: 'border-purple-500/50',
                 features: [
                   'Todas las ventajas de Diamond',
                   'Canal privado exclusivo',
@@ -965,64 +829,51 @@ export default function HomePage() {
               <div
                 key={tier.id}
                 className={`
-                  rounded-xl border bg-gradient-to-b ${tier.gradient} shadow-xl
-                  ${tier.popular
-                    ? `${tier.borderColor} transform scale-105 relative z-10`
-                    : `border-gray-700`}
-                  transition-all duration-300 hover:transform hover:translate-y-[-8px]
+                  relative rounded-xl bg-slate-900 border ${tier.popular ? 'border-blue-500 shadow-xl shadow-blue-900/20' : 'border-slate-800'} 
+                  transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl
                 `}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
                 {tier.popular && (
-                  <div className="absolute -top-4 left-0 right-0 text-center">
-                    <span className="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
-                      POPULAR
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <span className="bg-blue-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg tracking-wide">
+                      MÁS POPULAR
                     </span>
                   </div>
                 )}
 
                 <div className="p-8">
-                  <div className="relative w-full h-40 rounded-lg mb-6 overflow-hidden">
+                  <div className="relative w-full h-40 rounded-lg mb-6 overflow-hidden border border-slate-800">
                     <Image
                       src={tier.image}
                       alt={tier.name}
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-dark-900 opacity-40"></div>
+                    <div className="absolute inset-0 bg-slate-900/40"></div>
                   </div>
 
                   <h3 className={`text-xl font-bold ${tier.color} mb-2`}>{tier.name}</h3>
-                  <div className="flex items-end gap-1 mb-4">
-                    <span className="text-3xl font-bold text-white">{tier.price}€</span>
-                    <span className="text-gray-300 mb-1">/mes</span>
+                  <div className="flex items-end gap-1 mb-6">
+                    <span className="text-4xl font-bold text-white">{tier.price}€</span>
+                    <span className="text-slate-500 mb-1 font-medium">/mes</span>
                   </div>
 
-                  <div className="border-t border-b border-gray-700 py-6 my-6">
-                    <ul className="space-y-4">
-                      {tier.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <div className="text-green-400 mt-1 flex-shrink-0">
-                            <FaCheck />
-                          </div>
-                          <span className="text-gray-200">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ul className="space-y-4 mb-8">
+                    {tier.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <FaCheck className="text-green-500 mt-1 shrink-0 text-sm" />
+                        <span className="text-slate-300 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
 
                   <Button
                     href="/patreon"
-                    variant={tier.popular ? 'gradient' : 'outline'}
-                    rounded="default"
-                    className={`w-full font-medium shadow-lg ${tier.popular
-                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 border-none text-white'
-                      : tier.id === 'gold'
-                        ? 'bg-yellow-800 text-white border-yellow-600 hover:bg-yellow-700'
-                        : tier.id === 'platinum'
-                          ? 'bg-purple-800 text-white border-purple-600 hover:bg-purple-700'
-                          : `${tier.buttonColor} hover:border-${tier.color.split('-')[1]}-500/50`
+                    className={`w-full font-semibold py-3 rounded-lg transition-all ${tier.popular
+                        ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-900/20'
+                        : 'bg-slate-800 hover:bg-slate-700 text-white border border-slate-700'
                       }`}
                   >
                     Elegir Plan
