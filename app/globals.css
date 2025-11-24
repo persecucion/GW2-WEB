@@ -584,6 +584,65 @@
   }
 }
 
+/* Custom Animations for Premium Effects */
+@keyframes animate-gradient-x {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes animate-gradient-xy {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  25% {
+    background-position: 100% 50%;
+  }
+
+  50% {
+    background-position: 100% 100%;
+  }
+
+  75% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes animate-pulse-slow {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: animate-gradient-x 8s ease infinite;
+}
+
+.animate-gradient-xy {
+  background-size: 200% 200%;
+  animation: animate-gradient-xy 15s ease infinite;
+}
+
+.animate-pulse-slow {
+  animation: animate-pulse-slow 4s ease-in-out infinite;
+}
+
 /* Print Styles */
 @media print {
   .no-print {
