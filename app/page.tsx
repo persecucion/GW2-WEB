@@ -36,6 +36,8 @@ import { Button } from "./components/Button"
 import { Badge } from "./components/Badge"
 import Header from "./Header"
 import Footer from "./Footer"
+import ParticleBackground from "./components/ParticleBackground"
+import AnimatedSection from "./components/AnimatedSection"
 
 // Importación para el iframe del chat - comentado temporalmente hasta crear el componente
 // const WidgetBotChat = dynamic(() => import('./components/WidgetBotChat'), {
@@ -343,56 +345,89 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900 text-white overflow-x-hidden">
       <Header />
 
-      {/* Hero Section - Redesigned with better spacing */}
+      {/* Hero Section - Premium Redesign */}
       <section className="relative min-h-screen flex flex-col items-center overflow-hidden pt-40 pb-0 md:pt-36 md:pb-0 lg:h-screen lg:justify-between">
+        {/* ParticleBackground Component */}
+        <div className="absolute inset-0">
+          <ParticleBackground />
+        </div>
+
         {/* Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Base gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-dark-950 to-dark-900"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"></div>
 
           {/* Animated gradient overlay */}
-          <div className="absolute inset-0 opacity-60 hero-gradient-bg"></div>
+          <div className="absolute inset-0 opacity-40 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 animate-gradient-xy"></div>
 
-          {/* Particle effect overlay */}
-          <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
+          {/* Radial gradient for depth */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent"></div>
 
-          {/* Decorative orbs */}
-          <div className="absolute top-1/4 left-1/5 w-64 h-64 rounded-full bg-primary-900/20 blur-[100px]"></div>
-          <div className="absolute bottom-1/4 right-1/5 w-96 h-96 rounded-full bg-secondary-900/20 blur-[120px]"></div>
+          {/* Decorative orbs with enhanced glow */}
+          <div className="absolute top-1/4 left-1/5 w-96 h-96 rounded-full bg-blue-500/10 blur-[120px] animate-pulse-slow"></div>
+          <div className="absolute bottom-1/4 right-1/5 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[140px] animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-pink-500/5 blur-[160px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
         </div>
 
         <div className="container relative z-10 px-6 mx-auto text-center flex flex-col justify-start max-w-screen-xl flex-1">
-          {/* Text Content - increased spacing from top */}
-          <div className="max-w-2xl mx-auto mb-12 md:mb-16 lg:mb-20">
+          {/* Text Content */}
+          <div className="max-w-4xl mx-auto mb-12 md:mb-16 lg:mb-20">
             <div className="hero-title">
-              <div className="inline-block mb-3">
-                <div className="px-3 py-1 bg-gradient-to-r from-primary-900/60 to-secondary-900/60 backdrop-blur-md rounded-full border border-blue-500/20 text-blue-300 text-xs font-medium">
-                  <span className="text-xs mr-1">⚡</span> COMUNIDAD GW2
+              {/* Premium Badge with Glassmorphism */}
+              <div className="inline-block mb-6" data-aos="fade-down">
+                <div className="group relative px-6 py-2.5 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-full border border-blue-400/20 hover:border-blue-400/40 transition-all duration-300 shadow-lg shadow-blue-500/10">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+                  <div className="relative flex items-center gap-2 text-sm font-semibold">
+                    <span className="text-xl">⚡</span>
+                    <span className="bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
+                      COMUNIDAD PREMIUM GW2
+                    </span>
+                    <span className="inline-flex items-center justify-center w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  </div>
                 </div>
               </div>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight">
-                Bienvenido a <span className="relative inline-block">GW2<div className="shimmer-effect"></div></span>
+
+              {/* Main Title with Enhanced Gradient */}
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight" data-aos="fade-up" data-aos-delay="100">
+                <span className="inline-block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x">
+                  Bienvenido a
+                </span>
+                <br />
+                <span className="relative inline-block mt-2">
+                  <span className="relative z-10 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+                    GW2
+                  </span>
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 blur-3xl opacity-30 animate-pulse-slow"></div>
+                </span>
               </h1>
             </div>
 
-            <div className="hero-subtitle mb-6 md:mb-8">
-              <p className="text-base sm:text-lg md:text-xl text-blue-100/80">
-                Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
+            {/* Subtitle with better typography */}
+            <div className="hero-subtitle mb-8 md:mb-10" data-aos="fade-up" data-aos-delay="200">
+              <p className="text-lg sm:text-xl md:text-2xl text-blue-100/90 font-light leading-relaxed max-w-3xl mx-auto">
+                Descubre una <span className="text-white font-semibold">comunidad única</span> donde cada momento se convierte en una{' '}
+                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-semibold">
+                  experiencia inolvidable
+                </span>
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center hero-buttons">
+            {/* Enhanced CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center hero-buttons" data-aos="fade-up" data-aos-delay="300">
               <Button
                 href="https://discord.gg/gatitos2"
                 external
                 variant="gradient"
                 size="lg"
                 rounded="full"
-                leftIcon={<FaDiscord className="text-lg" />}
-                rightIcon={<FaArrowRight className="text-sm" />}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 border border-blue-500/30 shadow-lg shadow-blue-500/20 text-white hover:shadow-blue-500/40 transition-all duration-300 text-sm sm:text-base px-4 sm:px-6 py-2.5 sm:py-3 hover:translate-y-[-2px]"
+                leftIcon={<FaDiscord className="text-xl" />}
+                rightIcon={<FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform" />}
+                className="group relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 border-none shadow-2xl shadow-blue-500/30 text-white hover:shadow-blue-500/50 transition-all duration-300 text-base sm:text-lg px-8 py-4 hover:scale-105 hover:-translate-y-1 font-semibold"
               >
-                Únete a la Aventura
+                <span className="relative z-10">Únete a la Aventura</span>
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
               </Button>
 
               <Button
@@ -400,81 +435,131 @@ export default function HomePage() {
                 variant="outline"
                 size="lg"
                 rounded="full"
-                className="bg-dark-800/30 backdrop-blur-sm border-blue-500/20 hover:border-blue-500/40 shadow-lg text-white hover:shadow-blue-500/10 transition-all duration-300 text-sm sm:text-base px-4 sm:px-6 py-2.5 sm:py-3 hover:translate-y-[-2px]"
+                className="group relative bg-slate-800/40 backdrop-blur-xl border-blue-400/30 hover:border-blue-400/60 shadow-xl text-white hover:shadow-blue-500/20 transition-all duration-300 text-base sm:text-lg px-8 py-4 hover:scale-105 hover:-translate-y-1 font-semibold"
               >
                 Descubre más
+                <FaChevronDown className="inline-block ml-2 group-hover:translate-y-1 transition-transform" />
               </Button>
+            </div>
+
+            {/* Social Proof Stats */}
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm" data-aos="fade-up" data-aos-delay="400">
+              <div className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 backdrop-blur-xl rounded-full border border-blue-400/20">
+                <FaUsers className="text-blue-400" />
+                <span className="text-blue-100">
+                  <span className="font-bold text-white">1000+</span> Miembros Activos
+                </span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 backdrop-blur-xl rounded-full border border-purple-400/20">
+                <FaStar className="text-yellow-400" />
+                <span className="text-purple-100">
+                  <span className="font-bold text-white">4.9/5</span> Valoración
+                </span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 backdrop-blur-xl rounded-full border border-pink-400/20">
+                <FaGamepad className="text-pink-400" />
+                <span className="text-pink-100">
+                  <span className="font-bold text-white">50+</span> Eventos Mensuales
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Main hero image positioned at bottom for continuity illusion */}
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 mt-auto hero-image-container">
-          <div className="hero-image-glow absolute -inset-0 bg-blue-500/10 rounded-xl blur-2xl"></div>
+        {/* Main hero image with enhanced effects */}
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 mt-auto hero-image-container" data-aos="fade-up" data-aos-delay="500">
+          {/* Enhanced glow effect */}
+          <div className="absolute -inset-4 bg-gradient-to-t from-blue-500/20 via-purple-500/10 to-transparent rounded-2xl blur-3xl"></div>
 
-          <div className="img-border rounded-xl overflow-hidden">
+          <div className="relative rounded-2xl overflow-hidden border border-blue-400/20 shadow-2xl shadow-blue-500/20">
             <div className="relative w-full h-0" style={{ paddingBottom: "42%" }}>
               <Image
                 src="/images/server.png"
                 alt="GW2 Server"
                 fill
                 className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1400px"
                 priority
                 quality={95}
               />
 
               {/* Modern gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/80 to-transparent pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent pointer-events-none"></div>
 
-              {/* Decorative elements */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-30 mix-blend-overlay"></div>
-
-              {/* Shimmer effect */}
-              <div className="shimmer-effect"></div>
+              {/* Decorative gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-40 mix-blend-overlay"></div>
             </div>
           </div>
 
-          {/* Decorative elements */}
-          <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-2xl"></div>
-          <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full blur-2xl"></div>
+          {/* Floating decorative elements */}
+          <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div className="absolute -top-8 -right-8 w-40 h-40 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
 
-          {/* Floating badges */}
-          <div className="hidden md:block absolute -left-8 top-1/4 transform -translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-blue-500/20 shadow-xl">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300">
-                <FaUsers className="text-xl" />
-              </div>
-              <div className="text-left">
-                <div className="text-sm text-blue-300">Comunidad</div>
-                <div className="text-lg font-bold text-white">+1000 miembros</div>
+          {/* Enhanced floating badges */}
+          <div className="hidden lg:block absolute -left-12 top-1/4 transform -translate-y-1/2" data-aos="fade-right" data-aos-delay="600">
+            <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl p-4 rounded-2xl border border-blue-400/30 shadow-2xl shadow-blue-500/20 hover:scale-110 transition-transform duration-300">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                  <FaUsers className="text-2xl text-blue-400" />
+                </div>
+                <div className="text-left">
+                  <div className="text-xs text-blue-300 font-medium">Comunidad</div>
+                  <div className="text-xl font-bold bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">+1000</div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="hidden md:block absolute -right-8 bottom-1/4 transform translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-purple-500/20 shadow-xl">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300">
-                <FaGamepad className="text-xl" />
-              </div>
-              <div className="text-left">
-                <div className="text-sm text-purple-300">Experiencia</div>
-                <div className="text-lg font-bold text-white">Eventos exclusivos</div>
+          <div className="hidden lg:block absolute -right-12 top-2/3 transform -translate-y-1/2" data-aos="fade-left" data-aos-delay="700">
+            <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl p-4 rounded-2xl border border-purple-400/30 shadow-2xl shadow-purple-500/20 hover:scale-110 transition-transform duration-300">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
+                  <FaTrophy className="text-2xl text-purple-400" />
+                </div>
+                <div className="text-left">
+                  <div className="text-xs text-purple-300 font-medium">Eventos</div>
+                  <div className="text-xl font-bold bg-gradient-to-r from-white to-purple-100 bg-clip-text text-transparent">50+/mes</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Features Section - Redesigned */}
-      <section id="features" className="py-28 relative overflow-hidden">
-        {/* Background gradients and effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce" data-aos="fade-up" data-aos-delay="800">
+          <div className="flex flex-col items-center gap-2 text-blue-300/60">
+            <span className="text-xs font-medium">Descubre más</span>
+            <FaChevronDown className="text-xl" />
+          </div>
+        </div>
+      </section>
+    </div>
+            </div >
+          </div >
+
+    <div className="hidden md:block absolute -right-8 bottom-1/4 transform translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-purple-500/20 shadow-xl">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300">
+          <FaGamepad className="text-xl" />
+        </div>
+        <div className="text-left">
+          <div className="text-sm text-purple-300">Experiencia</div>
+          <div className="text-lg font-bold text-white">Eventos exclusivos</div>
+        </div>
+      </div>
+    </div>
+        </div >
+      </section >
+
+    {/* Features Section - Redesigned */ }
+    < section id = "features" className = "py-28 relative overflow-hidden" >
+      {/* Background gradients and effects */ }
+      < div className = "absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
 
-        {/* Decorative orbs */}
+  {/* Decorative orbs */ }
         <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
 
@@ -585,20 +670,20 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
-      {/* Statistics Section - Redesigned */}
-      <section
-        ref={statsRef}
-        className="py-28 relative overflow-hidden"
-      >
-        {/* Background elements */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+    {/* Statistics Section - Redesigned */ }
+    < section
+  ref = { statsRef }
+  className = "py-28 relative overflow-hidden"
+    >
+    {/* Background elements */ }
+    < div className = "absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
 
-        {/* Decorative orbs */}
+  {/* Decorative orbs */ }
         <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
         <div className="absolute bottom-1/4 left-0 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
 
@@ -709,17 +794,17 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
-      {/* Events Section - Redesigned */}
-      <section className="py-28 relative overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+    {/* Events Section - Redesigned */ }
+    < section className = "py-28 relative overflow-hidden" >
+      {/* Background elements */ }
+      < div className = "absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
 
-        {/* Decorative orbs */}
+  {/* Decorative orbs */ }
         <div className="absolute bottom-40 right-10 w-96 h-96 rounded-full bg-blue-900/10 blur-[100px]"></div>
         <div className="absolute top-40 left-10 w-96 h-96 rounded-full bg-violet-900/10 blur-[100px]"></div>
 
@@ -799,8 +884,8 @@ export default function HomePage() {
                       variant={event.featured ? 'gradient' : 'outline'}
                       rounded="default"
                       className={`relative z-10 w-full ${!event.featured
-                          ? 'bg-dark-900/50 border-gray-600/50 hover:border-primary-500/50 backdrop-blur-sm'
-                          : 'bg-gradient-to-r from-primary-600 to-violet-600 border border-primary-500/50 hover:from-primary-500 hover:to-violet-500'
+                        ? 'bg-dark-900/50 border-gray-600/50 hover:border-primary-500/50 backdrop-blur-sm'
+                        : 'bg-gradient-to-r from-primary-600 to-violet-600 border border-primary-500/50 hover:from-primary-500 hover:to-violet-500'
                         }`}
                     >
                       Más información
@@ -823,10 +908,10 @@ export default function HomePage() {
             </Button>
           </div>
         </div>
-      </section>
+      </section >
 
-      {/* Sección de Patreon */}
-      <section className="py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative">
+    {/* Sección de Patreon */ }
+    < section className = "py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative" >
         <div className="absolute inset-0 bg-dark-800"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -949,12 +1034,12 @@ export default function HomePage() {
                     variant={tier.popular ? 'gradient' : 'outline'}
                     rounded="default"
                     className={`w-full font-medium shadow-lg ${tier.popular
-                        ? 'bg-gradient-to-r from-blue-500 to-blue-600 border-none text-white'
-                        : tier.id === 'gold'
-                          ? 'bg-yellow-800 text-white border-yellow-600 hover:bg-yellow-700'
-                          : tier.id === 'platinum'
-                            ? 'bg-purple-800 text-white border-purple-600 hover:bg-purple-700'
-                            : `${tier.buttonColor} hover:border-${tier.color.split('-')[1]}-500/50`
+                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 border-none text-white'
+                      : tier.id === 'gold'
+                        ? 'bg-yellow-800 text-white border-yellow-600 hover:bg-yellow-700'
+                        : tier.id === 'platinum'
+                          ? 'bg-purple-800 text-white border-purple-600 hover:bg-purple-700'
+                          : `${tier.buttonColor} hover:border-${tier.color.split('-')[1]}-500/50`
                       }`}
                   >
                     Elegir Plan
@@ -989,10 +1074,10 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
-      {/* Sección de Testimonios */}
-      <section className="py-24 bg-gradient-to-b from-dark-800 to-dark-900 relative">
+    {/* Sección de Testimonios */ }
+    < section className = "py-24 bg-gradient-to-b from-dark-800 to-dark-900 relative" >
         <div className="absolute inset-0 bg-gradient-to-br from-primary-900/10 via-dark-900 to-secondary-900/10"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -1058,10 +1143,10 @@ export default function HomePage() {
             </Button>
           </div>
         </div>
-      </section>
+      </section >
 
-      {/* Sección Final CTA */}
-      <section className="py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative">
+    {/* Sección Final CTA */ }
+    < section className = "py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative" >
         <div className="absolute inset-0 bg-gradient-to-br from-secondary-900/10 via-dark-900 to-primary-900/10"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -1103,12 +1188,12 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
-      <Footer />
+    <Footer />
 
-      {/* Single global style tag for all animations */}
-      <style jsx global>{heroAnimations}</style>
-    </div>
+  {/* Single global style tag for all animations */ }
+  <style jsx global>{heroAnimations}</style>
+    </div >
   )
 }
