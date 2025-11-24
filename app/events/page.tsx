@@ -178,7 +178,7 @@ export default function EventsPage() {
   })
 
   const featuredEvents = filteredEvents.filter(event => event.featured)
-  
+
   const sortedEvents = filteredEvents
     .filter(event => !event.featured) // Remove featured events since they'll be displayed separately
     .sort((a, b) => {
@@ -190,33 +190,33 @@ export default function EventsPage() {
 
   // Helper functions for styling and UI
   const getCategoryColor = (category: string): string => {
-    switch(category) {
-      case 'community': 
+    switch (category) {
+      case 'community':
         return 'from-blue-600 to-blue-800';
-      case 'competition': 
+      case 'competition':
         return 'from-red-600 to-rose-800';
-      case 'special': 
+      case 'special':
         return 'from-purple-600 to-indigo-800';
-      default: 
+      default:
         return 'from-gray-600 to-gray-800';
     }
   };
 
   const getCategoryBgColor = (category: string): string => {
-    switch(category) {
-      case 'community': 
+    switch (category) {
+      case 'community':
         return 'bg-blue-500/10 border-blue-500/30 text-blue-400';
-      case 'competition': 
+      case 'competition':
         return 'bg-red-500/10 border-red-500/30 text-red-400';
-      case 'special': 
+      case 'special':
         return 'bg-purple-500/10 border-purple-500/30 text-purple-400';
-      default: 
+      default:
         return 'bg-gray-500/10 border-gray-500/30 text-gray-400';
     }
   };
 
   const getCategoryName = (category: string): string => {
-    switch(category) {
+    switch (category) {
       case 'community': return 'Comunidad';
       case 'competition': return 'Competitivo';
       case 'special': return 'Especial';
@@ -225,11 +225,11 @@ export default function EventsPage() {
   };
 
   const getPlatformIcon = (platform: string) => {
-    switch(platform) {
+    switch (platform) {
       case 'discord': return <FaDiscord className="text-indigo-400" />;
       case 'twitch': return <FaTwitch className="text-purple-400" />;
       case 'discord-twitch':
-      case 'both': 
+      case 'both':
         return (
           <div className="flex">
             <FaDiscord className="text-indigo-400" />
@@ -242,7 +242,7 @@ export default function EventsPage() {
 
   // Function to get platform name
   const getPlatformName = (platform: string): string => {
-    switch(platform) {
+    switch (platform) {
       case 'discord': return 'Discord';
       case 'twitch': return 'Twitch';
       case 'discord-twitch':
@@ -269,10 +269,10 @@ export default function EventsPage() {
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
           <div className="absolute inset-0 bg-gradient-to-b from-gray-950 to-gray-900"></div>
-          
+
           {/* Animated gradient overlay */}
           <div className="absolute inset-0 opacity-60 bg-gradient-to-br from-blue-900/10 via-gray-900 to-purple-900/10"></div>
-          
+
           {/* Particle effect overlay */}
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
 
@@ -280,7 +280,7 @@ export default function EventsPage() {
           <div className="absolute top-1/4 right-1/5 w-64 h-64 rounded-full bg-primary-900/20 blur-[100px]"></div>
           <div className="absolute bottom-1/4 left-1/5 w-96 h-96 rounded-full bg-purple-900/20 blur-[120px]"></div>
         </div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
           <div className="max-w-3xl mx-auto" data-aos="fade-up">
             <div className="inline-block mb-4">
@@ -288,33 +288,33 @@ export default function EventsPage() {
                 <span className="text-xs mr-2">🎮</span> EVENTOS DE LA COMUNIDAD
               </div>
             </div>
-            
+
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Próximos </span>
               <span className="bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">Eventos</span>
             </h1>
-            
+
             <p className="text-lg text-blue-100/80 mb-10 max-w-4xl mx-auto">
               Descubre todos los eventos exclusivos que organizamos para nuestra comunidad de Discord.
               ¡Participa y disfruta de momentos únicos con nosotros!
             </p>
-            
+
             <div className="flex gap-4 justify-center flex-wrap">
-              <Button 
+              <Button
                 href="#eventos"
                 variant="gradient"
-                rounded="lg"
+                rounded="default"
                 size="lg"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 border border-blue-500/30 shadow-lg text-white"
               >
                 Ver Eventos
               </Button>
-              
-              <Button 
+
+              <Button
                 href="https://discord.gg/gw2"
                 external
                 variant="outline"
-                rounded="lg"
+                rounded="default"
                 size="lg"
                 rightIcon={<FaDiscord />}
                 className="bg-dark-800/50 backdrop-blur-sm border-blue-500/20 hover:border-blue-500/40 shadow-lg text-white"
@@ -323,11 +323,11 @@ export default function EventsPage() {
               </Button>
             </div>
           </div>
-          
+
           {/* Featured event cards floating */}
           <div className="w-full mt-16 relative max-w-6xl" data-aos="fade-up" data-aos-delay="100">
             <div className="absolute -inset-10 bg-blue-500/5 blur-3xl rounded-full"></div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
               {[
                 {
@@ -373,7 +373,7 @@ export default function EventsPage() {
             </div>
           </div>
         </div>
-        
+
         {/* Arrow down indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
           <a href="#eventos" className="text-white/50 hover:text-white transition-colors">
@@ -390,12 +390,12 @@ export default function EventsPage() {
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
-          
+
           {/* Decorative orbs */}
           <div className="absolute bottom-40 right-10 w-96 h-96 rounded-full bg-blue-900/10 blur-[100px]"></div>
           <div className="absolute top-40 left-10 w-96 h-96 rounded-full bg-purple-900/10 blur-[100px]"></div>
         </div>
-        
+
         <div className="container max-w-7xl mx-auto px-6 relative z-10">
           {/* Heading */}
           <div className="text-center mb-14" data-aos="fade-up">
@@ -410,7 +410,7 @@ export default function EventsPage() {
               Utiliza los filtros para encontrar eventos que se ajusten a tus intereses
             </p>
           </div>
-              
+
           {/* Filters and Search - Modernized */}
           <div className="mb-12 bg-gradient-to-r from-gray-900/80 to-gray-950/80 backdrop-blur-sm rounded-xl p-6 border border-primary-500/10 shadow-lg" data-aos="fade-up">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -421,28 +421,26 @@ export default function EventsPage() {
                     <FaFilter className="text-primary-400 text-sm" />
                     <span className="text-sm font-medium text-gray-300">Filtrar:</span>
                   </div>
-                  
+
                   <div className="flex flex-wrap gap-2">
                     <button
                       onClick={() => setActiveCategory("all")}
-                      className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${
-                        activeCategory === "all"
+                      className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${activeCategory === "all"
                           ? "bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-md shadow-primary-500/20"
                           : "bg-gray-900/60 text-gray-300 hover:bg-gray-800/80"
-                      }`}
+                        }`}
                     >
                       Todos
                     </button>
-                    
+
                     {["community", "competition", "special"].map((category) => (
                       <button
                         key={category}
                         onClick={() => setActiveCategory(category)}
-                        className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${
-                          activeCategory === category
+                        className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${activeCategory === category
                             ? `bg-gradient-to-r ${getCategoryColor(category)} text-white shadow-md`
                             : "bg-gray-900/60 text-gray-300 hover:bg-gray-800/80"
-                        }`}
+                          }`}
                       >
                         {getCategoryName(category)}
                       </button>
@@ -474,17 +472,17 @@ export default function EventsPage() {
                 <FaStar className="text-yellow-400" />
                 <span className="bg-gradient-to-r from-white to-yellow-100 bg-clip-text text-transparent">Eventos Destacados</span>
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {featuredEvents.map((event) => (
-                  <div 
-                    key={event.id} 
+                  <div
+                    key={event.id}
                     className="group relative bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-primary-500/20 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                     data-aos="fade-up"
                   >
                     {/* Glass layer with shimmer effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-violet-500/5 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
+
                     <div className="relative">
                       <div className="relative h-56 overflow-hidden">
                         <Image
@@ -494,18 +492,18 @@ export default function EventsPage() {
                           className="object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/70 to-transparent"></div>
-                        
+
                         {/* Category Badge */}
                         <div className={`absolute top-4 right-4 bg-gradient-to-r ${getCategoryColor(event.category)} text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-white/10 backdrop-blur-sm`}>
                           {getCategoryName(event.category)}
                         </div>
-                        
+
                         {/* Featured Badge */}
                         <div className="absolute top-4 left-4 bg-gradient-to-r from-yellow-500 to-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-yellow-400/30 backdrop-blur-sm flex items-center gap-1">
                           <FaStar className="text-white" />
                           <span>Destacado</span>
                         </div>
-                        
+
                         <div className="absolute bottom-4 left-4 right-4">
                           <div className="flex items-center gap-2 text-sm font-medium text-white bg-gray-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
                             <FaCalendarAlt className="text-primary-400" />
@@ -515,7 +513,7 @@ export default function EventsPage() {
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="p-6 relative">
                         <h3 className="text-xl lg:text-2xl font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
                         <p className="text-gray-300 mb-6">{event.description}</p>
@@ -531,16 +529,15 @@ export default function EventsPage() {
                           </div>
                         </div>
 
-                        <Button 
+                        <Button
                           href="#"
                           variant={event.registrationOpen ? "gradient" : "outline"}
                           disabled={!event.registrationOpen}
-                          rounded="lg"
-                          className={`relative z-10 w-full justify-center ${
-                            event.registrationOpen 
-                              ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 shadow-md' 
+                          rounded="default"
+                          className={`relative z-10 w-full justify-center ${event.registrationOpen
+                              ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 shadow-md'
                               : 'bg-gray-900/50 border-gray-600/50 backdrop-blur-sm'
-                          }`}
+                            }`}
                         >
                           {event.registrationOpen ? "Inscribirme" : "Inscripciones Cerradas"}
                         </Button>
@@ -558,7 +555,7 @@ export default function EventsPage() {
               <FaCalendarAlt className="text-primary-400" />
               <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Todos los Eventos</span>
             </h3>
-            
+
             {filteredEvents.length === 0 ? (
               <div className="bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-sm rounded-xl p-8 text-center border border-primary-500/20 shadow-lg">
                 <FaCalendarTimes className="text-6xl text-gray-600 mx-auto mb-4" />
@@ -579,8 +576,8 @@ export default function EventsPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {sortedEvents.map((event) => (
-                  <div 
-                    key={event.id} 
+                  <div
+                    key={event.id}
                     className="group bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-700/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl flex flex-col h-full"
                     data-aos="fade-up"
                   >
@@ -593,12 +590,12 @@ export default function EventsPage() {
                           className="object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/70 to-transparent"></div>
-                        
+
                         {/* Category Badge */}
                         <div className={`absolute top-4 right-4 bg-gradient-to-r ${getCategoryColor(event.category)} text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-white/10 backdrop-blur-sm`}>
                           {getCategoryName(event.category)}
                         </div>
-                        
+
                         <div className="absolute bottom-4 left-4 right-4">
                           <div className="flex items-center gap-2 text-sm font-medium text-white bg-gray-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
                             <FaCalendarAlt className="text-primary-400" />
@@ -609,7 +606,7 @@ export default function EventsPage() {
                         </div>
                       </div>
                     </div>
-                      
+
                     <div className="p-6 flex-1 flex flex-col">
                       <h3 className="text-lg font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
                       <p className="text-gray-300 text-sm mb-5 flex-grow">{event.description}</p>
@@ -625,17 +622,16 @@ export default function EventsPage() {
                         </div>
                       </div>
 
-                      <Button 
+                      <Button
                         href="#"
                         variant={event.registrationOpen ? "gradient" : "outline"}
                         disabled={!event.registrationOpen}
-                        rounded="lg"
+                        rounded="default"
                         size="sm"
-                        className={`relative z-10 w-full justify-center ${
-                          event.registrationOpen 
-                            ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 shadow-sm' 
+                        className={`relative z-10 w-full justify-center ${event.registrationOpen
+                            ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 shadow-sm'
                             : 'bg-gray-900/50 border-gray-600/50 backdrop-blur-sm'
-                        }`}
+                          }`}
                       >
                         {event.registrationOpen ? "Inscribirme" : "Inscripciones Cerradas"}
                       </Button>
@@ -654,11 +650,11 @@ export default function EventsPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950"></div>
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
-        
+
         {/* Decorative orbs */}
         <div className="absolute top-1/3 right-20 w-64 h-64 rounded-full bg-blue-900/10 blur-[100px]"></div>
         <div className="absolute bottom-1/3 left-20 w-64 h-64 rounded-full bg-purple-900/10 blur-[100px]"></div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md rounded-xl overflow-hidden shadow-2xl border border-primary-500/20" data-aos="fade-up">
             <div className="p-8 md:p-12">
@@ -669,20 +665,20 @@ export default function EventsPage() {
                       <span className="text-xs mr-1">💡</span> PROPUESTAS
                     </div>
                   </div>
-                  
+
                   <h2 className="text-2xl md:text-3xl font-bold mb-4">
                     <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">¿Quieres proponer un </span>
                     <span className="bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">evento comunitario</span>
                     <span className="bg-gradient-to-r from-blue-100 to-white bg-clip-text text-transparent">?</span>
                   </h2>
-                  
+
                   <p className="text-gray-300">
                     Contacta con el equipo de moderación para proponer eventos comunitarios. Estamos buscando constantemente nuevas formas de interactuar con nuestra comunidad.
                   </p>
                 </div>
-                
+
                 <div className="flex flex-col space-y-4">
-                  <Button 
+                  <Button
                     href="https://discord.gg/gw2"
                     external
                     variant="gradient"
@@ -692,8 +688,8 @@ export default function EventsPage() {
                   >
                     Contactar vía Discord
                   </Button>
-                  
-                  <Button 
+
+                  <Button
                     href="mailto:contacto@gw2.gg"
                     variant="outline"
                     size="lg"
@@ -706,14 +702,14 @@ export default function EventsPage() {
               </div>
             </div>
           </div>
-          
+
           {/* Newsletter or Additional CTA */}
           <div className="mt-16 text-center" data-aos="fade-up">
             <h3 className="text-xl font-bold mb-4 text-white">No te pierdas ningún evento</h3>
             <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
               Únete a nuestro servidor de Discord para recibir notificaciones sobre próximos eventos y actividades exclusivas
             </p>
-            <Button 
+            <Button
               href="https://discord.gg/gw2"
               external
               variant="gradient"
@@ -728,7 +724,7 @@ export default function EventsPage() {
       </section>
 
       <Footer />
-      
+
       {/* Global Animation Styles */}
       <style jsx global>{`
         @keyframes pulse {
