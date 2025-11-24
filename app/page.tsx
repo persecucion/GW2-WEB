@@ -325,7 +325,7 @@ export default function HomePage() {
 
       const handleScroll = () => {
         setIsScrolled(window.scrollY > 50)
-        
+
         // Comprobar si la sección de estadísticas está visible
         if (statsRef.current) {
           const rect = statsRef.current.getBoundingClientRect()
@@ -349,10 +349,10 @@ export default function HomePage() {
         <div className="absolute inset-0 overflow-hidden">
           {/* Base gradient background */}
           <div className="absolute inset-0 bg-gradient-to-b from-dark-950 to-dark-900"></div>
-          
+
           {/* Animated gradient overlay */}
           <div className="absolute inset-0 opacity-60 hero-gradient-bg"></div>
-          
+
           {/* Particle effect overlay */}
           <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
 
@@ -374,15 +374,15 @@ export default function HomePage() {
                 Bienvenido a <span className="relative inline-block">GW2<div className="shimmer-effect"></div></span>
               </h1>
             </div>
-            
+
             <div className="hero-subtitle mb-6 md:mb-8">
               <p className="text-base sm:text-lg md:text-xl text-blue-100/80">
                 Descubre una comunidad única donde cada momento se convierte en una experiencia inolvidable.
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center hero-buttons">
-              <Button 
+              <Button
                 href="https://discord.gg/gatitos2"
                 external
                 variant="gradient"
@@ -394,8 +394,8 @@ export default function HomePage() {
               >
                 Únete a la Aventura
               </Button>
-              
-              <Button 
+
+              <Button
                 href="#features"
                 variant="outline"
                 size="lg"
@@ -411,34 +411,34 @@ export default function HomePage() {
         {/* Main hero image positioned at bottom for continuity illusion */}
         <div className="relative z-10 w-full max-w-4xl mx-auto px-4 mt-auto hero-image-container">
           <div className="hero-image-glow absolute -inset-0 bg-blue-500/10 rounded-xl blur-2xl"></div>
-          
+
           <div className="img-border rounded-xl overflow-hidden">
             <div className="relative w-full h-0" style={{ paddingBottom: "42%" }}>
-              <Image 
-                src="/images/server.png" 
-                alt="GW2 Server" 
+              <Image
+                src="/images/server.png"
+                alt="GW2 Server"
                 fill
                 className="object-cover"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                 priority
                 quality={95}
               />
-              
+
               {/* Modern gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/80 to-transparent pointer-events-none"></div>
-              
+
               {/* Decorative elements */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-30 mix-blend-overlay"></div>
-              
+
               {/* Shimmer effect */}
               <div className="shimmer-effect"></div>
             </div>
           </div>
-          
+
           {/* Decorative elements */}
           <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-2xl"></div>
           <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full blur-2xl"></div>
-          
+
           {/* Floating badges */}
           <div className="hidden md:block absolute -left-8 top-1/4 transform -translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-blue-500/20 shadow-xl">
             <div className="flex items-center gap-3">
@@ -451,7 +451,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          
+
           <div className="hidden md:block absolute -right-8 bottom-1/4 transform translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-purple-500/20 shadow-xl">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300">
@@ -473,11 +473,11 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
-        
+
         {/* Decorative orbs */}
         <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-20" data-aos="fade-up">
             <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-secondary-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
@@ -530,7 +530,7 @@ export default function HomePage() {
                 iconGradient: "from-purple-600 to-purple-900"
               },
             ].map((feature, index) => (
-              <div 
+              <div
                 key={index}
                 className={`group bg-gradient-to-br ${feature.gradient} backdrop-blur-md rounded-xl overflow-hidden shadow-xl border ${feature.borderColor} transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${feature.hoverGlow}`}
                 data-aos="fade-up"
@@ -557,7 +557,7 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          
+
           {/* Additional features in card format */}
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8" data-aos="fade-up">
             <div className="bg-gradient-to-br from-dark-900/50 to-dark-800/50 backdrop-blur-md rounded-xl p-6 border border-primary-500/10 shadow-lg hover:shadow-primary-500/5 transition-all duration-300">
@@ -571,7 +571,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gradient-to-br from-dark-900/50 to-dark-800/50 backdrop-blur-md rounded-xl p-6 border border-secondary-500/10 shadow-lg hover:shadow-secondary-500/5 transition-all duration-300">
               <div className="flex items-start gap-5">
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-secondary-600 to-secondary-800 flex items-center justify-center shrink-0">
@@ -588,8 +588,8 @@ export default function HomePage() {
       </section>
 
       {/* Statistics Section - Redesigned */}
-      <section 
-        ref={statsRef} 
+      <section
+        ref={statsRef}
         className="py-28 relative overflow-hidden"
       >
         {/* Background elements */}
@@ -597,11 +597,11 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
-        
+
         {/* Decorative orbs */}
         <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
         <div className="absolute bottom-1/4 left-0 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-20" data-aos="fade-up">
             <div className="inline-block rounded-full bg-gradient-to-r from-secondary-900/40 to-primary-900/40 backdrop-blur-sm px-4 py-1.5 border border-secondary-500/20 mb-4">
@@ -652,7 +652,7 @@ export default function HomePage() {
                 iconGradient: "from-purple-600 to-purple-700"
               },
             ].map((stat, index) => (
-              <div 
+              <div
                 key={index}
                 className={`group backdrop-blur-sm bg-gradient-to-br ${stat.gradient} rounded-xl p-8 text-center border ${stat.border} shadow-xl transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}
                 data-aos="fade-up"
@@ -664,7 +664,7 @@ export default function HomePage() {
                   </div>
                   <div className="absolute -inset-4 bg-white/5 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                
+
                 <div className={`text-4xl font-bold bg-gradient-to-r ${stat.textGradient} bg-clip-text text-transparent mb-3`}>
                   {statsVisible && (
                     <CountUp
@@ -675,19 +675,19 @@ export default function HomePage() {
                     />
                   )}
                 </div>
-                
+
                 <p className="text-lg text-gray-300 group-hover:text-white transition-colors duration-300">{stat.label}</p>
               </div>
             ))}
           </div>
-          
+
           {/* Additional stats */}
           <div className="mt-16" data-aos="fade-up">
             <div className="bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-md border border-white/5 rounded-xl p-8 shadow-lg">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
                 <div className="text-center p-4">
                   <div className="text-purple-400 mb-2"><FaCrown className="text-3xl mx-auto" /></div>
-                  <div className="text-2xl font-bold text-white mb-1">Desde {currentYear-2}</div>
+                  <div className="text-2xl font-bold text-white mb-1">Desde {currentYear - 2}</div>
                   <div className="text-gray-400 text-sm">Años en línea</div>
                 </div>
                 <div className="text-center p-4">
@@ -718,11 +718,11 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
-        
+
         {/* Decorative orbs */}
         <div className="absolute bottom-40 right-10 w-96 h-96 rounded-full bg-blue-900/10 blur-[100px]"></div>
         <div className="absolute top-40 left-10 w-96 h-96 rounded-full bg-violet-900/10 blur-[100px]"></div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-20" data-aos="fade-up">
             <div className="inline-block rounded-full bg-gradient-to-r from-primary-900/40 to-violet-900/40 backdrop-blur-sm px-4 py-1.5 border border-primary-500/20 mb-4">
@@ -739,36 +739,34 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {upcomingEvents.map((event, index) => (
-              <div 
+              <div
                 key={event.id}
-                className={`group relative bg-gradient-to-br from-dark-900/80 to-dark-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border ${
-                  event.featured ? 'border-primary-500/30' : 'border-gray-700/30'
-                } transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${
-                  event.featured ? 'md:scale-105 z-10 hover:shadow-primary-500/10' : 'hover:shadow-purple-500/10'
-                }`}
+                className={`group relative bg-gradient-to-br from-dark-900/80 to-dark-950/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border ${event.featured ? 'border-primary-500/30' : 'border-gray-700/30'
+                  } transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${event.featured ? 'md:scale-105 z-10 hover:shadow-primary-500/10' : 'hover:shadow-purple-500/10'
+                  }`}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
                 {/* Glass layer with shimmer effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-violet-500/5 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="shimmer-effect opacity-0 group-hover:opacity-100"></div>
-                
+
                 <div className="relative">
                   <div className="relative h-56 overflow-hidden">
-                    <Image 
+                    <Image
                       src={event.image}
                       alt={event.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/70 to-transparent"></div>
-                    
+
                     {event.featured && (
                       <div className="absolute top-4 right-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-primary-400/30 backdrop-blur-sm">
                         Destacado
                       </div>
                     )}
-                    
+
                     <div className="absolute bottom-4 left-4 right-4">
                       <div className="flex items-center gap-2 text-sm font-medium text-white bg-dark-900/60 backdrop-blur-sm p-2 rounded-lg border border-white/10 inline-block shadow-lg">
                         <FaCalendarAlt className="text-primary-400" />
@@ -778,7 +776,7 @@ export default function HomePage() {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="p-6 relative">
                     <div className="mb-4 flex justify-between items-center">
                       <span className="inline-block bg-gradient-to-r from-primary-600/90 to-violet-600/90 text-white text-xs px-3 py-1.5 rounded-full shadow-md">
@@ -792,19 +790,18 @@ export default function HomePage() {
                         </div>
                       )}
                     </div>
-                    
+
                     <h3 className="text-xl lg:text-2xl font-bold mb-3 text-white group-hover:text-primary-300 transition-colors duration-300">{event.title}</h3>
                     <p className="text-gray-300 mb-6">{event.description}</p>
-                    
-                    <Button 
+
+                    <Button
                       href="/events"
                       variant={event.featured ? 'gradient' : 'outline'}
-                      rounded="lg"
-                      className={`relative z-10 w-full ${
-                        !event.featured 
-                          ? 'bg-dark-900/50 border-gray-600/50 hover:border-primary-500/50 backdrop-blur-sm' 
+                      rounded="default"
+                      className={`relative z-10 w-full ${!event.featured
+                          ? 'bg-dark-900/50 border-gray-600/50 hover:border-primary-500/50 backdrop-blur-sm'
                           : 'bg-gradient-to-r from-primary-600 to-violet-600 border border-primary-500/50 hover:from-primary-500 hover:to-violet-500'
-                      }`}
+                        }`}
                     >
                       Más información
                     </Button>
@@ -813,9 +810,9 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          
+
           <div className="text-center mt-12" data-aos="fade-up">
-            <Button 
+            <Button
               href="/events"
               variant="outline"
               rounded="full"
@@ -831,7 +828,7 @@ export default function HomePage() {
       {/* Sección de Patreon */}
       <section className="py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative">
         <div className="absolute inset-0 bg-dark-800"></div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16" data-aos="fade-up">
             <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 shadow-md">
@@ -897,12 +894,12 @@ export default function HomePage() {
                 ]
               }
             ].map((tier, index) => (
-              <div 
+              <div
                 key={tier.id}
                 className={`
                   rounded-xl border bg-gradient-to-b ${tier.gradient} shadow-xl
-                  ${tier.popular 
-                    ? `${tier.borderColor} transform scale-105 relative z-10` 
+                  ${tier.popular
+                    ? `${tier.borderColor} transform scale-105 relative z-10`
                     : `border-gray-700`}
                   transition-all duration-300 hover:transform hover:translate-y-[-8px]
                 `}
@@ -916,24 +913,24 @@ export default function HomePage() {
                     </span>
                   </div>
                 )}
-                
+
                 <div className="p-8">
                   <div className="relative w-full h-40 rounded-lg mb-6 overflow-hidden">
-                    <Image 
-                      src={tier.image} 
+                    <Image
+                      src={tier.image}
                       alt={tier.name}
                       fill
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-dark-900 opacity-40"></div>
                   </div>
-                  
+
                   <h3 className={`text-xl font-bold ${tier.color} mb-2`}>{tier.name}</h3>
                   <div className="flex items-end gap-1 mb-4">
                     <span className="text-3xl font-bold text-white">{tier.price}€</span>
                     <span className="text-gray-300 mb-1">/mes</span>
                   </div>
-                  
+
                   <div className="border-t border-b border-gray-700 py-6 my-6">
                     <ul className="space-y-4">
                       {tier.features.map((feature, idx) => (
@@ -946,20 +943,19 @@ export default function HomePage() {
                       ))}
                     </ul>
                   </div>
-                  
-                  <Button 
+
+                  <Button
                     href="/patreon"
                     variant={tier.popular ? 'gradient' : 'outline'}
-                    rounded="lg"
-                    className={`w-full font-medium shadow-lg ${
-                      tier.popular 
-                        ? 'bg-gradient-to-r from-blue-500 to-blue-600 border-none text-white' 
-                        : tier.id === 'gold' 
-                          ? 'bg-yellow-800 text-white border-yellow-600 hover:bg-yellow-700' 
-                          : tier.id === 'platinum' 
+                    rounded="default"
+                    className={`w-full font-medium shadow-lg ${tier.popular
+                        ? 'bg-gradient-to-r from-blue-500 to-blue-600 border-none text-white'
+                        : tier.id === 'gold'
+                          ? 'bg-yellow-800 text-white border-yellow-600 hover:bg-yellow-700'
+                          : tier.id === 'platinum'
                             ? 'bg-purple-800 text-white border-purple-600 hover:bg-purple-700'
                             : `${tier.buttonColor} hover:border-${tier.color.split('-')[1]}-500/50`
-                    }`}
+                      }`}
                   >
                     Elegir Plan
                   </Button>
@@ -967,7 +963,7 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          
+
           <div className="bg-dark-800 rounded-xl border border-gray-700 p-6 md:p-8 mt-16 shadow-xl" data-aos="fade-up">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
@@ -975,14 +971,14 @@ export default function HomePage() {
                 <p className="text-gray-300">Visita nuestra sección de preguntas frecuentes o contáctanos directamente.</p>
               </div>
               <div className="flex gap-4">
-                <Button 
+                <Button
                   href="/faq"
                   variant="outline"
                   className="bg-dark-800 border-gray-500 text-white hover:bg-dark-700 hover:border-gray-400 whitespace-nowrap font-medium shadow-lg"
                 >
                   Ver FAQ
                 </Button>
-                <Button 
+                <Button
                   href="/contact"
                   variant="gradient"
                   className="bg-gradient-to-r from-purple-500 to-purple-600 text-white border-none font-medium shadow-lg whitespace-nowrap"
@@ -998,7 +994,7 @@ export default function HomePage() {
       {/* Sección de Testimonios */}
       <section className="py-24 bg-gradient-to-b from-dark-800 to-dark-900 relative">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-900/10 via-dark-900 to-secondary-900/10"></div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16" data-aos="fade-up">
             <span className="bg-gradient-to-r from-secondary-500 to-secondary-600 text-white text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 shadow-md">
@@ -1014,7 +1010,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {reviews.map((review, index) => (
-              <div 
+              <div
                 key={review.id}
                 className="bg-gradient-to-b from-dark-800 to-dark-900 rounded-xl p-8 border border-gray-700 shadow-xl transition-all duration-300 hover:-translate-y-2"
                 data-aos="fade-up"
@@ -1034,7 +1030,7 @@ export default function HomePage() {
                     <FaQuoteRight />
                   </div>
                 </div>
-                
+
                 <div className="mb-6">
                   <div className="flex mb-2">
                     {Array(5).fill(0).map((_, i) => (
@@ -1044,14 +1040,14 @@ export default function HomePage() {
                     ))}
                   </div>
                 </div>
-                
+
                 <p className="text-gray-300">{review.text}</p>
               </div>
             ))}
           </div>
-          
+
           <div className="text-center mt-12" data-aos="fade-up">
-            <Button 
+            <Button
               href="/reviews"
               variant="outline"
               rounded="full"
@@ -1067,38 +1063,38 @@ export default function HomePage() {
       {/* Sección Final CTA */}
       <section className="py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative">
         <div className="absolute inset-0 bg-gradient-to-br from-secondary-900/10 via-dark-900 to-primary-900/10"></div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex flex-col items-center text-center">
             <span className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-sm font-medium px-4 py-1.5 rounded-full inline-block mb-4 shadow-md" data-aos="fade-up">
               ÚNETE A NOSOTROS
             </span>
-            
+
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white" data-aos="fade-up" data-aos-delay="100">
               ¿Estás listo para formar parte de <br />
               <span className="bg-gradient-to-r from-primary-300 to-secondary-300 bg-clip-text text-transparent">nuestra comunidad</span>?
             </h2>
-            
+
             <p className="text-lg text-gray-200 max-w-3xl mb-10" data-aos="fade-up" data-aos-delay="200">
               Únete a miles de jugadores y vive la mejor experiencia de Guild Wars 2 en español.
               Eventos diarios, guías exclusivas y una comunidad activa te esperan.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="300">
-              <Button 
+              <Button
                 href="https://discord.gg/gw2esp"
                 variant="gradient"
-                rounded="lg"
+                rounded="default"
                 rightIcon={<FaDiscord />}
                 className="bg-gradient-to-r from-indigo-600 to-purple-600 border border-indigo-500 shadow-lg shadow-indigo-900/20 px-6 py-3 text-lg"
               >
                 Unirse al Discord
               </Button>
-              
-              <Button 
+
+              <Button
                 href="/patreon"
                 variant="outline"
-                rounded="lg"
+                rounded="default"
                 rightIcon={<FaPatreon />}
                 className="bg-dark-800 border-gray-700 hover:border-purple-500/50 px-6 py-3 text-lg"
               >
@@ -1110,7 +1106,7 @@ export default function HomePage() {
       </section>
 
       <Footer />
-      
+
       {/* Single global style tag for all animations */}
       <style jsx global>{heroAnimations}</style>
     </div>
