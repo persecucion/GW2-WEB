@@ -533,33 +533,16 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </div>
-            </div >
-          </div >
 
-    <div className="hidden md:block absolute -right-8 bottom-1/4 transform translate-y-1/2 bg-gradient-to-r from-dark-800/90 to-dark-900/90 backdrop-blur-md p-3 rounded-lg border border-purple-500/20 shadow-xl">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300">
-          <FaGamepad className="text-xl" />
-        </div>
-        <div className="text-left">
-          <div className="text-sm text-purple-300">Experiencia</div>
-          <div className="text-lg font-bold text-white">Eventos exclusivos</div>
-        </div>
-      </div>
-    </div>
-        </div >
-      </section >
-
-    {/* Features Section - Redesigned */ }
-    < section id = "features" className = "py-28 relative overflow-hidden" >
-      {/* Background gradients and effects */ }
-      < div className = "absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
+      {/* Features Section - Redesigned */}
+      <section id="features" className="py-28 relative overflow-hidden">
+        {/* Background gradients and effects */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
 
-  {/* Decorative orbs */ }
+        {/* Decorative orbs */}
         <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
 
@@ -672,18 +655,18 @@ export default function HomePage() {
         </div>
       </section >
 
-    {/* Statistics Section - Redesigned */ }
-    < section
-  ref = { statsRef }
-  className = "py-28 relative overflow-hidden"
-    >
-    {/* Background elements */ }
-    < div className = "absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
+      {/* Statistics Section - Redesigned */}
+      < section
+        ref={statsRef}
+        className="py-28 relative overflow-hidden"
+      >
+        {/* Background elements */}
+        < div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary-500/20 to-transparent"></div>
 
-  {/* Decorative orbs */ }
+        {/* Decorative orbs */}
         <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-secondary-900/10 blur-[100px]"></div>
         <div className="absolute bottom-1/4 left-0 w-96 h-96 rounded-full bg-primary-900/10 blur-[100px]"></div>
 
@@ -796,15 +779,15 @@ export default function HomePage() {
         </div>
       </section >
 
-    {/* Events Section - Redesigned */ }
-    < section className = "py-28 relative overflow-hidden" >
-      {/* Background elements */ }
-      < div className = "absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
+      {/* Events Section - Redesigned */}
+      < section className="py-28 relative overflow-hidden" >
+        {/* Background elements */}
+        < div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950" ></div >
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"></div>
 
-  {/* Decorative orbs */ }
+        {/* Decorative orbs */}
         <div className="absolute bottom-40 right-10 w-96 h-96 rounded-full bg-blue-900/10 blur-[100px]"></div>
         <div className="absolute top-40 left-10 w-96 h-96 rounded-full bg-violet-900/10 blur-[100px]"></div>
 
@@ -910,8 +893,8 @@ export default function HomePage() {
         </div>
       </section >
 
-    {/* Sección de Patreon */ }
-    < section className = "py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative" >
+      {/* Sección de Patreon */}
+      < section className="py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative" >
         <div className="absolute inset-0 bg-dark-800"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -1076,8 +1059,8 @@ export default function HomePage() {
         </div>
       </section >
 
-    {/* Sección de Testimonios */ }
-    < section className = "py-24 bg-gradient-to-b from-dark-800 to-dark-900 relative" >
+      {/* Sección de Testimonios */}
+      < section className="py-24 bg-gradient-to-b from-dark-800 to-dark-900 relative" >
         <div className="absolute inset-0 bg-gradient-to-br from-primary-900/10 via-dark-900 to-secondary-900/10"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -1145,8 +1128,8 @@ export default function HomePage() {
         </div>
       </section >
 
-    {/* Sección Final CTA */ }
-    < section className = "py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative" >
+      {/* Sección Final CTA */}
+      < section className="py-24 bg-gradient-to-b from-dark-900 to-dark-800 relative" >
         <div className="absolute inset-0 bg-gradient-to-br from-secondary-900/10 via-dark-900 to-primary-900/10"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -1190,10 +1173,10 @@ export default function HomePage() {
         </div>
       </section >
 
-    <Footer />
+      <Footer />
 
-  {/* Single global style tag for all animations */ }
-  <style jsx global>{heroAnimations}</style>
+      {/* Single global style tag for all animations */}
+      <style jsx global>{heroAnimations}</style>
     </div >
   )
 }
